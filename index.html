@@ -1,14 +1,568 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevCat-HGS | Software Analyst & Developer</title>
-    <meta name="description" content="DevCat-HGS is a professional software analyst and developer specializing in creating innovative digital solutions.">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>El Andén · Documentación de hgsportafolio.site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,800;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Periódico en pastel: papel crema, tinta ciruela y un tono suave por sección. */
+  --paper: #fdf8f1;
+  --ink: #2d2640;
+  --ink-soft: #625a74;
+  --rule: #2d2640;
+  --hair: #e2d8e8;
+  --mark: #fff0a6;
+  --accent: #7a5cc4;
+  --p0: #cdeedd;
+  --p1: #e4dcf8;
+  --p2: #ffdcca;
+  --p3: #fff0b3;
+  --p4: #d4e9fb;
+  --p5: #f9d4e4;
+  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1c1925;
+    --ink: #efe9f7;
+    --ink-soft: #b9b0c8;
+    --rule: #efe9f7;
+    --hair: #3b3549;
+    --mark: #5b5320;
+    --accent: #c4b2f2;
+    --p0: #234238;
+    --p1: #352e4f;
+    --p2: #4a3127;
+    --p3: #48411f;
+    --p4: #233a4d;
+    --p5: #4a2a39;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  margin: 0 auto;
+  max-width: 1240px;
+  padding: 0 clamp(16px, 4vw, 40px) 64px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 17px/1.55 var(--serif);
+  font-optical-sizing: auto;
+}
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; }
+
+/* —— Cabecera —— */
+.ears { display: flex; justify-content: space-between; gap: 1rem; padding: 18px 0 6px; font-size: 0.85rem; color: var(--ink-soft); }
+.masthead {
+  margin: 0;
+  color: var(--ink);
+  text-align: center;
+  font: 400 clamp(3.2rem, 11vw, 7.5rem)/0.95 "UnifrakturMaguntia", var(--serif);
+  letter-spacing: 0.01em;
+}
+.motto { margin: 4px 0 10px; text-align: center; font-style: italic; color: var(--ink-soft); }
+/* Franja de colores bajo la cabecera: los tonos de las secciones, en orden. */
+.ribbon { display: flex; height: 8px; margin: 2px 0 8px; border-radius: 4px; overflow: hidden; }
+.ribbon i { flex: 1; }
+.dateline {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem;
+  padding: 6px 0;
+  border-block: 3px double var(--rule);
+  font-size: 0.9rem;
+}
+.sections { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin: 0; padding: 12px 0; list-style: none; border-bottom: 1px solid var(--rule); font-weight: 600; }
+.sections a { display: inline-block; padding: 0.15rem 0.75rem; border-radius: 999px; background: var(--tint); text-decoration: none; }
+.sections a:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+
+/* —— Portada —— */
+.front > *, .story, .copy { min-width: 0; }
+.front { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 32px; padding: 28px 0; border-bottom: 3px double var(--rule); }
+.index { border-left: 1px solid var(--hair); padding-left: 24px; }
+.index h2 { margin: 0 0 8px; font-size: 1rem; font-weight: 800; }
+.index ol { margin: 0; padding: 0; list-style: none; }
+.index li { padding: 10px 0; border-top: 1px solid var(--hair); }
+.index li a { font-weight: 600; text-decoration: none; }
+.index li a::before { content: ""; display: inline-block; width: 0.7em; height: 0.7em; margin-right: 0.45em; border-radius: 50%; background: var(--tint); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent); }
+.index li span { display: block; font-size: 0.88rem; color: var(--ink-soft); }
+
+/* —— Artículos —— */
+.story { padding: 28px 0; border-bottom: 1px solid var(--rule); }
+.story header { max-width: 820px; }
+.kicker { display: inline-block; margin: 0 0 8px; padding: 0.1rem 0.7rem; border-radius: 999px; background: var(--tint); font-weight: 800; font-size: 0.9rem; color: var(--ink); }
+.lead header { padding: 18px 20px 4px; border-radius: 14px; background: color-mix(in srgb, var(--tint) 55%, transparent); }
+.story h2 { overflow-wrap: break-word; margin: 0; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.8rem); line-height: 1.05; letter-spacing: -0.01em; }
+.lead h2 { font-size: clamp(2.4rem, 5.4vw, 4.2rem); }
+.dek { margin: 10px 0 0; font-size: 1.2rem; font-style: italic; color: var(--ink-soft); }
+.byline { margin: 10px 0 18px; font-size: 0.85rem; color: var(--ink-soft); }
+.copy { columns: 3 18rem; column-gap: 32px; column-rule: 1px solid var(--hair); }
+.lead .copy { columns: 2 20rem; }
+.copy > * { break-inside: avoid-column; }
+.copy p { margin: 0 0 0.8em; text-align: justify; hyphens: auto; }
+.lead .copy > p:first-child::first-letter { float: left; margin: 6px 8px 0 0; font-size: 4.2em; line-height: 0.8; font-weight: 800; }
+.copy h3 { margin: 1.1em 0 0.35em; font-size: 1.25rem; line-height: 1.15; column-span: none; }
+.copy h4, .copy h5 { margin: 1em 0 0.3em; font-size: 1.02rem; }
+.copy ul, .copy ol { margin: 0 0 0.9em; padding-left: 1.2em; }
+.copy li { margin-bottom: 0.3em; }
+.copy blockquote { margin: 0.8em 0; padding: 0.4em 0 0.4em 1em; border-left: 4px solid var(--ink); font-size: 1.15rem; font-style: italic; }
+.copy code { overflow-wrap: anywhere; font: 0.88em ui-monospace, "Cascadia Code", Consolas, monospace; background: color-mix(in srgb, var(--ink) 8%, transparent); padding: 0 0.2em; }
+.copy pre { overflow-x: auto; padding: 10px 12px; border: 1px solid var(--hair); font-size: 0.85rem; line-height: 1.45; }
+.copy pre code { background: none; padding: 0; }
+.copy strong { font-weight: 800; }
+.copy .table { overflow-x: auto; margin: 0 0 1em; column-span: all; }
+.copy table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.copy th, .copy td { padding: 6px 8px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--hair); }
+.copy th { border-bottom: 2px solid var(--rule); }
+.copy hr { border: 0; border-top: 1px solid var(--hair); }
+mark, .copy em strong { background: var(--mark); color: inherit; }
+.copy blockquote { border-left-color: var(--tint); background: color-mix(in srgb, var(--tint) 35%, transparent); }
+.copy th { background: color-mix(in srgb, var(--tint) 45%, transparent); }
+footer.colophon { padding: 24px 0 0; font-size: 0.85rem; color: var(--ink-soft); text-align: center; }
+
+@media (max-width: 820px) {
+  .front { grid-template-columns: 1fr; }
+  .index { border-left: 0; padding-left: 0; border-top: 3px double var(--rule); padding-top: 16px; }
+  .copy, .lead .copy { columns: 1; }
+  .copy p { text-align: left; }
+  .ears span:last-child { display: none; }
+  .lead .copy > p:first-child::first-letter { font-size: 3.2em; }
+  .sections { justify-content: flex-start; }
+}
+@media print {
+  body { max-width: none; }
+  .sections { display: none; }
+  a { text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<div class="ears"><span>Edición n.º 277 · commit 4f2c664</span><span>Medellín, Colombia</span></div>
+<h1 class="masthead">El Andén</h1>
+<div class="ribbon" aria-hidden="true"><i style="background:var(--p0)"></i><i style="background:var(--p1)"></i><i style="background:var(--p2)"></i><i style="background:var(--p3)"></i><i style="background:var(--p4)"></i><i style="background:var(--p5)"></i></div>
+<p class="motto">Diario técnico de hgsportafolio.site: el portafolio, su admin y todo lo que los mueve</p>
+<div class="dateline"><span>Miércoles, 21 de octubre de 2026</span><span>14 artículos · 12 secciones</span></div>
+<nav aria-label="Secciones"><ul class="sections"><li style="--tint: var(--p0)"><a href="#README">Portada</a></li><li style="--tint: var(--p1)"><a href="#arquitectura">Arquitectura</a></li><li style="--tint: var(--p2)"><a href="#portafolio">Portafolio</a></li><li style="--tint: var(--p3)"><a href="#admin">Admin</a></li><li style="--tint: var(--p4)"><a href="#seguridad">Seguridad</a></li><li style="--tint: var(--p5)"><a href="#correos">Correos</a></li><li style="--tint: var(--p0)"><a href="#curriculum">Hoja de vida</a></li><li style="--tint: var(--p1)"><a href="#perfil-github">Perfil de GitHub</a></li><li style="--tint: var(--p2)"><a href="#ci-cd">Operación</a></li><li style="--tint: var(--p3)"><a href="#linkedin">Marca personal</a></li><li style="--tint: var(--p4)"><a href="#historial">Historial</a></li><li style="--tint: var(--p5)"><a href="#pendientes">Pendientes</a></li></ul></nav>
+<main>
+<div class="front">
+
+<article id="README" class="story lead" style="--tint: var(--p0)">
+  <header>
+    <p class="kicker">Portada</p>
+    <h2>Todo el sistema de Harol en un vistazo</h2>
+    <p class="dek">Qué piezas viven en este repositorio, cómo se conectan, dónde corre cada una y en qué estado están.</p>
+    <p class="byline">4 min de lectura · <a href="README.md">README.md</a></p>
+  </header>
+  <div class="copy"><p>Este repositorio privado (<code>DevCat-HGS/portfolio-hgs</code> en GitHub) reúne la presencia profesional de Harol Guerrero Salgado: el portafolio web, el editor de contenido, la hoja de vida en PDF, el README del perfil de GitHub y el material de LinkedIn. Todo sale de los mismos datos y se publica con un commit en <code>main</code>.</p>
+<h3>Las piezas</h3>
+<div class="table"><table><thead><tr><th>Pieza</th><th>Carpeta</th><th>Dónde se ve</th><th>Qué es</th></tr></thead><tbody><tr><td>Portafolio</td><td><code>portfolio/</code></td><td><code>https://hgsportafolio.site</code> (sitio de Netlify <code>portafolio-hgs</code>)</td><td>Página bilingüe en React 19 + Vite, con la página del caso MIGOZZ en <code>/migozz/</code>.</td></tr><tr><td>Admin</td><td><code>admin/</code></td><td><code>admin.hgsportafolio.site</code> (sitio de Netlify <code>admin-hgs</code>)</td><td>Editor propio en React que lee y publica el contenido del portafolio y del CV en este repositorio. También recibe el formulario de contacto, envía sus correos y guarda los mensajes.</td></tr><tr><td>Hoja de vida</td><td><code>curriculum/</code></td><td><code>portfolio/public/cv/</code> (botón de descarga del sitio)</td><td>Generador en Python que produce el CV en PDF en español e inglés desde <code>cv_data.json</code>.</td></tr><tr><td>Perfil de GitHub</td><td><code>README.md</code>, <code>README.es.md</code>, <code>profile/</code>, <code>privacity/</code>, <code>scripts/</code></td><td>Repositorio público <code>DevCat-HGS/DevCat-HGS</code></td><td>README del perfil, con gráficas de lenguajes generadas y copiado al repo público por un workflow.</td></tr><tr><td>LinkedIn</td><td><code>linkedin/</code></td><td>Perfil de LinkedIn (manual)</td><td>Guía, banners y publicación con la misma identidad visual del sitio.</td></tr></tbody></table></div>
+<h3>Cómo se conectan</h3>
+<ol><li>El contenido visible del portafolio vive en <code>portfolio/src/content/data/*.json</code> y el del CV en <code>curriculum/cv_data.json</code>.</li><li>El admin edita esos JSON y publica un solo commit en <code>main</code> a través de una función de Netlify que guarda el token de GitHub.</li><li>Ese commit dispara los workflows de GitHub Actions (CV, imágenes, pruebas) y el deploy de Netlify del portafolio.</li><li>El formulario de contacto del portafolio envía cada mensaje a una función del admin, que lo guarda y manda los correos.</li><li>El README del perfil se regenera aparte (gráficas diarias) y se copia al repositorio público.</li></ol>
+<p>El detalle está en <a href="#arquitectura">arquitectura</a>.</p>
+<h3>Estado actual</h3>
+<ul><li>El portafolio está en línea en el dominio propio <code>hgsportafolio.site</code>; <code>portafolio-hgs.netlify.app</code> sigue abierto como respaldo (ver <a href="#dominio-y-seo">dominio y SEO</a>).</li><li>El admin acaba de pasar a entrada con PIN más código por correo y sesión firmada; el token de GitHub ya no pasa por el navegador (commit <code>bf84696</code>, 2026-10-21).</li><li>El formulario de contacto ya no usa Netlify Forms: envía al admin, que guarda el mensaje (estación «Mensajes») y, con Resend configurado, envía la copia a Harol y la confirmación al visitante (commit <code>f4be780</code>, 2026-10-21).</li><li>La analítica con Umami está lista en el código pero apagada hasta que se configure <code>VITE_UMAMI_WEBSITE_ID</code>.</li><li>La carpeta <code>img/</code> ya no está en el repositorio (commit <code>236c9d3</code>).</li><li><strong>Falta configuración de Harol:</strong> las variables del admin en Netlify (incluidas las del formulario) y la verificación del dominio en Resend. Mientras falten, el admin no deja entrar y el formulario no envía correos. Lista completa en <a href="#configuracion">configuración</a> y <a href="#pendientes">pendientes</a>.</li><li>Ramas: solo <code>main</code> (producción) y <code>desarrollo</code>.</li></ul>
+<h3>Índice de artículos</h3>
+<div class="table"><table><thead><tr><th>#</th><th>Artículo</th><th>De qué va</th></tr></thead><tbody><tr><td>2</td><td><a href="#arquitectura">Arquitectura</a></td><td>Carpetas, tecnologías y el camino de un cambio hasta el sitio.</td></tr><tr><td>3</td><td><a href="#portafolio">Portafolio</a></td><td>Secciones, componentes, contenido en JSON, idiomas, MIGOZZ, imágenes, formulario, analítica y pruebas.</td></tr><tr><td>4</td><td><a href="#admin">Admin</a></td><td>Estaciones (incluida «Mensajes»), edición, imágenes, borradores, revisión y publicación.</td></tr><tr><td>5</td><td><a href="#seguridad">Seguridad</a></td><td>Entrada al admin, sesiones, límites, intermediario de GitHub, CSP y cabeceras.</td></tr><tr><td>6</td><td><a href="#correos">Correos</a></td><td>Formulario de contacto atendido por el admin y códigos de acceso, con Resend.</td></tr><tr><td>7</td><td><a href="#curriculum">Hoja de vida</a></td><td>Fuente única, generación de los PDF y diseño para ATS.</td></tr><tr><td>8</td><td><a href="#perfil-github">Perfil de GitHub</a></td><td>README del perfil, gráficas y publicación al repo público.</td></tr><tr><td>9</td><td><a href="#ci-cd">CI/CD</a></td><td>Workflows, Netlify, Dependabot y ramas.</td></tr><tr><td>10</td><td><a href="#dominio-y-seo">Dominio y SEO</a></td><td>Dominio, DNS, Search Console, sitemap y datos estructurados.</td></tr><tr><td>11</td><td><a href="#configuracion">Configuración</a></td><td>Variables de entorno por sitio y lo que falta configurar.</td></tr><tr><td>12</td><td><a href="#linkedin">LinkedIn</a></td><td>Guía, banners y publicación.</td></tr><tr><td>13</td><td><a href="#historial">Historial</a></td><td>Cronología del repositorio según <code>git log</code>.</td></tr><tr><td>14</td><td><a href="#pendientes">Pendientes</a></td><td>Lo que falta, lo que depende de Harol y mejoras sugeridas.</td></tr></tbody></table></div></div>
+</article>
+<aside class="index" aria-label="En esta edición">
+  <h2>En esta edición</h2>
+  <ol><li style="--tint: var(--p1)"><a href="#arquitectura">Cómo está armado el repositorio</a><span>Mapa de carpetas, tecnologías de cada pieza y el recorrido de un cambio desde el admin o un commit hasta el sitio en línea.</span></li><li style="--tint: var(--p2)"><a href="#portafolio">El portafolio por dentro</a><span>Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, la página de MIGOZZ, imágenes y pruebas.</span></li><li style="--tint: var(--p3)"><a href="#admin">El admin, la cabina de control del contenido</a><span>Para qué sirve el editor de admin.hgsportafolio.site, qué se edita en cada estación y cómo se revisa y publica un cambio.</span></li><li style="--tint: var(--p4)"><a href="#seguridad">Seguridad del admin y del sitio</a><span>Entrada con PIN y código por correo, sesiones, límites, intermediario de GitHub con lista de llamadas permitidas, CSP, cabeceras y protección del formulario.</span></li><li style="--tint: var(--p5)"><a href="#correos">Los correos que envía el sistema</a><span>Cuándo se envía cada correo del formulario de contacto y del admin, a quién, con qué proveedor y cómo se evita el abuso.</span></li><li style="--tint: var(--p0)"><a href="#curriculum">La hoja de vida, de un JSON a dos PDF</a><span>Fuente única en cv_data.json, generación automática de los PDF en español e inglés y las decisiones para pasar filtros ATS.</span></li><li style="--tint: var(--p1)"><a href="#perfil-github">El README del perfil de GitHub</a><span>Cómo se arman el README del perfil y sus gráficas, cómo se publica en el repositorio público y qué workflows lo mantienen al día.</span></li><li style="--tint: var(--p2)"><a href="#ci-cd">Workflows, despliegues y ramas</a><span>Qué hace cada workflow de GitHub Actions, cuándo corre y qué bloquea; los dos sitios de Netlify con sus previews; Dependabot y las ramas main y desarrollo.</span></li><li style="--tint: var(--p2)"><a href="#dominio-y-seo">Dominio, DNS y posicionamiento</a><span>El dominio hgsportafolio.site en Hostinger y Netlify, Search Console, sitemap, canonical, hreflang y datos estructurados.</span></li><li style="--tint: var(--p2)"><a href="#configuracion">Variables de entorno y lo que falta configurar</a><span>Cada variable de cada sitio, qué hace y dónde se pone, sin valores, y la lista de pasos pendientes para que el admin, los correos y la analítica funcionen.</span></li><li style="--tint: var(--p3)"><a href="#linkedin">Marca personal en LinkedIn</a><span>La guía para el perfil de LinkedIn, los banners y la publicación del portafolio, y cómo se regeneran sus imágenes.</span></li><li style="--tint: var(--p4)"><a href="#historial">Cronología del repositorio</a><span>Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta el formulario de contacto atendido por el admin en octubre de 2026.</span></li><li style="--tint: var(--p5)"><a href="#pendientes">Lo que falta y lo que conviene mejorar</a><span>Pasos que dependen de Harol y mejoras sugeridas, cada una con su porqué.</span></li></ol>
+</aside>
+</div>
+
+<article id="arquitectura" class="story" style="--tint: var(--p1)">
+  <header>
+    <p class="kicker">Arquitectura</p>
+    <h2>Cómo está armado el repositorio</h2>
+    <p class="dek">Mapa de carpetas, tecnologías de cada pieza y el recorrido de un cambio desde el admin o un commit hasta el sitio en línea.</p>
+    <p class="byline">3 min de lectura · <a href="arquitectura.md">arquitectura.md</a></p>
+  </header>
+  <div class="copy"><h3>Mapa de carpetas</h3>
+<div class="table"><table><thead><tr><th>Carpeta o archivo</th><th>Contenido</th></tr></thead><tbody><tr><td><code>portfolio/</code></td><td>Sitio web. <code>src/</code> (React), <code>src/content/data/*.json</code> (contenido), <code>seo/</code> (cabeceras, head, sitemap), <code>scripts/</code> (imágenes, Lighthouse, og.png, datos de GitHub), <code>tests/</code> (Vitest), <code>e2e/</code> (Playwright), <code>images/</code> (originales de imágenes), <code>public/</code> (archivos servidos).</td></tr><tr><td><code>admin/</code></td><td>Editor de contenido. <code>src/</code> (React), <code>netlify/functions/</code> (<code>auth.mts</code>, <code>github.mts</code>, <code>contact.mts</code>, <code>messages.mts</code>), <code>netlify/lib/</code> (<code>auth.ts</code>, <code>contact.ts</code>, <code>netlify.ts</code>), <code>netlify.toml</code>, <code>.env.example</code>.</td></tr><tr><td><code>curriculum/</code></td><td><code>cv_data.json</code> (fuente del CV), <code>generate_cv.py</code>, <code>fonts/</code> (Inter), <code>output/</code> (PDF versionados).</td></tr><tr><td><code>profile/</code></td><td>SVG del README del perfil (<code>banner.svg</code>, <code>languages.svg</code>, <code>languages.es.svg</code>).</td></tr><tr><td><code>privacity/</code></td><td>Lista elegida de repos privados para el README del perfil (<code>featured.json</code>) y su script.</td></tr><tr><td><code>scripts/</code></td><td><code>generate_language_charts.py</code>, que dibuja las gráficas de lenguajes del perfil.</td></tr><tr><td><code>linkedin/</code></td><td>Guía, plantillas HTML, PNG exportados y <code>exportar.mjs</code>.</td></tr><tr><td><code>.github/</code></td><td>Workflows, <code>dependabot.yml</code> y plantilla de pull request.</td></tr><tr><td><code>.claude/agents/</code></td><td>Agentes de Claude Code del proyecto (<code>documentador.md</code>, <code>rrhh-estricto.md</code>).</td></tr><tr><td><code>release-please-config.json</code>, <code>.release-please-manifest.json</code></td><td>Configuración de Release Please.</td></tr><tr><td><code>Doc/</code></td><td>Esta documentación y su generador <code>build.mjs</code>.</td></tr></tbody></table></div>
+<h3>Tecnologías</h3>
+<div class="table"><table><thead><tr><th>Pieza</th><th>Tecnologías (versiones en su <code>package.json</code> o <code>requirements.txt</code>)</th></tr></thead><tbody><tr><td>Portafolio</td><td>React 19, TypeScript, Vite, <code>motion</code> (solo en la página de MIGOZZ), fuente Archivo autoalojada, <code>sharp</code> para imágenes, Vitest, Playwright con axe, Lighthouse, ESLint y Prettier.</td></tr><tr><td>Admin</td><td>React 19, TypeScript, Vite, <code>@netlify/blobs</code>, <code>@netlify/functions</code>. Sin librerías de interfaz.</td></tr><tr><td>Funciones</td><td>Solo en el admin: Netlify Functions (formato <code>.mts</code> con <code>Config</code>), Netlify Blobs para estado y mensajes, Resend para correos. El portafolio no tiene funciones.</td></tr><tr><td>Hoja de vida</td><td>Python 3 con ReportLab.</td></tr><tr><td>Perfil</td><td>Python sin dependencias externas (<code>urllib</code>), API REST de GitHub.</td></tr></tbody></table></div>
+<h3>Dos sitios de Netlify</h3>
+<ul><li><code>portafolio-hgs</code> construye <code>portfolio/</code> con <code>portfolio/netlify.toml</code> (<code>npm run images &amp;&amp; npm run build</code>, publica <code>dist</code>).</li><li><code>admin-hgs</code> construye <code>admin/</code> con <code>admin/netlify.toml</code> (base directory <code>admin</code>). Su <code>ignore</code> (<code>git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- .</code>) hace que solo se reconstruya cuando cambia la carpeta <code>admin/</code>, no con cada cambio de contenido.</li></ul>
+<p>Van separados para que el admin tenga su propia política de seguridad y no se republique con cada cambio de contenido (comentario en <code>admin/netlify.toml</code>).</p>
+<h3>Cómo fluye un cambio</h3>
+<h4>Desde el admin</h4>
+<ol><li>Harol entra en <code>admin.hgsportafolio.site</code> (PIN y código por correo, ver <a href="#seguridad">seguridad</a>).</li><li>El admin lee los JSON de <code>main</code> por <code>/api/github</code>.</li><li>Al publicar, el navegador manda a <code>/api/github</code> las llamadas de la Git Data API: blobs, árbol, commit y mover <code>refs/heads/main</code>. Resultado: un solo commit con todos los archivos e imágenes (<code>admin/src/github.ts</code>).</li><li>El push a <code>main</code> dispara:</li><li>el deploy de Netlify del portafolio, cuyo build corre <code>npm run images</code> (convierte originales a WebP) y <code>tsc --noEmit</code> (valida la forma de cada JSON);</li><li><code>Curriculum</code>, que regenera los PDF y hace commit si cambiaron;</li><li><code>Images</code>, si hay originales nuevos en <code>portfolio/images/</code>, que commitea los WebP y lanza <code>Portfolio CI</code>;</li><li><code>Portfolio CI</code>, si cambió algo en <code>portfolio/**</code>.</li><li>El admin sigue en su tablero de salida las ejecuciones de Actions de ese commit.</li></ol>
+<p>Si un JSON tiene la forma equivocada, el typecheck falla y Netlify no publica esa versión: el sitio se queda con la anterior. Que un check de GitHub Actions bloquee o no el deploy de Netlify depende de la configuración del panel de Netlify, que no está en el repositorio (por confirmar).</p>
+<h4>Desde un commit</h4>
+<p>Un cambio de código sigue el mismo camino. En un pull request, además, Netlify publica un deploy preview por sitio y <code>preview-comment.yml</code> deja un comentario con el enlace. Ver <a href="#ci-cd">CI/CD</a>.</p>
+<h4>Un mensaje del formulario</h4>
+<p>El formulario del portafolio envía JSON a <code>https://admin.hgsportafolio.site/api/contact</code>. La función del admin lo filtra, lo guarda en Netlify Blobs (almacén <code>contact-messages</code>) y envía dos correos por Resend. Harol lo lee en su correo y en la estación «Mensajes» del admin. El portafolio sigue siendo estático; por eso su CSP permite conectarse al dominio del admin. Ver <a href="#correos">correos</a>.</p>
+<h4>El perfil de GitHub</h4>
+<p>Va por un camino aparte: <code>Metrics</code> y <code>Privacity</code> actualizan <code>README.md</code>, <code>README.es.md</code> y las gráficas en este repo, y <code>Publish profile</code> copia esos archivos al repositorio público <code>DevCat-HGS/DevCat-HGS</code>. Ver <a href="#perfil-github">perfil de GitHub</a>.</p></div>
+</article>
+
+<article id="portafolio" class="story" style="--tint: var(--p2)">
+  <header>
+    <p class="kicker">Portafolio</p>
+    <h2>El portafolio por dentro</h2>
+    <p class="dek">Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, la página de MIGOZZ, imágenes y pruebas.</p>
+    <p class="byline">7 min de lectura · <a href="portafolio.md">portafolio.md</a></p>
+  </header>
+  <div class="copy"><p>El portafolio es una sola página bilingüe en React 19 + TypeScript + Vite, sin librerías de interfaz. El diseño sigue una línea del metro de Medellín que recorre la página: una estación por capítulo (<code>portfolio/README.md</code>).</p>
+<h3>Secciones</h3>
+<p><code>portfolio/src/App.tsx</code> solo compone: hooks y un componente por sección, en este orden.</p>
+<div class="table"><table><thead><tr><th>#</th><th>Capítulo (<code>chapters</code> en <code>site.json</code>)</th><th>Componente</th></tr></thead><tbody><tr><td>01</td><td>Inicio</td><td><code>Hero.tsx</code> (con <code>LineArt.tsx</code>)</td></tr><tr><td>02</td><td>Oficio</td><td><code>Practice.tsx</code> (retrato, bento y marquesina)</td></tr><tr><td>03</td><td>Startup</td><td><code>Startup.tsx</code> (MIGOZZ y botón al caso)</td></tr><tr><td>04</td><td>Cargo</td><td><code>Tenure.tsx</code> (cargo anterior)</td></tr><tr><td>05</td><td>Proyectos</td><td><code>Projects.tsx</code> (dos destacados y el resto tras «ver más»)</td></tr><tr><td>06</td><td>Credenciales</td><td><code>Credentials.tsx</code> y <code>Lightbox.tsx</code> (carga diferida)</td></tr><tr><td>07</td><td>Stack</td><td><code>Stack.tsx</code> (acordeón por grupo)</td></tr><tr><td>08</td><td>Cierre</td><td><code>Close.tsx</code> con <code>ContactForm.tsx</code>, <code>Socials.tsx</code> y <code>GithubStats.tsx</code></td></tr></tbody></table></div>
+<p><code>Nav.tsx</code> es el mapa de la línea con el cambio de idioma. Los ids de los capítulos están en <code>CHAPTER_IDS</code> (<code>src/content/types.ts</code>) y una prueba comprueba que el menú los sigue en orden.</p>
+<p><code>GithubStats.tsx</code> muestra repos públicos, lenguajes y último push desde <code>src/data/github.json</code>, y se oculta mientras haya menos de 3 repos públicos (<code>MIN_REPOS</code>).</p>
+<h3>Contenido en JSON</h3>
+<p>Todo el texto visible vive en <code>portfolio/src/content/data/</code>:</p>
+<div class="table"><table><thead><tr><th>Archivo</th><th>Qué contiene</th><th>Quién lo lee</th></tr></thead><tbody><tr><td><code>site.json</code></td><td>Textos del sitio en <code>es</code> y <code>en</code>, incluidos <code>credGroups</code> y <code>stackGroups</code></td><td><code>content/es.ts</code>, <code>content/en.ts</code></td></tr><tr><td><code>projects.json</code></td><td>Proyectos (campos comunes y textos por idioma)</td><td><code>content/projects.ts</code></td></tr><tr><td><code>stack.json</code></td><td>Tecnologías e íconos por grupo</td><td><code>content/stack.ts</code></td></tr><tr><td><code>migozz.json</code></td><td>Página del caso MIGOZZ</td><td><code>content/migozz.ts</code></td></tr><tr><td><code>migozz-public.json</code></td><td>Versiones de la App Store y comunidad de creadores destacados</td><td><code>content/migozzPublic.ts</code></td></tr><tr><td><code>migozz-users.json</code></td><td>Cifras de usuarios de MIGOZZ (ocultas mientras <code>visible</code> sea <code>false</code>)</td><td><code>content/migozzUsers.ts</code></td></tr><tr><td><code>seo.json</code></td><td>Identidad del sitio, enlaces, códigos de Search Console y textos de cada página</td><td><code>seo/pages.ts</code></td></tr></tbody></table></div>
+<h4>Validación</h4>
+<p>JSON pierde los tipos literales, así que <code>checked()</code> en <code>src/content/json.ts</code> compara cada archivo con una copia «ensanchada» del tipo real (<code>Widen&lt;T&gt;</code>). Una clave que falta o está mal escrita hace fallar <code>tsc</code> y, por tanto, el build. Así un dato roto nunca llega a publicarse.</p>
+<p><code>projects.ts</code> normaliza las entradas: el admin puede dejar campos opcionales como <code>&quot;&quot;</code> o <code>null</code>, y <code>projectsFrom()</code> los quita antes de llegar a los componentes. <code>hidden: true</code> deja el proyecto en el archivo pero fuera del sitio; <code>featured: true</code> lo pone entre los destacados.</p>
+<p>Las pruebas de <code>tests/content.test.ts</code> añaden: misma estructura en los dos idiomas, ningún texto vacío, ids de proyectos iguales en ambos idiomas, enlaces solo <code>https</code>, y que existan las imágenes, íconos y PDF referenciados.</p>
+<h3>Idiomas</h3>
+<ul><li>Español en <code>/</code> y inglés en <code>/en/</code>: dos páginas estáticas con su propio título, descripción, canonical, <code>hreflang</code>, Open Graph, datos estructurados y texto de respaldo.</li><li>La URL decide el idioma (<code>useLocale</code>, <code>public/splash.js</code> y el build usan la misma regla). El botón cambia sin recargar y actualiza la dirección.</li><li><code>portfolio/netlify.toml</code> redirige (302) a <code>/en/</code> a quien llega por primera vez con el navegador en inglés. El botón de idioma fija la cookie <code>nf_lang</code>, que Netlify lee antes que el idioma del navegador. Los rastreadores no mandan idioma y reciben <code>/</code>.</li></ul>
+<h3>Página de MIGOZZ</h3>
+<p><code>/migozz/</code> y <code>/en/migozz/</code> son una segunda entrada de Vite (<code>portfolio/migozz/index.html</code>, <code>src/migozz.tsx</code>, <code>src/MigozzPage.tsx</code>). Tiene portada animada, cifras públicas con su fuente, gráficas (<code>components/migozz/UserCharts.tsx</code>), flujo de uso (<code>Flow.tsx</code>), problema, funciones, cronología, capturas y el rol de Harol. Usa <code>motion</code> para las animaciones.</p>
+<p>Desde el commit <code>fc4b004</code> sigue la identidad actual de la marca: fondo blanco, morado como color principal y fucsia de acento, con contraste AA.</p>
+<ul><li>Las gráficas de usuarios solo aparecen con <code>visible: true</code> en <code>migozz-users.json</code>, para no mostrar cifras inventadas.</li><li><code>shots</code> en <code>migozz.json</code> está vacío hoy, así que la sección de capturas no aparece.</li></ul>
+<h3>Imágenes</h3>
+<p>Los originales van en <code>portfolio/images/&lt;tipo&gt;/</code> y <code>npm run images</code> (<code>scripts/images.mjs</code>, con <code>sharp</code>) escribe los WebP en <code>public/</code>:</p>
+<div class="table"><table><thead><tr><th>Carpeta de originales</th><th>Salida</th></tr></thead><tbody><tr><td><code>images/shots/</code></td><td><code>public/shots/&lt;nombre&gt;.webp</code> (960 px) y <code>-480.webp</code></td></tr><tr><td><code>images/credentials/</code></td><td><code>public/credentials/&lt;nombre&gt;.webp</code> (1100 px), <code>thumb/&lt;nombre&gt;.webp</code> (560) y <code>thumb/&lt;nombre&gt;-360.webp</code></td></tr><tr><td><code>images/migozz/</code></td><td><code>public/migozz/&lt;nombre&gt;.webp</code> (780 px)</td></tr><tr><td><code>images/portrait/</code></td><td><code>public/portrait/&lt;nombre&gt;.webp</code> (cuadrado, hasta 600 px)</td></tr></tbody></table></div>
+<p>Los certificados (fotos de celular) pasan antes por un filtro de mediana. Los presupuestos de peso están en <code>tests/assets.test.ts</code>. El build de Netlify corre <code>npm run images</code> antes de compilar, así una imagen subida desde el admin se sirve aunque el commit del workflow <code>Images</code> aún no haya llegado.</p>
+<p><code>src/lib/asset.ts</code> arma rutas absolutas desde la raíz, porque la página en inglés vive un nivel más abajo. La tarjeta para compartir (<code>public/og.png</code>) se genera desde <code>scripts/og-template.html</code>.</p>
+<h3>Formulario de contacto</h3>
+<p><code>ContactForm.tsx</code> envía JSON a <code>https://admin.hgsportafolio.site/api/contact</code> (<code>src/lib/endpoints.ts</code>). El portafolio no tiene funciones de Netlify propias: guardar el mensaje y enviar los correos lo hace el admin. Además de nombre, correo y mensaje, manda el idioma de la página, un campo trampa invisible (<code>website</code>) y el tiempo de llenado (<code>elapsed</code>). La CSP permite esa conexión (<code>seo/headers.ts</code>). Detalle en <a href="#correos">correos</a>.</p>
+<h3>Analítica</h3>
+<p>Umami Cloud, sin cookies, por eso no hace falta aviso de consentimiento (comentario de <code>seo/headers.ts</code>). Está apagada mientras <code>VITE_UMAMI_WEBSITE_ID</code> esté vacía. Con un valor, el build agrega el script de <code>cloud.umami.is</code> con <code>data-domains</code> del dominio de producción, así los previews y <code>localhost</code> no cuentan (<code>vite.config.ts</code>), y la CSP abre los orígenes de Umami.</p>
+<p>Eventos que ya se registran (atributos <code>data-umami-event</code> y llamadas a <code>umami.track</code>):</p>
+<div class="table"><table><thead><tr><th>Evento</th><th>Dónde</th><th>Cuándo</th></tr></thead><tbody><tr><td><code>cv-download</code></td><td><code>Socials.tsx</code></td><td>Clic en descargar el CV.</td></tr><tr><td><code>social-&lt;red&gt;</code></td><td><code>Socials.tsx</code></td><td>Clic en una red social (nombre de la red en minúsculas).</td></tr><tr><td><code>project-&lt;id&gt;</code></td><td><code>Projects.tsx</code></td><td>Clic en un proyecto con enlace.</td></tr><tr><td><code>migozz-play</code>, <code>migozz-appstore</code></td><td><code>Startup.tsx</code></td><td>Clic en Google Play o App Store de MIGOZZ.</td></tr><tr><td><code>migozz-case</code></td><td><code>Startup.tsx</code></td><td>Clic en el botón al caso de MIGOZZ.</td></tr><tr><td><code>contact</code></td><td><code>ContactForm.tsx</code></td><td>Clic en enviar el formulario.</td></tr><tr><td><code>contact-sent</code></td><td><code>ContactForm.tsx</code></td><td>El mensaje se envió bien (<code>window.umami.track</code>).</td></tr></tbody></table></div>
+<p>Para activarla: crear el sitio en <code>cloud.umami.is</code> (Add website), copiar su Website ID, ponerlo como <code>VITE_UMAMI_WEBSITE_ID</code> en el sitio <code>portafolio-hgs</code> de Netlify y volver a desplegar, porque se lee al construir. Ver <a href="#configuracion">configuración</a>.</p>
+<h3>Estilos</h3>
+<p><code>src/styles/index.css</code> importa un archivo por sección en orden de cascada; los últimos refinan a los primeros. El desenfoque <code>backdrop-filter</code> solo se usa con puntero fino en pantallas anchas (<code>glass-touch.css</code> lo cambia por fondos opacos en táctiles). Hay modo de alto contraste (<code>contrast.css</code>) y hoja de impresión (<code>print.css</code>). Las animaciones se apagan con <code>prefers-reduced-motion</code>.</p>
+<h3>Comandos</h3>
+<pre><code>cd portfolio
+npm install
+npm run dev              # http://localhost:5173
+npm run build            # typecheck + build en dist/
+npm run check            # typecheck, lint, formato y pruebas
+npm run e2e              # axe y teclado contra el build
+npm run lighthouse       # mediana de varias corridas contra los presupuestos
+npm run images           # originales → WebP</code></pre>
+<p>Requiere Node 20.19 o superior; CI usa Node 22.</p>
+<h3>Pruebas</h3>
+<div class="table"><table><thead><tr><th>Archivo</th><th>Qué comprueba</th></tr></thead><tbody><tr><td><code>tests/content.test.ts</code></td><td>Integridad del contenido (ver arriba).</td></tr><tr><td><code>tests/assets.test.ts</code></td><td>Peso de capturas, certificados, íconos, capturas de MIGOZZ y retrato.</td></tr><tr><td><code>tests/seo.test.ts</code></td><td>Títulos por idioma, canonical, <code>hreflang</code>, Open Graph y JSON-LD.</td></tr><tr><td><code>tests/github-data.test.ts</code></td><td>Forma de <code>src/data/github.json</code>.</td></tr><tr><td><code>tests/contact-email.test.ts</code></td><td>Lógica del formulario en el admin (<code>admin/netlify/lib/contact.ts</code>): correos, descarte de bots, límites y orígenes permitidos.</td></tr><tr><td><code>tests/admin-auth.test.ts</code></td><td>Reglas de entrada del admin y lista de llamadas a GitHub permitidas.</td></tr><tr><td><code>e2e/a11y.spec.ts</code></td><td>Sin violaciones WCAG A/AA con axe, en ES y EN, móvil y escritorio, y en MIGOZZ.</td></tr><tr><td><code>e2e/keyboard.spec.ts</code></td><td>Enlace de salto, nombres accesibles, foco del visor de certificados, cambio de idioma.</td></tr><tr><td><code>e2e/features.spec.ts</code></td><td>Envío del formulario (JSON a la función del admin, simulada), modo de alto contraste e impresión.</td></tr><tr><td><code>e2e/seo.spec.ts</code></td><td>Idioma por URL, rutas de recursos, head estático y política de seguridad sin violaciones.</td></tr><tr><td><code>e2e/screenshots.spec.ts</code></td><td>Capturas por sección para el comentario del PR.</td></tr></tbody></table></div>
+<p>Los presupuestos de Lighthouse están en <code>scripts/lighthouse.mjs</code>: móvil rendimiento 0.90, escritorio 0.95, accesibilidad 1, buenas prácticas y SEO 0.95. Cada corrida fallida se reintenta hasta 3 veces.</p></div>
+</article>
+
+<article id="admin" class="story" style="--tint: var(--p3)">
+  <header>
+    <p class="kicker">Admin</p>
+    <h2>El admin, la cabina de control del contenido</h2>
+    <p class="dek">Para qué sirve el editor de admin.hgsportafolio.site, qué se edita en cada estación y cómo se revisa y publica un cambio.</p>
+    <p class="byline">5 min de lectura · <a href="admin.md">admin.md</a></p>
+  </header>
+  <div class="copy"><p>El admin es un editor propio en React + Vite (<code>admin/</code>), con la misma identidad de línea de metro del portafolio. Lee y guarda directamente en este repositorio, así que Harol cambia textos, proyectos, credenciales, stack, CV, MIGOZZ y SEO sin tocar código. También recibe los mensajes del formulario de contacto del portafolio y envía sus correos (ver <a href="#correos">correos</a>). Se despliega como segundo sitio de Netlify (<code>admin-hgs</code>) en <code>admin.hgsportafolio.site</code>.</p>
+<p>Reemplazó el 2026-10-21 a un primer editor basado en Sveltia CMS (commits <code>3a1e1e4</code> y <code>c1629bf</code>).</p>
+<h3>Entrar</h3>
+<ol><li>Escribir el PIN.</li><li>Escribir el código de 6 dígitos que llega al correo del dueño (vence en 10 minutos).</li><li>Queda abierta una sesión de 12 horas en una cookie que la página no puede leer.</li></ol>
+<p>Si la sesión termina mientras se edita, el admin vuelve a la entrada y los cambios sin publicar siguen guardados en el navegador. El detalle y los límites están en <a href="#seguridad">seguridad</a>.</p>
+<h3>Estaciones</h3>
+<p>Cada estación del mapa de la izquierda es una sección (<code>STATIONS</code> en <code>admin/src/schema.ts</code>):</p>
+<div class="table"><table><thead><tr><th>Estación</th><th>Archivo</th></tr></thead><tbody><tr><td>Mensajes</td><td>Ninguno: lee los mensajes del formulario de contacto guardados en Netlify Blobs (ver abajo).</td></tr><tr><td>Textos del sitio</td><td><code>portfolio/src/content/data/site.json</code>, sin <code>credGroups</code> ni <code>stackGroups</code>. Agrupado en Portada, Oficio, MIGOZZ en la página principal, Cargo anterior, Encabezados, Contacto, Navegación y pie.</td></tr><tr><td>Proyectos</td><td><code>portfolio/src/content/data/projects.json</code>. El orden de la lista es el del sitio.</td></tr><tr><td>Credenciales</td><td><code>site.json</code> → <code>credGroups</code>.</td></tr><tr><td>Stack</td><td><code>site.json</code> → <code>stackGroups</code> (grupos) y <code>stack.json</code> (tecnologías de cada grupo, con el mismo identificador).</td></tr><tr><td>Hoja de vida</td><td><code>curriculum/cv_data.json</code>. El PDF se regenera solo al publicar.</td></tr><tr><td>MIGOZZ</td><td><code>migozz.json</code> (página del caso), <code>migozz-public.json</code> (cifras públicas) y <code>migozz-users.json</code> (usuarios).</td></tr><tr><td>SEO</td><td><code>portfolio/src/content/data/seo.json</code>.</td></tr></tbody></table></div>
+<h3>Mensajes</h3>
+<p>La primera estación no edita archivos. <code>admin/src/components/Inbox.tsx</code> pide a <code>GET /api/messages</code> (<code>admin/netlify/functions/messages.mts</code>) los mensajes que dejó <code>/api/contact</code> en el almacén <code>contact-messages</code>, del más nuevo al más viejo (hasta 200).</p>
+<ul><li>Cada mensaje muestra nombre, correo, fecha y hora de Bogotá, lugar aproximado (geolocalización de Netlify) e idioma de la página.</li><li><strong>Responder</strong> abre el correo con el asunto «Re: tu mensaje» o «Re: your message», según el idioma.</li><li><strong>Borrar</strong> pide confirmación y llama a <code>DELETE /api/messages/:id</code>. No se puede deshacer.</li><li><strong>Actualizar</strong> vuelve a traer la lista. Si la sesión terminó, la estación lo dice y hay que recargar.</li></ul>
+<p>Cada mensaje también llega por correo; esta estación es el archivo, y conserva el mensaje aunque el correo falle.</p>
+<h3>Cómo se edita</h3>
+<ul><li>Los campos salen de los propios datos: si se agrega una clave a un JSON, el admin la muestra sola. <code>schema.ts</code> solo pone nombres en español, ayudas, campos de solo lectura, listas de opciones y editores especiales.</li><li>Español e inglés van lado a lado. Las listas permiten agregar, subir, bajar y quitar elementos; un elemento nuevo copia las claves que comparten los existentes, vacías.</li><li>Las estaciones con cambios sin publicar se pintan de amarillo en el mapa.</li></ul>
+<h3>Imágenes</h3>
+<div class="table"><table><thead><tr><th>Campo</th><th>Se sube a</th><th>Valor que queda en el JSON</th></tr></thead><tbody><tr><td>Captura de proyecto (<code>projects[].shot</code>)</td><td><code>portfolio/images/shots/</code></td><td><code>shots/&lt;nombre&gt;.webp</code></td></tr><tr><td>Certificado (<code>credGroups[].items[].img</code>)</td><td><code>portfolio/images/credentials/</code></td><td><code>&lt;nombre&gt;</code></td></tr><tr><td>Captura de MIGOZZ (<code>shots[].src</code>)</td><td><code>portfolio/images/migozz/</code></td><td><code>migozz/&lt;nombre&gt;.webp</code></td></tr><tr><td>Ícono del stack</td><td><code>portfolio/public/icons/&lt;nombre&gt;.svg</code> (sin conversión)</td><td><code>&lt;nombre&gt;</code></td></tr></tbody></table></div>
+<ul><li>Acepta PNG, JPG o WebP de hasta 8 MB; los íconos, SVG.</li><li>El nombre del archivo se normaliza (<code>slug</code> en <code>admin/src/data.ts</code>): «Mi Captura 2.PNG» queda <code>mi-captura-2</code>.</li><li>La conversión a WebP la hacen el build de Netlify y el workflow <code>Images</code> (ver <a href="#portafolio">portafolio</a>, sección Imágenes).</li></ul>
+<h3>Borradores</h3>
+<p>Lo que no se alcanza a publicar se guarda en <code>localStorage</code> (clave <code>hgs-admin-draft:&lt;rama&gt;</code>), junto con la versión del archivo sobre la que se editó. Al volver, si el archivo en GitHub no cambió, el admin recupera el borrador y lo avisa. Si cambió, el borrador se descarta. El navegador avisa antes de cerrar la pestaña con cambios pendientes.</p>
+<p>Las imágenes subidas no se guardan como borrador: solo viven hasta recargar.</p>
+<h3>Revisar y publicar</h3>
+<p>El <strong>tablero de salida</strong> (abajo, <code>components/Departure.tsx</code>) cuenta los cambios y ofrece:</p>
+<ul><li><strong>Revisar:</strong> cada cambio con su antes y ahora, y un aviso de los textos que quedaron vacíos. Permite escribir el mensaje del commit; si se deja vacío, usa <code>content: actualizar &lt;estaciones&gt; desde el admin</code>.</li><li><strong>Publicar:</strong> un solo commit en la rama con todos los archivos e imágenes, hecho con la Git Data API (blobs → árbol → commit → mover la rama). Si la rama se movió entretanto (por ejemplo el commit del CV), reintenta hasta 3 veces sobre la cabeza nueva.</li><li><strong>Conflictos:</strong> si alguien cambió en GitHub uno de los archivos editados desde que se abrió, no publica nada y ofrece «Recargar &lt;archivo&gt;», que trae la versión nueva y descarta los cambios de ese archivo.</li><li><strong>Seguimiento:</strong> después de publicar, el tablero consulta cada 10 segundos (hasta 20 minutos) las ejecuciones de GitHub Actions de ese commit y muestra su estado.</li></ul>
+<p>Si GitHub rechaza la publicación, el tablero lo explica: ante un 401 la sesión terminó y hay que entrar de nuevo (los cambios siguen guardados como borrador); ante un 403 el token del servidor (<code>ADMIN_GITHUB_TOKEN</code> en Netlify) no tiene permiso «Contents: Read and write».</p>
+<p>Netlify pone el sitio en línea en uno o dos minutos. Si un JSON quedó con la forma equivocada, el build falla y el sitio sigue con la versión anterior (ver <a href="#arquitectura">arquitectura</a>).</p>
+<h3>Probar contra otra rama</h3>
+<p><code>?branch=nombre</code> en la URL hace que el admin lea y publique en esa rama; la barra superior lo muestra como «Rama de prueba». El comentario del deploy preview del admin lo recuerda.</p>
+<h3>Desarrollo local</h3>
+<pre><code>cd admin
+npm install
+cp .env.example .env   # y llenar los valores
+npx netlify dev        # interfaz y funciones /api con el .env</code></pre>
+<p><code>npm run dev</code> levanta solo la interfaz (puerto 5600), sin funciones, así que no deja entrar. <code>npm run build</code> corre antes el typecheck de la app y de las funciones (<code>tsconfig.netlify.json</code>).</p></div>
+</article>
+
+<article id="seguridad" class="story" style="--tint: var(--p4)">
+  <header>
+    <p class="kicker">Seguridad</p>
+    <h2>Seguridad del admin y del sitio</h2>
+    <p class="dek">Entrada con PIN y código por correo, sesiones, límites, intermediario de GitHub con lista de llamadas permitidas, CSP, cabeceras y protección del formulario.</p>
+    <p class="byline">6 min de lectura · <a href="seguridad.md">seguridad.md</a></p>
+  </header>
+  <div class="copy"><h3>Principio</h3>
+<p>El token de GitHub nunca llega al navegador. Vive en Netlify (<code>ADMIN_GITHUB_TOKEN</code>) y solo lo usa la función <code>/api/github</code>, para sesiones abiertas y para una lista cerrada de llamadas. Antes del commit <code>bf84696</code> (2026-10-21) el admin pedía el token en el navegador; ese modelo ya no existe.</p>
+<p>Las reglas están en <code>admin/netlify/lib/auth.ts</code>, escritas como lógica pura con dependencias inyectadas (almacén, correo, reloj) para probarlas sin Netlify en <code>portfolio/tests/admin-auth.test.ts</code>.</p>
+<h3>Entrada en dos pasos</h3>
+<div class="table"><table><thead><tr><th>Paso</th><th>Ruta</th><th>Qué pasa</th></tr></thead><tbody><tr><td>PIN</td><td><code>POST /api/auth/pin</code></td><td>Compara el PIN con <code>ADMIN_PIN</code> en tiempo constante. Si es correcto, genera un código de 6 dígitos uniforme, guarda solo su HMAC, lo envía a <code>ADMIN_EMAIL</code> y pone la cookie <code>hgs_challenge</code> (10 minutos, solo para <code>/api/auth</code>).</td></tr><tr><td>Código</td><td><code>POST /api/auth/code</code></td><td>Verifica la cookie de reto y el código. Si es correcto, gasta el reto y abre una sesión de 12 horas en la cookie <code>hgs_session</code>.</td></tr><tr><td>Sesión</td><td><code>GET /api/auth/session</code></td><td>Dice si el navegador tiene una sesión válida.</td></tr><tr><td>Salir</td><td><code>POST /api/auth/logout</code></td><td>Borra la sesión del almacén y la cookie.</td></tr></tbody></table></div>
+<p>Por qué dos pasos: un PIN corto tiene pocos valores posibles (uno de 4 dígitos, 10.000). Aun acertándolo, solo se envía un código al correo del dueño, así que el PIN solo nunca abre el editor (comentario de <code>auth.ts</code>).</p>
+<p>El correo con el código dice desde qué lugar e IP se pidió (geolocalización de Netlify) y avisa que, si no fue Harol, alguien conoce el PIN y hay que cambiar <code>ADMIN_PIN</code>. La pantalla de entrada muestra la dirección de destino enmascarada (<code>maskEmail</code>), suficiente para reconocerla pero no para leerla.</p>
+<h4>Cómo elegir el PIN</h4>
+<p>Los límites frenan a quien prueba PIN al azar, no a quien lo adivina en pocos intentos. Por eso <code>ADMIN_PIN</code> no debe poder deducirse de datos públicos del dueño: ni los números de nombres de usuario actuales o anteriores, ni fechas, teléfonos o años que aparezcan en el sitio, el CV o las redes. Conviene un PIN sin relación con nada publicado y de más de 4 dígitos (el mínimo que pide <code>admin/.env.example</code>). Se cambia en las variables de entorno del sitio <code>admin-hgs</code> en Netlify.</p>
+<h3>Límites</h3>
+<p>Definidos en <code>LIMITS</code> (<code>admin/netlify/lib/auth.ts</code>):</p>
+<div class="table"><table><thead><tr><th>Límite</th><th>Valor</th></tr></thead><tbody><tr><td>PIN fallidos por dirección IP</td><td>5, luego bloqueo de 15 minutos para esa dirección</td></tr><tr><td>PIN fallidos en total (todas las direcciones)</td><td>20 en una hora, luego bloqueo del paso del PIN para todos durante 1 hora</td></tr><tr><td>Vida del código</td><td>10 minutos</td></tr><tr><td>Intentos por código</td><td>5, luego el código se quema y hay que pedir otro</td></tr><tr><td>Espera entre códigos</td><td>30 segundos por dirección</td></tr><tr><td>Duración de la sesión</td><td>12 horas</td></tr></tbody></table></div>
+<p>Cuando se produce un bloqueo, llega un correo de aviso al dueño una vez por bloqueo. Los contadores, retos y sesiones se guardan en Netlify Blobs (almacén <code>admin-auth</code>) con consistencia fuerte, para que un bloqueo o un código gastado se vean en la petición siguiente (<code>admin/netlify/lib/netlify.ts</code>).</p>
+<h3>Sesiones</h3>
+<ul><li>Cookie <code>hgs_session</code> con <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Strict</code> y <code>Path=/</code>.</li><li>El valor lleva id, vencimiento y firma HMAC-SHA256 con <code>SESSION_SECRET</code> (mínimo 32 caracteres).</li><li>La sesión también existe en el almacén: «Salir» la borra, así que una cookie copiada deja de servir.</li><li>Cambiar <code>SESSION_SECRET</code> cierra todas las sesiones abiertas.</li><li>Sin <code>ADMIN_PIN</code> o sin un <code>SESSION_SECRET</code> de 32+ caracteres, la función responde 503 y nadie entra.</li></ul>
+<h3>Intermediario de GitHub</h3>
+<p><code>admin/netlify/functions/github.mts</code> atiende <code>/api/github/*</code> y reenvía a <code>api.github.com</code> agregando el token. Antes revisa:</p>
+<ol><li>Que la petición traiga <code>X-Requested-With: hgs-admin</code> (<code>fromAdmin</code>). Un formulario de otro sitio no puede poner esa cabecera.</li><li>Que haya una sesión válida (si no, 401 y el admin vuelve a la entrada).</li><li>Que la llamada esté permitida por <code>allowedGitHubCall</code>:</li></ol>
+<div class="table"><table><thead><tr><th>Método</th><th>Rutas permitidas</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/user</code>, <code>/repos/DevCat-HGS/portfolio-hgs</code> y todo lo que cuelga de ella</td></tr><tr><td><code>POST</code></td><td><code>.../git/blobs</code>, <code>.../git/trees</code>, <code>.../git/commits</code></td></tr><tr><td><code>PATCH</code></td><td><code>.../git/refs/heads/&lt;rama&gt;</code></td></tr></tbody></table></div>
+<p>Nada más: ni borrar, ni configuraciones, ni otros repositorios. Rutas con <code>..</code> o que no empiezan con <code>/</code> se rechazan. Las respuestas salen con <code>Cache-Control: no-store</code>.</p>
+<p>El token recomendado en <code>admin/.env.example</code> es fine-grained, solo para el repo <code>portfolio-hgs</code>, con permiso «Contents: Read and write». El admin comprueba al cargar que tenga permiso de escritura.</p>
+<h3>Cabeceras del admin</h3>
+<p>En <code>admin/netlify.toml</code>, para todas las rutas:</p>
+<ul><li><code>Content-Security-Policy</code>: <code>default-src 'self'</code>, <code>script-src 'self'</code>, <code>connect-src 'self'</code> (la interfaz solo habla con sus funciones), imágenes de <code>self</code>, <code>data:</code>, <code>blob:</code>, <code>https://hgsportafolio.site</code> y <code>https://avatars.githubusercontent.com</code>, <code>frame-ancestors 'none'</code>.</li><li><code>X-Robots-Tag: noindex, nofollow</code>, <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy: no-referrer</code>, <code>Permissions-Policy</code> restrictiva, <code>Cross-Origin-Opener-Policy: same-origin</code>, <code>Strict-Transport-Security</code> de un año con subdominios.</li></ul>
+<h3>Cabeceras del portafolio</h3>
+<p><code>portfolio/seo/headers.ts</code> es la única fuente: <code>vite preview</code> las sirve para las pruebas y el build las escribe en <code>dist/_headers</code> para Netlify.</p>
+<ul><li>CSP sin scripts en línea ni <code>unsafe-eval</code>. Por eso los scripts de la pantalla de bienvenida y del 404 son archivos (<code>public/splash.js</code>, <code>public/404.js</code>). <code>style-src</code> admite <code>'unsafe-inline'</code> por los bloques <code>&lt;style&gt;</code> de <code>index.html</code> y los atributos <code>style</code> de React.</li><li><code>connect-src</code> permite <code>'self'</code> y <code>https://admin.hgsportafolio.site</code> (<code>CONTACT_ORIGIN</code> en <code>src/lib/endpoints.ts</code>), porque el formulario de contacto envía ahí. La misma constante alimenta el formulario y la política, así no se desalinean.</li><li>Si se define <code>VITE_UMAMI_WEBSITE_ID</code>, la CSP abre solo los orígenes de Umami (<code>https://cloud.umami.is</code> y <code>https://api-gateway.umami.dev</code>); sin él, la analítica está apagada.</li><li><code>nosniff</code>, <code>X-Frame-Options: DENY</code>, <code>Referrer-Policy: strict-origin-when-cross-origin</code>, <code>Permissions-Policy</code>, COOP y HSTS.</li></ul>
+<p><code>e2e/seo.spec.ts</code> comprueba que cada página envía la política y corre sin violaciones.</p>
+<h3>Formulario de contacto</h3>
+<p>El formulario del portafolio le escribe al admin (<code>POST https://admin.hgsportafolio.site/api/contact</code>). Junto con la entrada (<code>/api/auth/*</code>), es la única ruta del admin que responde sin sesión, y se protege así:</p>
+<ul><li><strong>Origen:</strong> <code>allowedOrigin</code> en <code>admin/netlify/lib/contact.ts</code> solo acepta el portafolio, su dirección de Netlify y sus deploy previews; las cabeceras CORS solo se envían a esos orígenes. Una prueba comprueba que un dominio que imita el nombre (<code>...netlify.app.evil.example</code>) se rechaza.</li><li><strong>Bots:</strong> campo trampa <code>website</code> y tiempo mínimo de llenado de 2,5 segundos. Los bots reciben la misma respuesta que una persona.</li><li><strong>Límites:</strong> 3 mensajes por IP cada 10 minutos y 40 por día en total.</li><li><strong>Confirmación sin eco:</strong> el correo al visitante nunca repite lo que escribió (ni el mensaje, ni un nombre que no parezca nombre), para que el formulario no sirva para mandar texto a desconocidos.</li></ul>
+<p>Los mensajes guardados solo se leen y se borran con sesión abierta: <code>admin/netlify/functions/messages.mts</code> (<code>GET /api/messages</code>, <code>DELETE /api/messages/:id</code>) exige la cabecera <code>X-Requested-With: hgs-admin</code> y una sesión válida, igual que el intermediario de GitHub. El borrado solo acepta ids de letras, números, <code>_</code> y <code>-</code>.</p>
+<p>Detalle en <a href="#correos">correos</a>.</p>
+<h3>Lo que nunca llega al navegador</h3>
+<ul><li><code>ADMIN_GITHUB_TOKEN</code>, <code>ADMIN_PIN</code>, <code>SESSION_SECRET</code>, <code>RESEND_API_KEY</code>.</li><li>Las cookies de sesión y de reto (son <code>HttpOnly</code>).</li><li>El código de acceso en claro: el servidor solo guarda su HMAC.</li></ul>
+<p>Los archivos <code>.env</code> están en <code>.gitignore</code>; solo se versionan las plantillas <code>.env.example</code>, sin valores secretos.</p></div>
+</article>
+
+<article id="correos" class="story" style="--tint: var(--p5)">
+  <header>
+    <p class="kicker">Correos</p>
+    <h2>Los correos que envía el sistema</h2>
+    <p class="dek">Cuándo se envía cada correo del formulario de contacto y del admin, a quién, con qué proveedor y cómo se evita el abuso.</p>
+    <p class="byline">4 min de lectura · <a href="correos.md">correos.md</a></p>
+  </header>
+  <div class="copy"><p>Todos los correos salen del sitio del admin (<code>admin-hgs</code>) con <a href="https://resend.com" target="_blank" rel="noreferrer">Resend</a>, por su API (<code>https://api.resend.com/emails</code>), con la clave <code>RESEND_API_KEY</code> y el dominio <code>hgsportafolio.site</code>, que debe estar verificado en Resend. Mientras no lo esté, no sale ningún correo. La función que llama a Resend es <code>resend()</code> en <code>admin/netlify/lib/netlify.ts</code>. Ver <a href="#configuracion">configuración</a>.</p>
+<p>Desde el commit <code>f4be780</code> (2026-10-21) el portafolio ya no envía correos ni tiene funciones de Netlify: su formulario le escribe al admin.</p>
+<h3>Resumen</h3>
+<div class="table"><table><thead><tr><th>Correo</th><th>Cuándo</th><th>A quién</th><th>Remitente</th></tr></thead><tbody><tr><td>Mensaje nuevo</td><td>Llega un mensaje válido a <code>/api/contact</code></td><td><code>CONTACT_TO</code> (si falta, <code>ADMIN_EMAIL</code>)</td><td><code>CONTACT_FROM</code></td></tr><tr><td>Confirmación</td><td>El mismo mensaje</td><td>El correo que escribió el visitante</td><td><code>CONTACT_FROM</code></td></tr><tr><td>Código de acceso</td><td>PIN correcto en el admin</td><td><code>ADMIN_EMAIL</code></td><td><code>ADMIN_MAIL_FROM</code></td></tr><tr><td>Intentos fallidos</td><td>Se bloquea el PIN</td><td><code>ADMIN_EMAIL</code></td><td><code>ADMIN_MAIL_FROM</code></td></tr></tbody></table></div>
+<p>Si una variable no está definida, el código usa un valor por defecto: el destino es el correo de contacto de Harol, y los remitentes son <code>contacto@hgsportafolio.site</code> (formulario) y <code>admin@hgsportafolio.site</code> (códigos).</p>
+<h3>Formulario de contacto</h3>
+<h4>El recorrido</h4>
+<ol><li>El visitante llena el formulario de la sección Cierre (<code>portfolio/src/components/ContactForm.tsx</code>): nombre (máx. 120), correo (máx. 200) y mensaje (máx. 4000).</li><li>El formulario envía JSON por <code>fetch</code> a <code>https://admin.hgsportafolio.site/api/contact</code> (constante <code>CONTACT_API</code> en <code>portfolio/src/lib/endpoints.ts</code>), sin recargar la página. Además de los campos manda <code>lang</code> (idioma de la página), <code>website</code> (campo trampa, invisible) y <code>elapsed</code> (milisegundos desde que se abrió la página hasta el envío). Si la respuesta no es correcta, el formulario pide escribir por correo.</li><li>Responde <code>admin/netlify/functions/contact.mts</code>. Solo acepta orígenes del portafolio (<code>allowedOrigin</code>) y contesta las peticiones CORS previas (<code>OPTIONS</code>).</li><li><code>receiveContact()</code> en <code>admin/netlify/lib/contact.ts</code> descarta bots, valida, aplica los límites, guarda el mensaje en Netlify Blobs (almacén <code>contact-messages</code>, clave <code>msg:&lt;id&gt;</code>) y envía los dos correos en paralelo.</li><li>El mensaje queda en la estación «Mensajes» del admin aunque falle el envío de los correos (ver <a href="#admin">admin</a>).</li></ol>
+<p>Por qué cambió: el formulario anterior usaba Netlify Forms, que no detectaba el formulario (respondía 404) y redirigía los envíos de la página en inglés, así que no se guardaba ni se enviaba nada (mensaje del commit <code>f4be780</code>).</p>
+<h4>Los dos correos</h4>
+<ul><li><strong>A Harol:</strong> asunto «Nuevo mensaje de &lt;nombre&gt; desde el portafolio», con el nombre, el correo, el mensaje escapado, la fecha en hora de Bogotá y el idioma de la página. «Responder» va directo al visitante (<code>reply_to</code>).</li><li><strong>Al visitante:</strong> «Recibí tu mensaje» o «I got your message», según el idioma de la página. Agradece, dice que la respuesta llega en uno o dos días hábiles y firma Harol. «Responder» va a Harol.</li></ul>
+<p>La copia de Harol se envía primero en la lista, pero los dos van con <code>Promise.allSettled</code>: si uno falla, el otro sale igual y el error queda en el registro de la función.</p>
+<h4>Protecciones contra abuso</h4>
+<div class="table"><table><thead><tr><th>Protección</th><th>Cómo funciona</th></tr></thead><tbody><tr><td>Origen</td><td>Solo <code>https://hgsportafolio.site</code>, <code>https://portafolio-hgs.netlify.app</code> y sus deploy previews (<code>&lt;algo&gt;--portafolio-hgs.netlify.app</code>). Otro origen recibe 403.</td></tr><tr><td>Campo trampa</td><td>Si <code>website</code> (o el antiguo <code>bot-field</code>) trae algo, el envío se descarta.</td></tr><tr><td>Tiempo mínimo</td><td>Un envío hecho en menos de 2,5 segundos (<code>minFillMs</code>) se descarta. Si la petición no trae <code>elapsed</code>, esta revisión no se aplica.</td></tr><tr><td>Respuesta a bots</td><td>Los bots descartados reciben el mismo <code>200 ok</code> que una persona, para que no descubran la trampa. No se guarda nada ni se envía nada.</td></tr><tr><td>Por dirección IP</td><td>3 mensajes cada 10 minutos (<code>perIp</code>, <code>ipWindowMs</code>). Luego responde 429.</td></tr><tr><td>Por día</td><td>40 mensajes en total (<code>perDay</code>), para no gastar la cuota diaria gratuita de Resend (100, según el comentario del código).</td></tr><tr><td>Contenido de la confirmación</td><td>Nunca repite lo que escribió el visitante: ni el mensaje, y el nombre solo si es una palabra de letras (<code>safeFirstName</code>). Así el formulario no sirve para mandar texto a desconocidos.</td></tr><tr><td>Duplicados</td><td>Cada correo lleva una <code>Idempotency-Key</code> (SHA-256 de tipo, correo, nombre y mensaje); Resend no envía dos veces la misma en 24 horas.</td></tr></tbody></table></div>
+<p>Los límites están en <code>CONTACT_LIMITS</code> (<code>admin/netlify/lib/contact.ts</code>). Los contadores se guardan en el mismo almacén <code>contact-messages</code> (claves <code>limit:ip:&lt;ip&gt;</code> y <code>limit:day:&lt;fecha&gt;</code>).</p>
+<p>Pruebas: <code>portfolio/tests/contact-email.test.ts</code> (importa <code>admin/netlify/lib/contact.ts</code>: correos, bots, límites y orígenes) y <code>portfolio/e2e/features.spec.ts</code> (el formulario envía el JSON esperado y avisa si falla; la función se simula).</p>
+<h3>Correos del admin</h3>
+<p>Los arma <code>admin/netlify/lib/auth.ts</code> y los envía <code>send()</code> en <code>admin/netlify/lib/netlify.ts</code>.</p>
+<ul><li><strong>Código de acceso:</strong> asunto «&lt;código&gt; es tu código del admin», con el código en grande, la advertencia de que vence en 10 minutos, y el lugar, la IP y la hora (Bogotá) de la petición. El pie dice que, si no fue Harol, alguien conoce el PIN y hay que cambiar <code>ADMIN_PIN</code>.</li><li><strong>Intentos fallidos:</strong> asunto «Intentos fallidos en el admin». Avisa si se bloqueó una dirección 15 minutos tras 5 intentos o si se bloqueó el PIN para todos durante una hora. Se envía una vez por bloqueo.</li></ul>
+<p>Si el envío del código falla, el reto se borra y la pantalla muestra «No se pudo enviar el código. Revisa RESEND_API_KEY.». Un fallo al enviar el aviso de bloqueo se ignora para no romper la respuesta.</p>
+<p>Límites que frenan el abuso: un código cada 30 segundos por dirección y los bloqueos del PIN descritos en <a href="#seguridad">seguridad</a>.</p></div>
+</article>
+
+<article id="curriculum" class="story" style="--tint: var(--p0)">
+  <header>
+    <p class="kicker">Hoja de vida</p>
+    <h2>La hoja de vida, de un JSON a dos PDF</h2>
+    <p class="dek">Fuente única en cv_data.json, generación automática de los PDF en español e inglés y las decisiones para pasar filtros ATS.</p>
+    <p class="byline">1 min de lectura · <a href="curriculum.md">curriculum.md</a></p>
+  </header>
+  <div class="copy"><h3>Fuente única</h3>
+<p><code>curriculum/cv_data.json</code> es la única fuente del CV. Tiene los datos de contacto y, por idioma (<code>es</code> y <code>en</code>): <code>title</code>, <code>location</code>, <code>labels</code>, <code>summary</code>, <code>experience</code>, <code>skills</code>, <code>projects</code>, <code>education</code>, <code>certifications</code> y <code>awards</code>. La clave <code>files</code> dice el nombre del PDF de cada idioma.</p>
+<p>Se edita desde el admin (estación «Hoja de vida», ver <a href="#admin">admin</a>) o a mano.</p>
+<h3>Generación</h3>
+<p><code>curriculum/generate_cv.py</code> usa ReportLab y escribe:</p>
+<div class="table"><table><thead><tr><th>Salida</th><th>Para qué</th></tr></thead><tbody><tr><td><code>curriculum/output/Harol_Guerrero_CV_ES.pdf</code> y <code>_EN.pdf</code></td><td>Fuente versionada de los PDF.</td></tr><tr><td><code>portfolio/public/cv/</code> (mismos nombres)</td><td>Copia que descarga el botón del portafolio.</td></tr></tbody></table></div>
+<pre><code>pip install -r curriculum/requirements.txt
+python curriculum/generate_cv.py</code></pre>
+<p>Opciones: <code>--data</code> (otro JSON), <code>--out</code> (otra carpeta), <code>--site-dir</code> (otra carpeta para la copia) y <code>--no-site-copy</code>.</p>
+<p>El PDF es determinista (<code>invariant=1</code>): si <code>cv_data.json</code> no cambió, el archivo sale idéntico y no hay commit.</p>
+<h3>Automático</h3>
+<p>El workflow <code>.github/workflows/curriculum.yml</code> corre en cada push a <code>main</code> o <code>desarrollo</code> (salvo cuando solo cambian los propios PDF) y a mano. Instala ReportLab, genera los PDF y, si cambiaron, hace commit <code>chore: update CV</code> y push a la misma rama.</p>
+<p><code>portfolio/netlify.toml</code> sirve <code>/cv/*</code> con <code>must-revalidate</code>, así el visitante siempre baja la última versión.</p>
+<h3>Pensado para ATS</h3>
+<ul><li>Una sola columna, sin tablas ni imágenes.</li><li>Texto real y seleccionable: la fuente Inter (<code>curriculum/fonts/</code>, licencia OFL) va incrustada con su mapa Unicode, así el texto se puede extraer.</li><li>Encabezados convencionales y fechas con formato uniforme.</li><li>Metadatos del PDF (título y autor) completos.</li><li>Colores sobrios, legibles también en blanco y negro.</li></ul>
+<h3>Datos personales</h3>
+<p>El JSON incluye teléfono y correo porque van impresos en el CV. Esta documentación no los repite.</p></div>
+</article>
+
+<article id="perfil-github" class="story" style="--tint: var(--p1)">
+  <header>
+    <p class="kicker">Perfil de GitHub</p>
+    <h2>El README del perfil de GitHub</h2>
+    <p class="dek">Cómo se arman el README del perfil y sus gráficas, cómo se publica en el repositorio público y qué workflows lo mantienen al día.</p>
+    <p class="byline">3 min de lectura · <a href="perfil-github.md">perfil-github.md</a></p>
+  </header>
+  <div class="copy"><h3>Dos repositorios</h3>
+<ul><li><strong>Este repo privado</strong> (<code>DevCat-HGS/portfolio-hgs</code>) tiene la fuente: <code>README.md</code> (inglés), <code>README.es.md</code> (español), <code>profile/</code>, <code>privacity/</code> y <code>scripts/</code>.</li><li><strong>El repo público</strong> <code>DevCat-HGS/DevCat-HGS</code> solo recibe el README y sus imágenes. El código del portafolio, los workflows y el historial no salen de aquí (comentario de <code>publish-profile.yml</code>).</li></ul>
+<h3>Qué tiene el README</h3>
+<p>Banner (<code>profile/banner.svg</code>), insignias (portafolio, LinkedIn, DevPanel, estado de Netlify, visitas), tecnologías con íconos de skillicons.dev, experiencia (MIGOZZ y Mitsubishi Electric de Colombia), proyectos destacados, la sección de repos privados elegidos, gráficas de lenguajes, racha de contribuciones y contacto.</p>
+<p><code>README.md</code> y <code>README.es.md</code> se editan a mano, salvo el bloque entre <code>&lt;!-- PRIVATE-REPOS:START --&gt;</code> y <code>&lt;!-- PRIVATE-REPOS:END --&gt;</code>.</p>
+<h3>Gráficas de lenguajes</h3>
+<p><code>scripts/generate_language_charts.py</code> consulta la API de GitHub y dibuja <code>profile/languages.svg</code> y <code>profile/languages.es.svg</code>. Mide dos cosas: volumen de código (bytes por lenguaje) y amplitud de uso (en cuántos repos aparece).</p>
+<p>Para no deformar los datos descarta:</p>
+<ul><li>repos copiados o con artefactos (<code>SKIPPED_REPOS</code>: GameDB, UnityCW, GameExp, RespaldoGame);</li><li>lenguajes generados por motores o sistemas de build, y SVG (<code>IGNORED_LANGUAGES</code>);</li><li>repos subidos desde otros proyectos donde la mayoría de los commits humanos no son propios (cuenta los de <code>DevCat-HGS</code> y la cuenta anterior <code>Catnova0106</code>).</li></ul>
+<h3>Repos privados elegidos</h3>
+<p><code>privacity/update_private_repos.py</code> escribe la tabla de repos privados en los dos README a partir de <code>privacity/featured.json</code>. Nada se publica por defecto: un repo aparece solo si se agrega ahí, con título y descripción públicos en los dos idiomas. Los privados salen sin enlace. <code>blocked_terms</code> lista palabras prohibidas (por ejemplo nombres de clientes): si aparece una, el script falla. Hoy <code>featured.json</code> no tiene repos, así que la sección no se muestra.</p>
+<p>Opciones: <code>--check</code> (no escribe, falla si algo está desactualizado) y <code>--no-verify</code> (sin llamadas a la API).</p>
+<h3>Workflows</h3>
+<div class="table"><table><thead><tr><th>Workflow</th><th>Cuándo</th><th>Qué hace</th></tr></thead><tbody><tr><td><code>metrics.yml</code> (Metrics)</td><td>Diario 06:00 UTC, a mano, o al cambiar el script o el workflow en <code>main</code></td><td>Corre <code>generate_language_charts.py</code> con <code>METRICS_TOKEN</code> y commitea las gráficas si cambiaron.</td></tr><tr><td><code>privacity.yml</code> (Privacity)</td><td>Diario 06:30 UTC, a mano, o al cambiar <code>featured.json</code>, el script o el workflow en <code>main</code> o <code>desarrollo</code></td><td>Actualiza la tabla de repos privados y commitea los README si cambiaron.</td></tr><tr><td><code>publish-profile.yml</code> (Publish profile)</td><td>Push a <code>main</code> que toque <code>README.md</code>, <code>README.es.md</code>, <code>profile/*.svg</code> o el workflow; al terminar bien Metrics o Privacity; a mano</td><td>Clona <code>DevCat-HGS/DevCat-HGS</code> con <code>METRICS_TOKEN</code>, copia los dos README, <code>banner.svg</code> y las dos gráficas, y hace push si hay cambios.</td></tr></tbody></table></div>
+<p><code>METRICS_TOKEN</code> es un secreto del repositorio en GitHub (no está en el código). Según <code>privacity/README.md</code>, sirve un token clásico con alcance <code>repo</code> o uno fine-grained con lectura de metadatos; para publicar el perfil además necesita escribir en <code>DevCat-HGS/DevCat-HGS</code> (por confirmar en GitHub).</p>
+<h3>Archivos sin uso</h3>
+<p><code>profile/stats.svg</code> y <code>profile/calendar.svg</code> no los referencia ningún README ni workflow (vienen de commits del 2026-09-21). La carpeta <code>img/</code> (imágenes del README antiguo) salió del repositorio en el commit <code>236c9d3</code> y ahora está en <code>.gitignore</code>: solo existe en el equipo de Harol. Ver <a href="#pendientes">pendientes</a>.</p></div>
+</article>
+
+<article id="ci-cd" class="story" style="--tint: var(--p2)">
+  <header>
+    <p class="kicker">Operación</p>
+    <h2>Workflows, despliegues y ramas</h2>
+    <p class="dek">Qué hace cada workflow de GitHub Actions, cuándo corre y qué bloquea; los dos sitios de Netlify con sus previews; Dependabot y las ramas main y desarrollo.</p>
+    <p class="byline">4 min de lectura · <a href="ci-cd.md">ci-cd.md</a></p>
+  </header>
+  <div class="copy"><h3>Ramas</h3>
+<p>Solo hay dos: <code>main</code> (producción, la que despliega Netlify y la que edita el admin) y <code>desarrollo</code>. Los workflows <code>Curriculum</code> y <code>Privacity</code> corren en las dos; los demás, en pull requests y en <code>main</code>. El commit <code>bf84696</code> actualizó los workflows al nombre <code>desarrollo</code> (antes <code>portafolio</code>).</p>
+<h3>Workflows</h3>
+<p>Todos en <code>.github/workflows/</code>.</p>
+<div class="table"><table><thead><tr><th>Workflow</th><th>Cuándo corre</th><th>Qué hace</th><th>Qué bloquea</th></tr></thead><tbody><tr><td><code>portfolio-ci.yml</code> (Portfolio CI)</td><td>PR y push a <code>main</code> que toquen <code>portfolio/**</code>, <code>admin/netlify/**</code> o el workflow; a mano (lo lanza <code>Images</code>)</td><td>Job <code>check</code>: typecheck, lint, formato, <code>npm run images</code>, pruebas y build. Job <code>quality</code>: Lighthouse (5 corridas), axe, teclado y capturas; sube reportes y comenta el PR con las cifras frente a <code>main</code>.</td><td>El check del PR falla si falla cualquier paso, un presupuesto de Lighthouse o una prueba de navegador.</td></tr><tr><td><code>admin-ci.yml</code> (Admin CI)</td><td>PR y push a <code>main</code> que toquen <code>admin/**</code> o el workflow</td><td><code>npm ci</code> y <code>npm run build</code> del admin (incluye typecheck de la app y de las funciones).</td><td>Check del PR.</td></tr><tr><td><code>images.yml</code> (Images)</td><td>PR que toque <code>portfolio/images/**</code> o <code>scripts/images.mjs</code>; push a <code>main</code> que toque <code>portfolio/images/**</code></td><td>Regenera todos los WebP, comprueba los presupuestos de peso y commitea <code>public/</code> en la misma rama; después lanza <code>Portfolio CI</code> sobre el commit nuevo (un push con <code>GITHUB_TOKEN</code> no dispara otros workflows). En forks falla si las imágenes no están al día.</td><td>Check del PR si un WebP excede su presupuesto.</td></tr><tr><td><code>curriculum.yml</code> (Curriculum)</td><td>Push a <code>main</code> o <code>desarrollo</code> (ignora cambios solo en los PDF); a mano</td><td>Genera los PDF del CV y commitea si cambiaron.</td><td>Nada.</td></tr><tr><td><code>links.yml</code> (Links)</td><td>Lunes 12:00 UTC, a mano, PR que toque <code>portfolio/src/content/**</code> o <code>curriculum/cv_data.json</code></td><td>Revisa con lychee las URL de <code>portfolio/src/content/*.ts</code>, <code>portfolio/src/content/data/*.json</code>, <code>curriculum/cv_data.json</code> y los dos README. Fuera de PR abre, actualiza o cierra un único issue <code>broken-links</code>. Excluye LinkedIn, wa.me, shields.io, <code>mailto:</code>, hechoensabaneta.com y páginas <code>/blob/</code> del repo público.</td><td>En PR, falla si hay enlaces rotos.</td></tr><tr><td><code>og.yml</code> (Open Graph image)</td><td>Push a <code>main</code> que toque <code>scripts/og-template.html</code> u <code>og.mjs</code>; a mano</td><td>Renderiza <code>public/og.png</code> con Playwright y lo commitea.</td><td>Nada.</td></tr><tr><td><code>github-data.yml</code> (GitHub data)</td><td>Lunes 06:15 UTC; a mano</td><td>Actualiza <code>portfolio/src/data/github.json</code> y commitea si cambió.</td><td>Nada.</td></tr><tr><td><code>preview-comment.yml</code> (Preview comment)</td><td>Evento <code>status</code> de Netlify</td><td>Un comentario por sitio (Portafolio, Admin) y por PR con el enlace del deploy preview, editado en cada deploy.</td><td>Nada.</td></tr><tr><td><code>release.yml</code> (Release)</td><td>Solo a mano</td><td>Release Please: PR de versión con <code>CHANGELOG.md</code> desde los mensajes Conventional Commits.</td><td>Nada.</td></tr><tr><td><code>metrics.yml</code>, <code>privacity.yml</code>, <code>publish-profile.yml</code></td><td>Ver <a href="#perfil-github">perfil de GitHub</a></td><td>Gráficas, repos privados y copia al repo público.</td><td>Nada.</td></tr></tbody></table></div>
+<p>Notas:</p>
+<ul><li><code>preview-comment.yml</code> corre siempre desde la rama por defecto: un cambio en él solo surte efecto al llegar a <code>main</code>.</li><li>La línea base de Lighthouse se guarda como artefacto <code>lighthouse-baseline</code> (90 días) en cada push a <code>main</code>; los PR la descargan para comparar.</li><li>Release Please parte de la versión <code>1.0.0</code> (<code>.release-please-manifest.json</code>) con <code>release-type: simple</code>.</li></ul>
+<h3>Netlify</h3>
+<div class="table"><table><thead><tr><th>Sitio</th><th>Carpeta</th><th>Dominio</th><th>Build</th></tr></thead><tbody><tr><td><code>portafolio-hgs</code></td><td><code>portfolio/</code></td><td><code>hgsportafolio.site</code> (y <code>portafolio-hgs.netlify.app</code> como respaldo)</td><td><code>npm run images &amp;&amp; npm run build</code>, publica <code>dist</code>.</td></tr><tr><td><code>admin-hgs</code></td><td><code>admin/</code> (base directory)</td><td><code>admin.hgsportafolio.site</code></td><td><code>npm run build</code>, publica <code>dist</code>. Solo construye si cambió <code>admin/</code>.</td></tr></tbody></table></div>
+<ul><li><strong>Deploy previews:</strong> Netlify publica un preview por PR en cada sitio y lo reporta como estado <code>netlify/&lt;sitio&gt;/deploy-preview</code>; <code>preview-comment.yml</code> lo convierte en comentario. El preview del admin entra con el mismo PIN y código y puede apuntar a la rama del PR con <code>?branch=&lt;rama&gt;</code>.</li><li><strong>Funciones:</strong> solo en el admin: <code>auth.mts</code> (entrada), <code>github.mts</code> (intermediario de GitHub), <code>contact.mts</code> (formulario del portafolio) y <code>messages.mts</code> (estación «Mensajes»), en <code>admin/netlify/functions/</code>. El portafolio ya no tiene funciones (commit <code>f4be780</code>). Como <code>admin-hgs</code> solo se reconstruye cuando cambia <code>admin/</code>, un cambio en la lógica del formulario despliega el admin, no el portafolio.</li><li><strong>Caché:</strong> los archivos con hash (<code>/assets/*</code>) se guardan un año; imágenes, íconos, MIGOZZ y CV se revalidan en cada visita (<code>portfolio/netlify.toml</code>).</li><li>Si un check de GitHub Actions detiene o no un deploy de producción depende del panel de Netlify (por confirmar). Lo que sí detiene un deploy es que falle el build de Netlify, que incluye el typecheck.</li></ul>
+<h3>Dependabot</h3>
+<p><code>.github/dependabot.yml</code> revisa cada semana:</p>
+<ul><li>npm en <code>/portfolio</code> (máximo 5 PR abiertos, dependencias de desarrollo agrupadas en <code>dev-tooling</code>);</li><li>npm en <code>/admin</code>, con las mismas reglas;</li><li>GitHub Actions en <code>/</code>.</li></ul>
+<h3>Plantilla de pull request</h3>
+<p><code>.github/pull_request_template.md</code> pide resumen, cambios, tipo de cambio y verificación: build del portafolio, revisión en móvil y escritorio, en ES y EN, y sin regresiones de accesibilidad.</p></div>
+</article>
+
+<article id="dominio-y-seo" class="story" style="--tint: var(--p2)">
+  <header>
+    <p class="kicker">Operación</p>
+    <h2>Dominio, DNS y posicionamiento</h2>
+    <p class="dek">El dominio hgsportafolio.site en Hostinger y Netlify, Search Console, sitemap, canonical, hreflang y datos estructurados.</p>
+    <p class="byline">2 min de lectura · <a href="dominio-y-seo.md">dominio-y-seo.md</a></p>
+  </header>
+  <div class="copy"><h3>Dominio</h3>
+<ul><li><strong>Producción:</strong> <code>https://hgsportafolio.site</code>, fijado en <code>portfolio/netlify.toml</code> como <code>VITE_SITE_URL</code>. De ahí salen canonical, <code>hreflang</code>, Open Graph, JSON-LD y sitemap.</li><li><strong>Respaldo:</strong> <code>portafolio-hgs.netlify.app</code> sigue abierto. No compite en Google porque cada página declara como canonical su versión en <code>hgsportafolio.site</code> (commit <code>8d5a3db</code>, que quitó la redirección 301 añadida en <code>73be47d</code>).</li><li><strong>Admin:</strong> <code>admin.hgsportafolio.site</code>, con un registro <code>CNAME</code> en Hostinger hacia <code>admin-hgs.netlify.app</code> (<code>admin/README.md</code>).</li></ul>
+<p>El registrador y el DNS están en Hostinger. Los registros del dominio raíz hacia Netlify no están escritos en el repositorio (por confirmar en el panel de Hostinger).</p>
+<h4>Registros para Resend</h4>
+<p>Para que salgan los correos, <code>hgsportafolio.site</code> debe estar verificado en Resend: Resend entrega unos registros DNS (normalmente SPF, DKIM y, opcional, DMARC) que se agregan en Hostinger. Esos registros no están en el repositorio; es un paso pendiente de Harol. Ver <a href="#configuracion">configuración</a>.</p>
+<h3>Search Console</h3>
+<p><code>seo.json</code> → <code>site.verification</code> guarda dos códigos de verificación de Google Search Console, que se emiten como <code>&lt;meta name=&quot;google-site-verification&quot;&gt;</code> en cada página. Se editan en el admin, estación SEO. Sus valores no se copian aquí.</p>
+<h3>Páginas e idiomas</h3>
+<div class="table"><table><thead><tr><th>URL</th><th>Página</th></tr></thead><tbody><tr><td><code>/</code></td><td>Portafolio en español</td></tr><tr><td><code>/en/</code></td><td>Portafolio en inglés</td></tr><tr><td><code>/migozz/</code></td><td>Caso MIGOZZ en español</td></tr><tr><td><code>/en/migozz/</code></td><td>Caso MIGOZZ en inglés</td></tr></tbody></table></div>
+<p><code>index.html</code> es la única fuente HTML del portafolio. <code>vite.config.ts</code> llena sus bloques marcados (<code>&lt;!--seo-head--&gt;</code>, <code>&lt;!--seo-body--&gt;</code>) para cada idioma y página. Cada página trae su head completo en el HTML estático, antes de que corra JavaScript, para que los buscadores y las vistas previas lo lean.</p>
+<p>Los textos de título, descripción y respaldo salen de <code>portfolio/src/content/data/seo.json</code> (<code>pages</code> y <code>migozzPages</code>), a través de <code>portfolio/seo/pages.ts</code>.</p>
+<h3>Lo que genera el build</h3>
+<p>Todo en <code>portfolio/seo/render.ts</code>, con pruebas en <code>portfolio/tests/seo.test.ts</code>:</p>
+<ul><li><strong>Head:</strong> título, descripción, canonical, <code>hreflang</code> para <code>es</code>, <code>en</code> y <code>x-default</code>, Open Graph (con <code>og:locale</code> y alternativo) y tarjeta para compartir (<code>og.png</code>, 1200 × 630).</li><li><strong>Datos estructurados (JSON-LD):</strong> <code>Person</code> (con <code>worksFor</code> MIGOZZ, <code>alumniOf</code> SENA y dirección en Medellín), <code>SoftwareApplication</code> (MIGOZZ con sus dos tiendas), <code>WebSite</code> y <code>ProfilePage</code>; en la página de MIGOZZ, <code>WebPage</code> y <code>BreadcrumbList</code>.</li><li><strong><code>sitemap.xml</code>:</strong> las páginas de cada idioma, con <code>lastmod</code>.</li><li><strong><code>robots.txt</code>:</strong> permite todo y apunta al sitemap.</li></ul>
+<p>Si no hay dirección del sitio en el build (ni <code>VITE_SITE_URL</code> ni la variable <code>URL</code> de Netlify), las etiquetas que necesitan una dirección se omiten en vez de quedar vacías.</p>
+<h3>Redirección por idioma</h3>
+<p>Quien llega por primera vez con el navegador en inglés va a <code>/en/</code> (o <code>/en/migozz/</code>) con un 302. El botón de idioma fija la cookie <code>nf_lang</code>, que Netlify lee antes, así la elección manual se mantiene. Los rastreadores reciben <code>/</code>.</p>
+<h3>Otros detalles</h3>
+<ul><li><code>public/favicon.ico</code> real y nombre del sitio consistente para Google (commit <code>4f652c0</code>).</li><li><code>public/404.html</code> es la página de error que sirve Netlify.</li><li>El admin no se indexa: <code>X-Robots-Tag: noindex, nofollow</code> y <code>admin/public/robots.txt</code>.</li></ul></div>
+</article>
+
+<article id="configuracion" class="story" style="--tint: var(--p2)">
+  <header>
+    <p class="kicker">Operación</p>
+    <h2>Variables de entorno y lo que falta configurar</h2>
+    <p class="dek">Cada variable de cada sitio, qué hace y dónde se pone, sin valores, y la lista de pasos pendientes para que el admin, los correos y la analítica funcionen.</p>
+    <p class="byline">4 min de lectura · <a href="configuracion.md">configuracion.md</a></p>
+  </header>
+  <div class="copy"><p>Las variables de producción van en Netlify: <em>sitio → Project configuration → Environment variables</em>. Para probar en local se copia el <code>.env.example</code> de cada carpeta a <code>.env</code> (ignorado por git) y se usa <code>npx netlify dev</code>. Nunca se sube un <code>.env</code> con valores reales.</p>
+<h3>Sitio del admin (<code>admin-hgs</code>)</h3>
+<p>Plantilla: <code>admin/.env.example</code>.</p>
+<div class="table"><table><thead><tr><th>Variable</th><th>Obligatoria</th><th>Qué hace</th></tr></thead><tbody><tr><td><code>ADMIN_GITHUB_TOKEN</code></td><td>Sí</td><td>Token de GitHub que usa <code>/api/github</code> para leer y publicar. Fine-grained, solo el repo <code>portfolio-hgs</code>, permiso «Contents: Read and write». El navegador nunca lo ve.</td></tr><tr><td><code>ADMIN_PIN</code></td><td>Sí</td><td>PIN de entrada, 4 o más dígitos. Sin él nadie entra (respuesta 503).</td></tr><tr><td><code>SESSION_SECRET</code></td><td>Sí</td><td>Firma de sesiones y retos. 32 caracteres aleatorios o más; cambiarlo cierra todas las sesiones. <code>.env.example</code> trae el comando de Node para generarlo.</td></tr><tr><td><code>ADMIN_EMAIL</code></td><td>No</td><td>Correo que recibe los códigos y los avisos de bloqueo. Tiene un valor por defecto en el código.</td></tr><tr><td><code>RESEND_API_KEY</code></td><td>Sí</td><td>Clave de Resend para todos los correos: los códigos de acceso y los dos del formulario de contacto. Sin ella el PIN correcto devuelve error de correo y el formulario guarda el mensaje pero no envía correos.</td></tr><tr><td><code>ADMIN_MAIL_FROM</code></td><td>No</td><td>Remitente de los códigos, en el dominio verificado. Por defecto <code>Admin HGS &lt;admin@hgsportafolio.site&gt;</code>.</td></tr><tr><td><code>CONTACT_TO</code></td><td>No</td><td>Dónde llegan los mensajes del formulario. Si falta, usa <code>ADMIN_EMAIL</code> (y si también falta, un valor por defecto del código).</td></tr><tr><td><code>CONTACT_FROM</code></td><td>No</td><td>Remitente de la copia a Harol y de la confirmación al visitante. Por defecto <code>Harol Guerrero Salgado &lt;contacto@hgsportafolio.site&gt;</code>.</td></tr></tbody></table></div>
+<p>El estado de la entrada (contadores, retos, sesiones) va en Netlify Blobs, almacén <code>admin-auth</code>; los mensajes del formulario y sus límites, en el almacén <code>contact-messages</code>. Ninguno necesita configuración.</p>
+<h3>Sitio del portafolio (<code>portafolio-hgs</code>)</h3>
+<p>Plantilla: <code>portfolio/.env.example</code>. Desde el commit <code>f4be780</code> el portafolio ya no envía correos: <code>RESEND_API_KEY</code>, <code>CONTACT_TO</code> y <code>CONTACT_FROM</code> van en <code>admin-hgs</code>, no aquí. Si quedaron puestas en <code>portafolio-hgs</code>, ya no las usa nada y se pueden borrar.</p>
+<div class="table"><table><thead><tr><th>Variable</th><th>Obligatoria</th><th>Qué hace</th></tr></thead><tbody><tr><td><code>VITE_SITE_URL</code></td><td>Ya fijada</td><td>Dominio de producción. Está en <code>portfolio/netlify.toml</code>, no hace falta ponerla en el panel.</td></tr><tr><td><code>VITE_UMAMI_WEBSITE_ID</code></td><td>No</td><td>Website ID de Umami Cloud (<code>cloud.umami.is</code> → Add website). Activa la analítica sin cookies y abre sus orígenes en la CSP. Se lee al construir: tras ponerla hay que volver a desplegar. Vacía = apagada. Eventos en <a href="#portafolio">portafolio</a>.</td></tr></tbody></table></div>
+<p>Netlify define además <code>URL</code>, que el build usa solo si falta <code>VITE_SITE_URL</code>.</p>
+<h3>Variables de pruebas locales</h3>
+<div class="table"><table><thead><tr><th>Variable</th><th>Dónde</th><th>Qué hace</th></tr></thead><tbody><tr><td><code>PW_CHANNEL</code></td><td>Playwright</td><td><code>chrome</code> para usar el Chrome instalado.</td></tr><tr><td><code>CHROME_PATH</code></td><td>Lighthouse</td><td>Ruta del navegador.</td></tr><tr><td><code>LH_URL</code>, <code>LH_RUNS</code></td><td><code>scripts/lighthouse.mjs</code></td><td>Dirección y número de corridas (3 por defecto; CI usa 5).</td></tr><tr><td><code>SCREENSHOTS</code></td><td>Playwright</td><td>En CI, <code>1</code> para guardar capturas.</td></tr></tbody></table></div>
+<h3>Secretos de GitHub Actions</h3>
+<div class="table"><table><thead><tr><th>Secreto</th><th>Lo usan</th><th>Para qué</th></tr></thead><tbody><tr><td><code>METRICS_TOKEN</code></td><td><code>metrics.yml</code>, <code>privacity.yml</code>, <code>publish-profile.yml</code></td><td>Leer repos (incluidos privados) para gráficas y tabla, y hacer push al repo público del perfil.</td></tr></tbody></table></div>
+<p>Los demás workflows usan el <code>GITHUB_TOKEN</code> automático.</p>
+<h3>Checklist de lo que falta</h3>
+<p>Pendiente de Harol a la fecha de esta edición (según <code>admin/README.md</code>, los <code>.env.example</code> y los commits <code>bf84696</code> y <code>f4be780</code>). No se puede comprobar desde el repositorio qué variables ya están puestas en Netlify:</p>
+<ul><li>[ ] En <code>admin-hgs</code>: <code>ADMIN_GITHUB_TOKEN</code>, <code>ADMIN_PIN</code>, <code>SESSION_SECRET</code>, <code>ADMIN_EMAIL</code>, <code>RESEND_API_KEY</code>, <code>ADMIN_MAIL_FROM</code>, <code>CONTACT_TO</code>, <code>CONTACT_FROM</code>.</li><li>[ ] En <code>portafolio-hgs</code>: <code>VITE_UMAMI_WEBSITE_ID</code>, si se quiere analítica. Quitar <code>RESEND_API_KEY</code>, <code>CONTACT_TO</code> y <code>CONTACT_FROM</code> si siguen ahí.</li><li>[ ] Enviar un mensaje de prueba desde el formulario y confirmar que llegan los dos correos (la copia y la confirmación) y que aparece en la estación «Mensajes».</li><li>[ ] En Resend: agregar y verificar el dominio <code>hgsportafolio.site</code>, copiando sus registros DNS en Hostinger.</li><li>[ ] Confirmar que <code>admin.hgsportafolio.site</code> tiene su <code>CNAME</code> hacia <code>admin-hgs.netlify.app</code> y que <code>admin-hgs</code> tiene base directory <code>admin</code>.</li><li>[ ] Dejar activos los deploy previews de PR en los dos sitios.</li></ul>
+<p><strong>Mientras falten:</strong> el admin no deja entrar (sin PIN ni secreto responde 503; sin Resend no llega el código) y el formulario no envía correos, aunque sí guarda los mensajes en el almacén <code>contact-messages</code> para leerlos en «Mensajes» cuando se pueda entrar.</p>
+<p>Después de cambiar variables en Netlify hay que volver a desplegar el sitio para que las funciones las tomen (comportamiento de Netlify, por confirmar en el panel si se aplica solo).</p></div>
+</article>
+
+<article id="linkedin" class="story" style="--tint: var(--p3)">
+  <header>
+    <p class="kicker">Marca personal</p>
+    <h2>Marca personal en LinkedIn</h2>
+    <p class="dek">La guía para el perfil de LinkedIn, los banners y la publicación del portafolio, y cómo se regeneran sus imágenes.</p>
+    <p class="byline">2 min de lectura · <a href="linkedin.md">linkedin.md</a></p>
+  </header>
+  <div class="copy"><p>La carpeta <code>linkedin/</code> busca que el perfil de LinkedIn, el portafolio y el GitHub se vean como una sola marca: la misma tipografía (Archivo condensada), los mismos colores (papel, tinta, amarillo de señal y verde del metro) y el mismo mensaje (<code>linkedin/GUIA.md</code>).</p>
+<h3>Qué hay</h3>
+<div class="table"><table><thead><tr><th>Archivo</th><th>Para qué</th></tr></thead><tbody><tr><td><code>GUIA.md</code></td><td>Guía paso a paso: banner, foto, titular, Acerca de, Destacados, Experiencia, Proyectos y certificaciones, Aptitudes, Recomendaciones, configuración, actividad y lista de comprobación.</td></tr><tr><td><code>PUBLICACION.md</code></td><td>Texto de la publicación del portafolio en español e inglés, cómo publicarla e ideas para las siguientes.</td></tr><tr><td><code>banner-es.png</code>, <code>banner-en.png</code></td><td>Banner del perfil, 1584 × 396 px.</td></tr><tr><td><code>publicacion-es.png</code>, <code>publicacion-en.png</code></td><td>Imagen de la publicación, 1080 × 1350 px.</td></tr><tr><td><code>banner.html</code>, <code>publicacion.html</code></td><td>Plantillas; el texto se cambia aquí.</td></tr><tr><td><code>capturas/</code></td><td>Capturas del portafolio en vivo (escritorio y móvil) que usa la publicación.</td></tr><tr><td><code>fuente/</code></td><td>Archivo, la fuente del portafolio, para que las plantillas se vean igual.</td></tr><tr><td><code>exportar.mjs</code></td><td>Regenera los PNG.</td></tr></tbody></table></div>
+<h3>Regenerar las imágenes</h3>
+<pre><code>node linkedin/exportar.mjs             # banners y publicación
+node linkedin/exportar.mjs --capturas  # además, nuevas capturas de hgsportafolio.site</code></pre>
+<p>Usa el Playwright instalado en <code>portfolio/</code> (no instala nada nuevo) con el canal <code>msedge</code>, así que necesita Microsoft Edge. Las capturas se toman de <code>https://hgsportafolio.site</code> a 1440 × 900 y 390 × 844.</p>
+<h3>Publicación</h3>
+<p>LinkedIn no tiene API en este flujo: banner, textos y publicación se suben a mano siguiendo <code>GUIA.md</code> y <code>PUBLICACION.md</code>.</p>
+<p>Los commits <code>dd6e9b6</code> y <code>e55f47e</code> (2026-10-13) quitaron detalles confidenciales de trabajo del texto de la publicación y del perfil; cualquier cambio futuro debe mantener ese criterio. El agente <code>.claude/agents/rrhh-estricto.md</code> sirve para auditar CV, LinkedIn, README o portafolio como lo haría un filtro de reclutamiento, incluida una revisión de confidencialidad.</p></div>
+</article>
+
+<article id="historial" class="story" style="--tint: var(--p4)">
+  <header>
+    <p class="kicker">Historial</p>
+    <h2>Cronología del repositorio</h2>
+    <p class="dek">Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta el formulario de contacto atendido por el admin en octubre de 2026.</p>
+    <p class="byline">4 min de lectura · <a href="historial.md">historial.md</a></p>
+  </header>
+  <div class="copy"><p>Fuente: <code>git log --format=&quot;%h %ad %s&quot; --date=short</code>. Se omiten los commits automáticos repetidos (gráficas de lenguajes, CV, datos de GitHub) y los merges de Dependabot, salvo cuando marcan algo.</p>
+<h3>2024-12 a 2025-10: el README del perfil</h3>
+<ul><li><strong>2024-12-14</strong> <code>82abbd8</code> Commit inicial. Ese día y los siguientes, decenas de ediciones de <code>README.md</code> desde la web de GitHub.</li><li><strong>2025-01 a 2025-07</strong> Ediciones sueltas del README y subida de imágenes a <code>img/</code> (fondos, logos, código QR). En total hay 93 commits «Update README.md».</li><li><strong>2025-10-21</strong> <code>3d30eed</code> Última edición de esa etapa.</li></ul>
+<h3>2026-09: renovación del perfil</h3>
+<ul><li><strong>2026-09-21</strong> README reescrito con nueva marca personal, generación de gráficas de lenguajes y limpieza de imágenes sin uso (<code>fcbf852</code>, <code>e39c105</code>, <code>818d23c</code>, <code>9d5f4e3</code>).</li><li><strong>2026-09-29</strong> Experiencia en Mitsubishi Electric y correo de contacto en el README (<code>01db10f</code>).</li></ul>
+<h3>2026-10-01: nace el portafolio</h3>
+<ul><li><code>54b15c8</code> Primera versión del portafolio con la sección de MIGOZZ, tarjetas y capturas.</li><li><code>dbc3ded</code> Generador del CV, su workflow y el botón de descarga.</li><li><code>b64b7b7</code> Sección de credenciales.</li><li><code>7a38214</code> CV rediseñado con Inter incrustada.</li><li><code>4759508</code> Imágenes WebP, fuentes propias y pantalla de bienvenida.</li><li><code>d7352cb</code> Stack en acordeón, SEO y datos estructurados.</li><li><code>7df5731</code> Sección opcional de repos privados en el perfil (<code>privacity/</code>).</li><li><code>213eca1</code>, <code>b199ff1</code> Verificación de Google Search Console.</li></ul>
+<h3>2026-10-07: línea de metro, calidad y CI</h3>
+<ul><li><code>857354f</code> Rediseño alrededor de una línea del metro de Medellín.</li><li><code>6dac778</code> App dividida en componentes y hooks, contenido tipado, CSS por sección.</li><li><code>ec543d6</code> ESLint, Prettier, Vitest, CI, Dependabot y README del portafolio.</li><li><code>42692f4</code> Copia del README del perfil al repositorio público.</li><li><code>84dc422</code> Comentario de deploy preview desde los estados de Netlify.</li><li><code>f765c77</code> Presupuestos de Lighthouse, axe, pruebas de teclado, capturas en PR, generador de <code>og.png</code>, Release Please, revisión de enlaces y datos de GitHub.</li><li><code>6f98ab2</code> Release Please solo a mano.</li><li><code>ee130d5</code> Página <code>/en/</code> con <code>hreflang</code>, más datos estructurados, CSP y cabeceras de seguridad.</li><li>Merge del PR #1 (<code>testing</code>) y primeros PR de Dependabot.</li></ul>
+<h3>2026-10-10: MIGOZZ, formulario y automatización de imágenes</h3>
+<ul><li><code>0390adc</code> Página del caso MIGOZZ en <code>/migozz/</code> y <code>/en/migozz/</code>.</li><li><code>b6073f7</code> Formulario de contacto con Netlify Forms.</li><li><code>8fdee63</code> Analítica opcional con Umami, apagada hasta configurarla.</li><li><code>7f5f8ab</code> Modo de alto contraste e impresión.</li><li><code>1de4fe7</code> Workflow de imágenes y presupuestos de peso.</li><li><code>0b87eb7</code> Comparación de Lighthouse contra <code>main</code> en el comentario del PR.</li><li><code>2a45a15</code> Un solo issue de enlaces rotos.</li><li><code>39b7332</code> Revalidación de imágenes, íconos y CV en cada visita.</li><li><code>c10c5d4</code> Rediseño de MIGOZZ con Motion, gráficas públicas y pantalla de carga.</li><li>PR #13 a #15 y #27 a #29.</li></ul>
+<h3>2026-10-13 a 2026-10-15: retrato, LinkedIn y revisión de RR. HH.</h3>
+<ul><li><code>d686b89</code>, <code>8f4afa5</code> Retrato en la sección Oficio.</li><li><code>88659a3</code> Nueva URL de LinkedIn en portafolio, SEO y CV.</li><li><code>b182da1</code> Carpeta <code>linkedin/</code>: banner, publicación y guía.</li><li><code>dd6e9b6</code>, <code>e55f47e</code>, <code>ffae6f7</code> Se quitan detalles confidenciales y cifras; título real y un solo nombre en todas partes (PR #31).</li><li><code>b1ba0c0</code> Dos proyectos destacados y el resto tras «ver más» (PR #32).</li><li><strong>2026-10-14</strong> Merges de Dependabot que suben las acciones a <code>checkout@v7</code>, <code>setup-node@v7</code>, <code>github-script@v9</code>, <code>upload-artifact@v7</code> y <code>release-please-action@v5</code>.</li><li><strong>2026-10-15</strong> <code>4f652c0</code> <code>favicon.ico</code> real y nombre del sitio consistente para Google.</li></ul>
+<h3>2026-10-19 a 2026-10-21: dominio propio y admin</h3>
+<ul><li><strong>2026-10-19</strong> <code>5806c65</code> Contenido afinado, stack reorganizado en Web, Backend, Mobile y Cloud, nuevo correo de contacto.</li><li><strong>2026-10-21</strong> <code>73be47d</code> El sitio pasa a <code>hgsportafolio.site</code>.</li><li><strong>2026-10-21</strong> <code>8d5a3db</code> <code>netlify.app</code> queda como respaldo y se emiten los dos códigos de Search Console.</li><li><strong>2026-10-21</strong> <code>3a1e1e4</code> Primer admin con Sveltia CMS; los proyectos pasan a <code>projects.json</code>.</li><li><strong>2026-10-21</strong> <code>c1629bf</code> Admin propio en React para todo el portafolio; todo el texto visible pasa a <code>src/content/data/*.json</code> validado con <code>checked()</code>.</li><li><strong>2026-10-21</strong> <code>fc4b004</code> Correos del formulario con Resend y caso MIGOZZ en blanco con los colores actuales de la marca.</li><li><strong>2026-10-21</strong> <code>4d8f465</code> Formato del README del portafolio y reintentos de Lighthouse.</li><li><strong>2026-10-21</strong> <code>bf84696</code> Entrada al admin con PIN y código por correo, token de GitHub solo en el servidor, bloqueos en Netlify Blobs, <code>.env.example</code> en los dos sitios, un comentario de preview por sitio y workflows con la rama <code>desarrollo</code>.</li><li><strong>2026-10-21</strong> <code>fa72716</code>, <code>4ceff81</code> Primeros commits hechos desde el admin («content: actualizar textos del sitio desde el admin»): un cambio de prueba en <code>site.json</code> y su corrección.</li><li><strong>2026-10-21</strong> <code>5ba4d50</code> Carpeta <code>Doc/</code> con el agente documentador y la vista de periódico; Dependabot también revisa <code>admin/</code>.</li><li><strong>2026-10-21</strong> <code>f4be780</code> El formulario de contacto deja Netlify Forms, que no lo detectaba, y envía al admin (<code>/api/contact</code>), que guarda el mensaje y manda los dos correos. Nueva estación «Mensajes». El portafolio se queda sin funciones y registra el evento <code>contact-sent</code> en Umami.</li><li><strong>2026-10-21</strong> <code>236c9d3</code> La carpeta <code>img/</code> (imágenes personales) sale del repositorio y queda en <code>.gitignore</code>.</li></ul>
+<h3>Commits automáticos</h3>
+<p>A la fecha: 18 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (<code>Bump</code>).</p></div>
+</article>
+
+<article id="pendientes" class="story" style="--tint: var(--p5)">
+  <header>
+    <p class="kicker">Pendientes</p>
+    <h2>Lo que falta y lo que conviene mejorar</h2>
+    <p class="dek">Pasos que dependen de Harol y mejoras sugeridas, cada una con su porqué.</p>
+    <p class="byline">4 min de lectura · <a href="pendientes.md">pendientes.md</a></p>
+  </header>
+  <div class="copy"><h3>Depende de Harol</h3>
+<div class="table"><table><thead><tr><th>Pendiente</th><th>Por qué importa</th></tr></thead><tbody><tr><td>Configurar en <code>admin-hgs</code> las variables <code>ADMIN_GITHUB_TOKEN</code>, <code>ADMIN_PIN</code>, <code>SESSION_SECRET</code>, <code>ADMIN_EMAIL</code>, <code>RESEND_API_KEY</code> y <code>ADMIN_MAIL_FROM</code>, más <code>CONTACT_TO</code> y <code>CONTACT_FROM</code> para el formulario.</td><td>Sin ellas el admin no deja entrar (sin PIN o secreto responde 503 y sin Resend no llega el código) y el formulario no envía correos.</td></tr><tr><td>Elegir un <code>ADMIN_PIN</code> que no se pueda deducir de datos públicos (ni números de nombres de usuario actuales o anteriores, ni fechas o teléfonos publicados) y de más de 4 dígitos.</td><td>Los límites solo frenan los intentos al azar; un PIN deducible se acierta en pocos intentos y deja como única barrera el correo. Ver <a href="#seguridad">seguridad</a>.</td></tr><tr><td>Quitar de <code>portafolio-hgs</code> <code>RESEND_API_KEY</code>, <code>CONTACT_TO</code> y <code>CONTACT_FROM</code>, si se llegaron a poner.</td><td>Desde <code>f4be780</code> el portafolio no las usa; dejarlas solo deja una copia más de la clave de Resend.</td></tr><tr><td>Enviar un mensaje de prueba desde <code>hgsportafolio.site</code> (en español y en inglés) y confirmar que llegan los dos correos: la copia a Harol y la confirmación al visitante.</td><td>Es la prueba real del flujo nuevo; las pruebas automáticas simulan Resend y la función. Si no llegan, el mensaje debe verse igual en la estación «Mensajes», y el error queda en el registro de la función <code>contact</code> en Netlify.</td></tr><tr><td>Verificar <code>hgsportafolio.site</code> en Resend y copiar sus registros DNS en Hostinger.</td><td>Resend solo envía desde dominios verificados; sin eso no salen ni los códigos del admin ni los correos del formulario.</td></tr><tr><td>Confirmar el <code>CNAME</code> de <code>admin.hgsportafolio.site</code> y que <code>admin-hgs</code> use base directory <code>admin</code>.</td><td>Es lo que hace que el admin exista en su dominio (<code>admin/README.md</code>).</td></tr><tr><td>Confirmar que <code>METRICS_TOKEN</code> puede escribir en <code>DevCat-HGS/DevCat-HGS</code>.</td><td><code>publish-profile.yml</code> lo usa para hacer push al repo público.</td></tr><tr><td>Llenar <code>migozz-users.json</code> con cifras reales y su fuente, y activar <code>visible</code>.</td><td>Las gráficas de usuarios del caso MIGOZZ están ocultas hasta entonces, a propósito.</td></tr><tr><td>Subir capturas de la app a MIGOZZ (<code>shots</code>).</td><td>La sección de capturas del caso no aparece mientras la lista esté vacía.</td></tr><tr><td>Activar Umami: crear el sitio en <code>cloud.umami.is</code> (Add website), copiar el Website ID, ponerlo como <code>VITE_UMAMI_WEBSITE_ID</code> en el sitio <code>portafolio-hgs</code> y volver a desplegar.</td><td>Los eventos (descarga del CV, clics en proyectos, redes, MIGOZZ y envío del formulario) ya están en el código, pero sin el ID no se registra nada. Ver <a href="#portafolio">portafolio</a>.</td></tr><tr><td>Dar los datos para las cifras de los proyectos: un resultado medible por proyecto (usuarios, tiempos, volumen, ahorro) con su fuente y fecha.</td><td>Hoy el campo <code>result</code> de <code>projects.json</code> es cualitativo («Entregado al cliente», «Escalamiento humano incluido»). Una cifra con fuente pesa más ante un reclutador, y el sitio no muestra cifras inventadas.</td></tr><tr><td>Dar los datos del caso de estudio de ARIA: problema, papel de Harol, arquitectura, resultados, fechas y qué es confidencial.</td><td>ARIA hoy es solo una tarjeta en <code>projects.json</code> (cliente Arix Group, stack AWS, Bedrock, OpenSearch). Sin esos datos no se puede escribir el caso, y lo confidencial debe quedar fuera desde el principio.</td></tr></tbody></table></div>
+<p>Detalle de variables en <a href="#configuracion">configuración</a>.</p>
+<h3>Mejoras sugeridas</h3>
+<ul><li><strong>Sanear los SVG subidos desde el admin.</strong> Los íconos se guardan tal cual en <code>portfolio/public/icons/</code>. La CSP del portafolio bloquea scripts en línea, pero limpiar el SVG (o rechazar los que traen <code>&lt;script&gt;</code> o manejadores <code>on*</code>) cierra la puerta del todo.</li><li><strong>Archivos sin uso.</strong> <code>profile/stats.svg</code> y <code>profile/calendar.svg</code> no los referencia nada. Borrarlos aligera el repo y evita confusiones. (La carpeta <code>img/</code> ya salió del repositorio en <code>236c9d3</code>, aunque sigue en el historial de git.)</li><li><strong>Limpieza del almacén <code>contact-messages</code>.</strong> Los contadores diarios (<code>limit:day:&lt;fecha&gt;</code>) y por IP nunca se borran, y la estación «Mensajes» solo muestra los 200 más nuevos. No es urgente, pero una limpieza periódica evita que crezca sin fin y que haya mensajes viejos que no se ven.</li><li><strong>Cifras de Lighthouse en el README del portafolio.</strong> Están escritas a mano y envejecen; el comentario del PR y el artefacto <code>lighthouse-baseline</code> ya tienen las actuales.</li><li><strong>Borradores de imágenes.</strong> Las imágenes subidas en el admin se pierden al recargar (solo los JSON se guardan como borrador). Avisarlo en la interfaz evita sorpresas.</li><li><strong>Release Please.</strong> Corre solo a mano y aún no hay <code>CHANGELOG.md</code>. Si se quieren versiones, hay que lanzarlo o agregar el disparador <code>push</code> a <code>main</code> que ya está comentado en <code>release.yml</code>.</li></ul></div>
+</article>
+</main>
+<footer class="colophon">Generado con <code>node Doc/build.mjs</code> a partir de los archivos .md de esta carpeta. Para corregir algo, edita el .md y vuelve a generar.</footer>
+</body>
 </html>
