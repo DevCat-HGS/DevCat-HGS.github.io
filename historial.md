@@ -1,7 +1,7 @@
 ---
 titulo: Cronología del repositorio
 seccion: Historial
-resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta el formulario de contacto atendido por el admin en octubre de 2026.
+resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta el caso de estudio de ARIA y el resumen semanal en octubre de 2026.
 orden: 13
 ---
 
@@ -79,6 +79,22 @@ Fuente: `git log --format="%h %ad %s" --date=short`. Se omiten los commits autom
 - **2026-10-21** `f4be780` El formulario de contacto deja Netlify Forms, que no lo detectaba, y envía al admin (`/api/contact`), que guarda el mensaje y manda los dos correos. Nueva estación «Mensajes». El portafolio se queda sin funciones y registra el evento `contact-sent` en Umami.
 - **2026-10-21** `236c9d3` La carpeta `img/` (imágenes personales) sale del repositorio y queda en `.gitignore`.
 
+## 2026-10-21 (tarde): documentación, seguridad, ARIA y resumen semanal
+
+- `aeb5d33` `Doc/` al día con el nuevo flujo del formulario.
+- `4f2c664`, `fd823c4` La documentación se publica en `DevCat-HGS.github.io` con el workflow `Publish docs`, y pasa de vista de periódico a sitio de documentación.
+- `2d942c4` Búsqueda de secretos con gitleaks en cada push y PR, saneado de los SVG subidos desde el admin y `security.txt`.
+- `7837484` La CSP deja pasar los eventos de Umami hacia `gateway.umami.is` (antes se perdían); la página de documentación gana favicon y descripción.
+- `e4aae5a` Se ignora la configuración local de WakaTime.
+- `b7461ec` La etiqueta de Umami toma solo el UUID de la variable, el `lastmod` del sitemap sale del último commit con contenido visible, el respaldo de la portada enlaza al caso MIGOZZ y la pantalla de carga sale en el idioma de cada página.
+- `f3089f8` Vite 8.3.5 en el portafolio y el admin: cierra 12 alertas de Dependabot.
+- `ba00cb5` Resumen semanal por correo desde el admin (visitas de Umami, descargas del CV y resultados de Search Console), los lunes a las 8:00 de Bogotá.
+- `b9d13b1` Caso de estudio de ARIA en `/aria/` y `/en/aria/`, editable desde el admin; tarjeta de ARIA corregida (S3 Vectors y un resultado medido); subpáginas genéricas en la capa SEO; el respaldo de la portada lista todos los proyectos; nuevo enfoque de los textos: productos web y móviles a producción, con backend serverless e IA.
+- `94f0f6a` Las tarjetas de SENA Cloud y SensoresAPP enlazan a sus repos públicos nuevos (`sena-cloud`, `sensores-app`).
+- `8bbfdbf` El CV describe ARIA como trabajo de equipo con la parte de Harol y sin OpenSearch, que también sale del stack del sitio.
+
+Ese mismo día, fuera del repositorio: revisión del historial para decidir si `portfolio-hgs` podía ser público (ver [seguridad](seguridad.md)).
+
 ## Commits automáticos
 
-A la fecha: 18 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`).
+A la fecha (287 commits en `main`): 18 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.

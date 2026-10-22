@@ -1,7 +1,7 @@
 ---
 titulo: El README del perfil de GitHub
 seccion: Perfil de GitHub
-resumen: Cómo se arman el README del perfil y sus gráficas, cómo se publica en el repositorio público y qué workflows lo mantienen al día.
+resumen: Cómo se arman el README del perfil y sus gráficas, cómo se publica en el repositorio público, qué workflows lo mantienen al día y qué código se publica.
 orden: 8
 ---
 
@@ -9,6 +9,25 @@ orden: 8
 
 - **Este repo privado** (`DevCat-HGS/portfolio-hgs`) tiene la fuente: `README.md` (inglés), `README.es.md` (español), `profile/`, `privacity/` y `scripts/`.
 - **El repo público** `DevCat-HGS/DevCat-HGS` solo recibe el README y sus imágenes. El código del portafolio, los workflows y el historial no salen de aquí (comentario de `publish-profile.yml`).
+
+## Repos públicos de proyectos
+
+El 2026-10-21 se publicaron dos proyectos de la formación en el SENA como repos públicos nuevos:
+
+| Repo | Proyecto | Enlazado desde |
+| :-- | :-- | :-- |
+| `DevCat-HGS/sena-cloud` | SENA Cloud | Tarjeta «SENA Cloud» del portafolio (`code` en `projects.json`) |
+| `DevCat-HGS/sensores-app` | SensoresAPP | Tarjeta «SensoresAPP» del portafolio |
+
+Son copias limpias en un solo commit, no los repos originales con la visibilidad cambiada: sin archivos `.env` (solo plantillas `.env.example`), sin la IP ni el dominio del servidor, sin contraseñas de prueba y sin documentos de compañeros. Así el historial de los originales no sale a la luz. Las tarjetas los enlazan con «Ver código» (commit `94f0f6a`).
+
+### Regla: los repos de clientes se quedan privados
+
+Por decisión de Harol, el código de los proyectos de clientes no se publica: Hecho en Sabaneta, ARIA, Arcoiris, CashWin y Farmacia siguen privados y sus tarjetas no llevan enlace de código. El campo `code` de un proyecto es solo para código propio (lo dicen el comentario de `ProjectEntry` en `portfolio/src/content/projects.ts` y la ayuda del campo en el admin). Si un proyecto de cliente debe mostrarse, se hace con un caso de estudio (como `/aria/`), no con el código.
+
+### Cifra de repos públicos en el portafolio
+
+`GithubStats.tsx` se oculta con menos de 3 repos públicos. `portfolio/src/data/github.json` lo actualiza el workflow `GitHub data` cada lunes; mientras no corra después de esta publicación, el archivo sigue con la cifra anterior. Se puede lanzar a mano desde Actions.
 
 ## Qué tiene el README
 

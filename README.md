@@ -11,11 +11,12 @@ Este repositorio privado (`DevCat-HGS/portfolio-hgs` en GitHub) reúne la presen
 
 | Pieza | Carpeta | Dónde se ve | Qué es |
 | :-- | :-- | :-- | :-- |
-| Portafolio | `portfolio/` | `https://hgsportafolio.site` (sitio de Netlify `portafolio-hgs`) | Página bilingüe en React 19 + Vite, con la página del caso MIGOZZ en `/migozz/`. |
-| Admin | `admin/` | `admin.hgsportafolio.site` (sitio de Netlify `admin-hgs`) | Editor propio en React que lee y publica el contenido del portafolio y del CV en este repositorio. También recibe el formulario de contacto, envía sus correos y guarda los mensajes. |
+| Portafolio | `portfolio/` | `https://hgsportafolio.site` (sitio de Netlify `portafolio-hgs`) | Página bilingüe en React 19 + Vite, con los casos de estudio de MIGOZZ (`/migozz/`) y ARIA (`/aria/`). |
+| Admin | `admin/` | `admin.hgsportafolio.site` (sitio de Netlify `admin-hgs`) | Editor propio en React que lee y publica el contenido del portafolio y del CV en este repositorio. También recibe el formulario de contacto, envía sus correos, guarda los mensajes y manda un resumen semanal por correo. |
 | Hoja de vida | `curriculum/` | `portfolio/public/cv/` (botón de descarga del sitio) | Generador en Python que produce el CV en PDF en español e inglés desde `cv_data.json`. |
 | Perfil de GitHub | `README.md`, `README.es.md`, `profile/`, `privacity/`, `scripts/` | Repositorio público `DevCat-HGS/DevCat-HGS` | README del perfil, con gráficas de lenguajes generadas y copiado al repo público por un workflow. |
 | LinkedIn | `linkedin/` | Perfil de LinkedIn (manual) | Guía, banners y publicación con la misma identidad visual del sitio. |
+| Documentación | `Doc/` | `https://devcat-hgs.github.io` (repo público `DevCat-HGS.github.io`) | Estos artículos y su página `index.html`, publicados por el workflow `Publish docs` en cada push a `main` que toque `Doc/`. |
 
 ## Cómo se conectan
 
@@ -24,6 +25,7 @@ Este repositorio privado (`DevCat-HGS/portfolio-hgs` en GitHub) reúne la presen
 3. Ese commit dispara los workflows de GitHub Actions (CV, imágenes, pruebas) y el deploy de Netlify del portafolio.
 4. El formulario de contacto del portafolio envía cada mensaje a una función del admin, que lo guarda y manda los correos.
 5. El README del perfil se regenera aparte (gráficas diarias) y se copia al repositorio público.
+6. Cada lunes, una función programada del admin lee Umami y Search Console y le manda a Harol un resumen de la semana.
 
 El detalle está en [arquitectura](arquitectura.md).
 
@@ -32,9 +34,14 @@ El detalle está en [arquitectura](arquitectura.md).
 - El portafolio está en línea en el dominio propio `hgsportafolio.site`; `portafolio-hgs.netlify.app` sigue abierto como respaldo (ver [dominio y SEO](dominio-y-seo.md)).
 - El admin acaba de pasar a entrada con PIN más código por correo y sesión firmada; el token de GitHub ya no pasa por el navegador (commit `bf84696`, 2026-10-21).
 - El formulario de contacto ya no usa Netlify Forms: envía al admin, que guarda el mensaje (estación «Mensajes») y, con Resend configurado, envía la copia a Harol y la confirmación al visitante (commit `f4be780`, 2026-10-21).
-- La analítica con Umami está lista en el código pero apagada hasta que se configure `VITE_UMAMI_WEBSITE_ID`.
+- El caso de estudio de ARIA está en `/aria/` y `/en/aria/`, editable desde el admin; la tarjeta y el CV describen ARIA como trabajo de equipo, con S3 Vectors y un tiempo medido (commits `b9d13b1` y `8bbfdbf`, 2026-10-21).
+- SENA Cloud y SensoresAPP tienen repos públicos nuevos y limpios, enlazados desde sus tarjetas. Los repos de clientes se quedan privados (ver [perfil de GitHub](perfil-github.md)).
+- La analítica con Umami está lista en el código; se activa con `VITE_UMAMI_WEBSITE_ID` (solo el UUID) en `portafolio-hgs`.
+- El resumen semanal por correo (`weekly-digest`) está desplegado, pero no envía nada hasta que se configuren sus variables en `admin-hgs`.
+- Vite 8.3.5 en los dos proyectos; sin alertas abiertas de Dependabot tras `f3089f8`. gitleaks revisa el historial en cada push.
+- El repo sigue privado: hacerlo público pide un repo nuevo con historial limpio, decisión aplazada (ver [seguridad](seguridad.md)).
 - La carpeta `img/` ya no está en el repositorio (commit `236c9d3`).
-- **Falta configuración de Harol:** las variables del admin en Netlify (incluidas las del formulario) y la verificación del dominio en Resend. Mientras falten, el admin no deja entrar y el formulario no envía correos. Lista completa en [configuración](configuracion.md) y [pendientes](pendientes.md).
+- **Falta configuración de Harol:** las variables del admin en Netlify (incluidas las del formulario y del resumen semanal) y la verificación del dominio en Resend. Mientras falten, el admin no deja entrar y el formulario no envía correos. Lista completa en [configuración](configuracion.md) y [pendientes](pendientes.md).
 - Ramas: solo `main` (producción) y `desarrollo`.
 
 ## Índice de artículos
@@ -42,12 +49,12 @@ El detalle está en [arquitectura](arquitectura.md).
 | # | Artículo | De qué va |
 | :-- | :-- | :-- |
 | 2 | [Arquitectura](arquitectura.md) | Carpetas, tecnologías y el camino de un cambio hasta el sitio. |
-| 3 | [Portafolio](portafolio.md) | Secciones, componentes, contenido en JSON, idiomas, MIGOZZ, imágenes, formulario, analítica y pruebas. |
-| 4 | [Admin](admin.md) | Estaciones (incluida «Mensajes»), edición, imágenes, borradores, revisión y publicación. |
-| 5 | [Seguridad](seguridad.md) | Entrada al admin, sesiones, límites, intermediario de GitHub, CSP y cabeceras. |
-| 6 | [Correos](correos.md) | Formulario de contacto atendido por el admin y códigos de acceso, con Resend. |
+| 3 | [Portafolio](portafolio.md) | Secciones, componentes, contenido en JSON, idiomas, casos MIGOZZ y ARIA, imágenes, formulario, analítica y pruebas. |
+| 4 | [Admin](admin.md) | Estaciones (incluidas «Mensajes» y ARIA), edición, imágenes, borradores, publicación y resumen semanal. |
+| 5 | [Seguridad](seguridad.md) | Entrada al admin, sesiones, límites, intermediario de GitHub, CSP, cabeceras, dependencias, gitleaks y publicación del repo. |
+| 6 | [Correos](correos.md) | Formulario de contacto, códigos de acceso y resumen semanal, con Resend. |
 | 7 | [Hoja de vida](curriculum.md) | Fuente única, generación de los PDF y diseño para ATS. |
-| 8 | [Perfil de GitHub](perfil-github.md) | README del perfil, gráficas y publicación al repo público. |
+| 8 | [Perfil de GitHub](perfil-github.md) | README del perfil, gráficas, publicación y qué código se hace público. |
 | 9 | [CI/CD](ci-cd.md) | Workflows, Netlify, Dependabot y ramas. |
 | 10 | [Dominio y SEO](dominio-y-seo.md) | Dominio, DNS, Search Console, sitemap y datos estructurados. |
 | 11 | [Configuración](configuracion.md) | Variables de entorno por sitio y lo que falta configurar. |

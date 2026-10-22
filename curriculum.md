@@ -43,6 +43,10 @@ El workflow `.github/workflows/curriculum.yml` corre en cada push a `main` o `de
 - Metadatos del PDF (título y autor) completos.
 - Colores sobrios, legibles también en blanco y negro.
 
+## Regla de contenido: solo lo que se hizo
+
+El CV describe lo construido y medido, no lo planeado. Ejemplo del commit `8bbfdbf` (2026-10-21): el proyecto ARIA decía que el asistente buscaba en OpenSearch y escalaba casos a un consultor humano, y ninguna de las dos cosas se construyó. Ahora dice que fue trabajo de un equipo de cinco personas, cuál fue la parte de Harol (interfaz de chat en React con respuestas en vivo y panel de fuentes, una API de pruebas en FastAPI y el pipeline batch), el stack real (Bedrock y RAG sobre S3 Vectors, en AWS serverless) y un tiempo de respuesta medido. OpenSearch salió también de la lista de habilidades. El texto coincide con la tarjeta y el caso de ARIA del portafolio (ver [portafolio](portafolio.md)).
+
 ## Datos personales
 
 El JSON incluye teléfono y correo porque van impresos en el CV. Esta documentación no los repite.

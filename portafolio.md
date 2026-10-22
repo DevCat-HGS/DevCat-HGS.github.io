@@ -1,11 +1,11 @@
 ---
 titulo: El portafolio por dentro
 seccion: Portafolio
-resumen: Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, la página de MIGOZZ, imágenes y pruebas.
+resumen: Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, los casos MIGOZZ y ARIA, imágenes y pruebas.
 orden: 3
 ---
 
-El portafolio es una sola página bilingüe en React 19 + TypeScript + Vite, sin librerías de interfaz. El diseño sigue una línea del metro de Medellín que recorre la página: una estación por capítulo (`portfolio/README.md`).
+El portafolio es una página principal bilingüe en React 19 + TypeScript + Vite, sin librerías de interfaz, más dos casos de estudio (MIGOZZ y ARIA). El diseño sigue una línea del metro de Medellín que recorre la página: una estación por capítulo (`portfolio/README.md`).
 
 ## Secciones
 
@@ -38,6 +38,7 @@ Todo el texto visible vive en `portfolio/src/content/data/`:
 | `migozz.json` | Página del caso MIGOZZ | `content/migozz.ts` |
 | `migozz-public.json` | Versiones de la App Store y comunidad de creadores destacados | `content/migozzPublic.ts` |
 | `migozz-users.json` | Cifras de usuarios de MIGOZZ (ocultas mientras `visible` sea `false`) | `content/migozzUsers.ts` |
+| `aria.json` | Página del caso ARIA | `content/aria.ts` |
 | `seo.json` | Identidad del sitio, enlaces, códigos de Search Console y textos de cada página | `seo/pages.ts` |
 
 ### Validación
@@ -46,15 +47,28 @@ JSON pierde los tipos literales, así que `checked()` en `src/content/json.ts` c
 
 `projects.ts` normaliza las entradas: el admin puede dejar campos opcionales como `""` o `null`, y `projectsFrom()` los quita antes de llegar a los componentes. `hidden: true` deja el proyecto en el archivo pero fuera del sitio; `featured: true` lo pone entre los destacados.
 
+### Campos `case` y `code` de un proyecto
+
+Dos campos opcionales de `projects.json`, agregados el 2026-10-21:
+
+| Campo | Qué guarda | Qué muestra la tarjeta |
+| :-- | :-- | :-- |
+| `case` | Id del caso de estudio en el sitio (hoy solo ARIA usa `"aria"`). `projectsFrom()` lo convierte en `/aria/` o `/en/aria/` según el idioma. | Enlace «Ver el caso completo» / «Read the case study». |
+| `code` | URL de un repositorio público. Solo código propio, nunca de un cliente (comentario de `ProjectEntry` y ayuda del campo en el admin). Hoy lo usan SENA Cloud y SensoresAPP. | Enlace «Ver código» / «View code», que abre en otra pestaña. |
+
+Antes toda tarjeta con sitio en línea era un enlace completo. Un enlace no puede contener otros enlaces, así que una tarjeta con caso o con código pasa a ser un `<article>` con enlaces separados (sitio, caso, código); las demás siguen siendo un enlace completo (`ProjectCard` en `components/Projects.tsx`, commit `94f0f6a`).
+
 Las pruebas de `tests/content.test.ts` añaden: misma estructura en los dos idiomas, ningún texto vacío, ids de proyectos iguales en ambos idiomas, enlaces solo `https`, y que existan las imágenes, íconos y PDF referenciados.
 
 ## Idiomas
 
 - Español en `/` y inglés en `/en/`: dos páginas estáticas con su propio título, descripción, canonical, `hreflang`, Open Graph, datos estructurados y texto de respaldo.
 - La URL decide el idioma (`useLocale`, `public/splash.js` y el build usan la misma regla). El botón cambia sin recargar y actualiza la dirección.
-- `portfolio/netlify.toml` redirige (302) a `/en/` a quien llega por primera vez con el navegador en inglés. El botón de idioma fija la cookie `nf_lang`, que Netlify lee antes que el idioma del navegador. Los rastreadores no mandan idioma y reciben `/`.
+- `portfolio/netlify.toml` redirige (302) `/` a `/en/` y `/migozz/` a `/en/migozz/` solo si el navegador pide inglés o tiene la cookie `nf_lang=en`. El botón de idioma fija esa cookie, que Netlify lee antes que el idioma del navegador. Los rastreadores no mandan idioma y reciben la versión en español. `/aria/` aún no tiene esa regla (ver [dominio y SEO](dominio-y-seo.md)).
 
-## Página de MIGOZZ
+## Casos de estudio
+
+### MIGOZZ
 
 `/migozz/` y `/en/migozz/` son una segunda entrada de Vite (`portfolio/migozz/index.html`, `src/migozz.tsx`, `src/MigozzPage.tsx`). Tiene portada animada, cifras públicas con su fuente, gráficas (`components/migozz/UserCharts.tsx`), flujo de uso (`Flow.tsx`), problema, funciones, cronología, capturas y el rol de Harol. Usa `motion` para las animaciones.
 
@@ -62,6 +76,18 @@ Desde el commit `fc4b004` sigue la identidad actual de la marca: fondo blanco, m
 
 - Las gráficas de usuarios solo aparecen con `visible: true` en `migozz-users.json`, para no mostrar cifras inventadas.
 - `shots` en `migozz.json` está vacío hoy, así que la sección de capturas no aparece.
+
+### ARIA
+
+`/aria/` y `/en/aria/` (commit `b9d13b1`) son la tercera entrada de Vite: `portfolio/aria/index.html`, `src/aria.tsx`, `src/AriaPage.tsx` y sus estilos en `src/styles/aria.css`. El contenido vive en `src/content/data/aria.json` (tipos en `src/content/aria.ts`) y se edita en la estación ARIA del admin.
+
+ARIA es un asistente de soporte SAP hecho en equipo para Arix Group. La página tiene, en orden: portada, cifras medidas con su contexto (cada cifra lleva una nota de con qué se comparó o cómo se midió), problema y solución, la arquitectura dibujada como dos líneas de metro (consulta e ingesta diaria) con su estación de transbordo, decisiones, lo que se rompió, la parte de Harol en el equipo, lo que falta y el stack. La nota del admin para esta estación pide solo cifras medidas y nada de IDs de AWS, URLs internas ni nombres del equipo.
+
+No usa `motion` ni pantalla de carga. Su título de pestaña es el mismo de los resultados de búsqueda (`seo.json` → `ariaPages`).
+
+### Tarjeta de ARIA
+
+La tarjeta de ARIA en `projects.json` se corrigió el mismo día: dice S3 Vectors en vez de OpenSearch (que el proyecto no usó), cambia el resultado «Escalamiento humano incluido» (que no se construyó) por un tiempo de respuesta medido, describe la parte de Harol en el equipo y enlaza al caso con `case: "aria"`. OpenSearch también salió del stack del sitio (`stack.json`, el texto de `site.json` y su ícono) en el commit `8bbfdbf`.
 
 ## Imágenes
 
@@ -93,12 +119,16 @@ Eventos que ya se registran (atributos `data-umami-event` y llamadas a `umami.tr
 | `cv-download` | `Socials.tsx` | Clic en descargar el CV. |
 | `social-<red>` | `Socials.tsx` | Clic en una red social (nombre de la red en minúsculas). |
 | `project-<id>` | `Projects.tsx` | Clic en un proyecto con enlace. |
+| `case-<id>` | `Projects.tsx` | Clic en «Ver el caso completo» de una tarjeta. |
+| `code-<id>` | `Projects.tsx` | Clic en «Ver código» de una tarjeta. |
 | `migozz-play`, `migozz-appstore` | `Startup.tsx` | Clic en Google Play o App Store de MIGOZZ. |
 | `migozz-case` | `Startup.tsx` | Clic en el botón al caso de MIGOZZ. |
 | `contact` | `ContactForm.tsx` | Clic en enviar el formulario. |
 | `contact-sent` | `ContactForm.tsx` | El mensaje se envió bien (`window.umami.track`). |
 
-Para activarla: crear el sitio en `cloud.umami.is` (Add website), copiar su Website ID, ponerlo como `VITE_UMAMI_WEBSITE_ID` en el sitio `portafolio-hgs` de Netlify y volver a desplegar, porque se lee al construir. Ver [configuración](configuracion.md).
+`umamiId()` (`seo/headers.ts`) extrae de la variable solo el UUID, así que un fragmento `<script>` pegado completo no rompe el `<head>`.
+
+Para activarla: crear el sitio en `cloud.umami.is` (Add website), copiar su Website ID (solo el UUID), ponerlo como `VITE_UMAMI_WEBSITE_ID` en el sitio `portafolio-hgs` de Netlify y volver a desplegar, porque se lee al construir. Ver [configuración](configuracion.md).
 
 ## Estilos
 
@@ -125,11 +155,13 @@ Requiere Node 20.19 o superior; CI usa Node 22.
 | :-- | :-- |
 | `tests/content.test.ts` | Integridad del contenido (ver arriba). |
 | `tests/assets.test.ts` | Peso de capturas, certificados, íconos, capturas de MIGOZZ y retrato. |
-| `tests/seo.test.ts` | Títulos por idioma, canonical, `hreflang`, Open Graph y JSON-LD. |
+| `tests/seo.test.ts` | Títulos por idioma, canonical, `hreflang`, Open Graph, JSON-LD, sitemap, texto de respaldo y página de ARIA. |
 | `tests/github-data.test.ts` | Forma de `src/data/github.json`. |
 | `tests/contact-email.test.ts` | Lógica del formulario en el admin (`admin/netlify/lib/contact.ts`): correos, descarte de bots, límites y orígenes permitidos. |
 | `tests/admin-auth.test.ts` | Reglas de entrada del admin y lista de llamadas a GitHub permitidas. |
-| `e2e/a11y.spec.ts` | Sin violaciones WCAG A/AA con axe, en ES y EN, móvil y escritorio, y en MIGOZZ. |
+| `tests/digest.test.ts` | Resumen semanal del admin (`admin/netlify/lib/digest.ts`): rango de fechas, lectura de Umami y Search Console, y el correo. |
+| `tests/security-txt.test.ts` | `public/.well-known/security.txt` tiene contacto y dirección canónica, y falla un mes antes de que venza. |
+| `e2e/a11y.spec.ts` | Sin violaciones WCAG A/AA con axe, en ES y EN, móvil y escritorio, en la portada, MIGOZZ y ARIA. |
 | `e2e/keyboard.spec.ts` | Enlace de salto, nombres accesibles, foco del visor de certificados, cambio de idioma. |
 | `e2e/features.spec.ts` | Envío del formulario (JSON a la función del admin, simulada), modo de alto contraste e impresión. |
 | `e2e/seo.spec.ts` | Idioma por URL, rutas de recursos, head estático y política de seguridad sin violaciones. |

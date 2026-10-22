@@ -9,8 +9,8 @@ orden: 2
 
 | Carpeta o archivo | Contenido |
 | :-- | :-- |
-| `portfolio/` | Sitio web. `src/` (React), `src/content/data/*.json` (contenido), `seo/` (cabeceras, head, sitemap), `scripts/` (imágenes, Lighthouse, og.png, datos de GitHub), `tests/` (Vitest), `e2e/` (Playwright), `images/` (originales de imágenes), `public/` (archivos servidos). |
-| `admin/` | Editor de contenido. `src/` (React), `netlify/functions/` (`auth.mts`, `github.mts`, `contact.mts`, `messages.mts`), `netlify/lib/` (`auth.ts`, `contact.ts`, `netlify.ts`), `netlify.toml`, `.env.example`. |
+| `portfolio/` | Sitio web. `src/` (React), `src/content/data/*.json` (contenido), `seo/` (cabeceras, head, sitemap), `migozz/` y `aria/` (HTML de cada caso de estudio), `scripts/` (imágenes, Lighthouse, og.png, datos de GitHub), `tests/` (Vitest), `e2e/` (Playwright), `images/` (originales de imágenes), `public/` (archivos servidos). |
+| `admin/` | Editor de contenido. `src/` (React), `netlify/functions/` (`auth.mts`, `github.mts`, `contact.mts`, `messages.mts`, `weekly-digest.mts`), `netlify/lib/` (`auth.ts`, `contact.ts`, `digest.ts`, `google.ts`, `netlify.ts`), `netlify.toml`, `.env.example`. |
 | `curriculum/` | `cv_data.json` (fuente del CV), `generate_cv.py`, `fonts/` (Inter), `output/` (PDF versionados). |
 | `profile/` | SVG del README del perfil (`banner.svg`, `languages.svg`, `languages.es.svg`). |
 | `privacity/` | Lista elegida de repos privados para el README del perfil (`featured.json`) y su script. |
@@ -19,7 +19,7 @@ orden: 2
 | `.github/` | Workflows, `dependabot.yml` y plantilla de pull request. |
 | `.claude/agents/` | Agentes de Claude Code del proyecto (`documentador.md`, `rrhh-estricto.md`). |
 | `release-please-config.json`, `.release-please-manifest.json` | Configuración de Release Please. |
-| `Doc/` | Esta documentación y su generador `build.mjs`. |
+| `Doc/` | Esta documentación y su generador `build.mjs`; se publica en `DevCat-HGS.github.io`. |
 
 ## Tecnologías
 
@@ -27,7 +27,7 @@ orden: 2
 | :-- | :-- |
 | Portafolio | React 19, TypeScript, Vite, `motion` (solo en la página de MIGOZZ), fuente Archivo autoalojada, `sharp` para imágenes, Vitest, Playwright con axe, Lighthouse, ESLint y Prettier. |
 | Admin | React 19, TypeScript, Vite, `@netlify/blobs`, `@netlify/functions`. Sin librerías de interfaz. |
-| Funciones | Solo en el admin: Netlify Functions (formato `.mts` con `Config`), Netlify Blobs para estado y mensajes, Resend para correos. El portafolio no tiene funciones. |
+| Funciones | Solo en el admin: Netlify Functions (formato `.mts` con `Config`, una de ellas programada), Netlify Blobs para estado y mensajes, Resend para correos, APIs de Umami Cloud y Search Console para el resumen semanal (firma con Web Crypto, sin SDK de Google). El portafolio no tiene funciones. |
 | Hoja de vida | Python 3 con ReportLab. |
 | Perfil | Python sin dependencias externas (`urllib`), API REST de GitHub. |
 
@@ -61,6 +61,10 @@ Un cambio de código sigue el mismo camino. En un pull request, además, Netlify
 ### Un mensaje del formulario
 
 El formulario del portafolio envía JSON a `https://admin.hgsportafolio.site/api/contact`. La función del admin lo filtra, lo guarda en Netlify Blobs (almacén `contact-messages`) y envía dos correos por Resend. Harol lo lee en su correo y en la estación «Mensajes» del admin. El portafolio sigue siendo estático; por eso su CSP permite conectarse al dominio del admin. Ver [correos](correos.md).
+
+### El resumen semanal
+
+Cada lunes a las 8:00 de Bogotá, Netlify corre `weekly-digest` en el sitio del admin: lee la semana anterior en Umami Cloud y Search Console y envía un correo por Resend. No depende de ningún commit. Ver [admin](admin.md).
 
 ### El perfil de GitHub
 

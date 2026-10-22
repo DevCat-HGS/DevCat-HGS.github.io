@@ -1,11 +1,11 @@
 ---
 titulo: El admin, la cabina de control del contenido
 seccion: Admin
-resumen: Para qué sirve el editor de admin.hgsportafolio.site, qué se edita en cada estación y cómo se revisa y publica un cambio.
+resumen: Para qué sirve el editor de admin.hgsportafolio.site, qué se edita en cada estación, cómo se revisa y publica un cambio y el resumen semanal por correo.
 orden: 4
 ---
 
-El admin es un editor propio en React + Vite (`admin/`), con la misma identidad de línea de metro del portafolio. Lee y guarda directamente en este repositorio, así que Harol cambia textos, proyectos, credenciales, stack, CV, MIGOZZ y SEO sin tocar código. También recibe los mensajes del formulario de contacto del portafolio y envía sus correos (ver [correos](correos.md)). Se despliega como segundo sitio de Netlify (`admin-hgs`) en `admin.hgsportafolio.site`.
+El admin es un editor propio en React + Vite (`admin/`), con la misma identidad de línea de metro del portafolio. Lee y guarda directamente en este repositorio, así que Harol cambia textos, proyectos, credenciales, stack, CV, los casos MIGOZZ y ARIA, y SEO sin tocar código. También recibe los mensajes del formulario de contacto del portafolio y envía sus correos (ver [correos](correos.md)) y, cada lunes, le manda a Harol un resumen de la semana. Se despliega como segundo sitio de Netlify (`admin-hgs`) en `admin.hgsportafolio.site`.
 
 Reemplazó el 2026-10-21 a un primer editor basado en Sveltia CMS (commits `3a1e1e4` y `c1629bf`).
 
@@ -25,12 +25,13 @@ Cada estación del mapa de la izquierda es una sección (`STATIONS` en `admin/sr
 | :-- | :-- |
 | Mensajes | Ninguno: lee los mensajes del formulario de contacto guardados en Netlify Blobs (ver abajo). |
 | Textos del sitio | `portfolio/src/content/data/site.json`, sin `credGroups` ni `stackGroups`. Agrupado en Portada, Oficio, MIGOZZ en la página principal, Cargo anterior, Encabezados, Contacto, Navegación y pie. |
-| Proyectos | `portfolio/src/content/data/projects.json`. El orden de la lista es el del sitio. |
+| Proyectos | `portfolio/src/content/data/projects.json`. El orden de la lista es el del sitio. Incluye los campos `case` (id del caso de estudio, p. ej. `aria`) y `code` (repositorio público: solo código propio, nunca de un cliente); ver [portafolio](portafolio.md). |
 | Credenciales | `site.json` → `credGroups`. |
 | Stack | `site.json` → `stackGroups` (grupos) y `stack.json` (tecnologías de cada grupo, con el mismo identificador). |
 | Hoja de vida | `curriculum/cv_data.json`. El PDF se regenera solo al publicar. |
 | MIGOZZ | `migozz.json` (página del caso), `migozz-public.json` (cifras públicas) y `migozz-users.json` (usuarios). |
-| SEO | `portfolio/src/content/data/seo.json`. |
+| ARIA | `aria.json` (página del caso `/aria/`). Nueva desde el commit `b9d13b1`. La nota del panel pide solo cifras medidas y con su contexto, y nada de IDs de AWS, URLs internas ni nombres del equipo. |
+| SEO | `portfolio/src/content/data/seo.json`, incluidos los textos de las páginas de MIGOZZ y de ARIA (`ariaPages`). |
 
 ## Mensajes
 
@@ -56,9 +57,10 @@ Cada mensaje también llega por correo; esta estación es el archivo, y conserva
 | Captura de proyecto (`projects[].shot`) | `portfolio/images/shots/` | `shots/<nombre>.webp` |
 | Certificado (`credGroups[].items[].img`) | `portfolio/images/credentials/` | `<nombre>` |
 | Captura de MIGOZZ (`shots[].src`) | `portfolio/images/migozz/` | `migozz/<nombre>.webp` |
-| Ícono del stack | `portfolio/public/icons/<nombre>.svg` (sin conversión) | `<nombre>` |
+| Ícono del stack | `portfolio/public/icons/<nombre>.svg` (saneado, sin conversión) | `<nombre>` |
 
-- Acepta PNG, JPG o WebP de hasta 8 MB; los íconos, SVG.
+- Acepta PNG, JPG o WebP de hasta 8 MB; los íconos, SVG de hasta 25 KB.
+- Antes de guardarlo, `cleanSvg()` (`admin/src/svg.ts`) quita del SVG scripts, manejadores `on*`, enlaces externos o `javascript:`, documentos incrustados y estilos con `@import` o URL externas, y avisa cuántos elementos quitó (commit `2d942c4`). El ícono se sirve desde el dominio del portafolio, así que un script dentro correría ahí si alguien abriera el archivo directamente.
 - El nombre del archivo se normaliza (`slug` en `admin/src/data.ts`): «Mi Captura 2.PNG» queda `mi-captura-2`.
 - La conversión a WebP la hacen el build de Netlify y el workflow `Images` (ver [portafolio](portafolio.md), sección Imágenes).
 
@@ -80,6 +82,45 @@ El **tablero de salida** (abajo, `components/Departure.tsx`) cuenta los cambios 
 Si GitHub rechaza la publicación, el tablero lo explica: ante un 401 la sesión terminó y hay que entrar de nuevo (los cambios siguen guardados como borrador); ante un 403 el token del servidor (`ADMIN_GITHUB_TOKEN` en Netlify) no tiene permiso «Contents: Read and write».
 
 Netlify pone el sitio en línea en uno o dos minutos. Si un JSON quedó con la forma equivocada, el build falla y el sitio sigue con la versión anterior (ver [arquitectura](arquitectura.md)).
+
+## Resumen semanal por correo
+
+La función programada `admin/netlify/functions/weekly-digest.mts` (commit `ba00cb5`) le envía a Harol un correo con cómo le fue al portafolio la semana anterior. La lógica está en `admin/netlify/lib/digest.ts` y la firma para Google en `admin/netlify/lib/google.ts`; las pruebas, en `portfolio/tests/digest.test.ts`.
+
+### Cuándo
+
+Cada lunes a las 8:00 de Bogotá (`schedule: "0 13 * * 1"`, en UTC). Cubre los siete días completos anteriores, de medianoche a medianoche en Bogotá.
+
+### Qué manda
+
+- **Asunto:** visitantes y descargas del CV de la semana.
+- **Visitas (Umami Cloud):** visitantes, visitas, páginas vistas y tiempo medio por visita, comparados con la semana anterior; páginas más vistas, de dónde llegaron, países y los eventos del sitio. `eventLabel()` traduce a palabras los de descarga del CV, formulario, MIGOZZ, redes y proyectos; los demás (como `case-<id>` y `code-<id>`) salen con su nombre tal cual.
+- **Google (Search Console):** apariciones en resultados, clics, posición media y las 5 búsquedas que más mostraron el sitio. Search Console va dos o tres días atrasado, así que su semana termina antes y el correo lo dice.
+- **Lo que falló:** si una fuente responde con error, el correo lo dice en «No se pudo leer» en vez de mostrar ceros.
+
+Cada fuente es opcional: lo que no está configurado se deja fuera, nunca se inventa. Se envía por Resend con una clave de idempotencia por semana (`weekly-digest-<inicio de la semana>`): un reintento o una segunda corrida a mano dentro de las 24 horas en que Resend recuerda la clave no envía otro correo.
+
+### Variables que necesita
+
+En el sitio `admin-hgs` de Netlify (ver [configuración](configuracion.md)):
+
+| Variable | Para qué |
+| :-- | :-- |
+| `UMAMI_API_KEY` y `UMAMI_WEBSITE_ID` | Las dos activan la parte de visitas. Es la API de Umami Cloud (`api.umami.is`), distinta de `VITE_UMAMI_WEBSITE_ID` del portafolio aunque el id del sitio sea el mismo. |
+| `GSC_SERVICE_ACCOUNT` | Opcional. El JSON de una cuenta de servicio de Google Cloud con lectura de Search Console. El correo de esa cuenta debe agregarse como usuario de la propiedad en Search Console. |
+| `GSC_SITE` | Opcional. Propiedad de Search Console; por defecto la de dominio de `hgsportafolio.site`. |
+| `DIGEST_TO` | A quién llega. Si falta, usa `CONTACT_TO`. |
+| `CONTACT_FROM` | Remitente. Aquí es obligatoria: la función no tiene valor por defecto. |
+
+Además usa `RESEND_API_KEY`, como todos los correos del admin.
+
+### Estado
+
+El código está desplegado, pero el resumen no llega hasta que se configuren esas variables: sin destinatario o remitente la función falla, y sin ninguna fuente (Umami o Search Console) también. Es un pendiente de Harol (ver [pendientes](pendientes.md)).
+
+### Cómo probarlo
+
+En Netlify: sitio `admin-hgs` → Functions → `weekly-digest` → **Run now**. El registro de la función muestra el error si falta algo. Por la clave de idempotencia, otra corrida en las 24 horas siguientes no envía un segundo correo.
 
 ## Probar contra otra rama
 

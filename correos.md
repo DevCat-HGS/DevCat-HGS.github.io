@@ -1,7 +1,7 @@
 ---
 titulo: Los correos que envía el sistema
 seccion: Correos
-resumen: Cuándo se envía cada correo del formulario de contacto y del admin, a quién, con qué proveedor y cómo se evita el abuso.
+resumen: Cuándo se envía cada correo del formulario de contacto, del admin y del resumen semanal, a quién, con qué proveedor y cómo se evita el abuso.
 orden: 6
 ---
 
@@ -17,8 +17,9 @@ Desde el commit `f4be780` (2026-10-21) el portafolio ya no envía correos ni tie
 | Confirmación | El mismo mensaje | El correo que escribió el visitante | `CONTACT_FROM` |
 | Código de acceso | PIN correcto en el admin | `ADMIN_EMAIL` | `ADMIN_MAIL_FROM` |
 | Intentos fallidos | Se bloquea el PIN | `ADMIN_EMAIL` | `ADMIN_MAIL_FROM` |
+| Resumen semanal | Lunes 8:00 de Bogotá (función programada) | `DIGEST_TO` (si falta, `CONTACT_TO`) | `CONTACT_FROM` (sin valor por defecto) |
 
-Si una variable no está definida, el código usa un valor por defecto: el destino es el correo de contacto de Harol, y los remitentes son `contacto@hgsportafolio.site` (formulario) y `admin@hgsportafolio.site` (códigos).
+Si una variable no está definida, el código del formulario y de los códigos usa un valor por defecto: el destino es el correo de contacto de Harol, y los remitentes son `contacto@hgsportafolio.site` (formulario) y `admin@hgsportafolio.site` (códigos).
 
 ## Formulario de contacto
 
@@ -66,3 +67,15 @@ Los arma `admin/netlify/lib/auth.ts` y los envía `send()` en `admin/netlify/lib
 Si el envío del código falla, el reto se borra y la pantalla muestra «No se pudo enviar el código. Revisa RESEND_API_KEY.». Un fallo al enviar el aviso de bloqueo se ignora para no romper la respuesta.
 
 Límites que frenan el abuso: un código cada 30 segundos por dirección y los bloqueos del PIN descritos en [seguridad](seguridad.md).
+
+## Resumen semanal
+
+`admin/netlify/functions/weekly-digest.mts` corre cada lunes a las 8:00 de Bogotá y envía un correo con las visitas de la semana anterior (Umami Cloud) y cómo apareció el sitio en Google (Search Console). Asunto: «Tu portafolio esta semana: <n> visitantes, <n> descargas del CV». Lo arma `digestEmail()` en `admin/netlify/lib/digest.ts`, con el mismo marco visual que los correos del formulario (`layout()` de `contact.ts`), en HTML y en texto plano.
+
+- **Destino y remitente:** `DIGEST_TO` (o `CONTACT_TO`) y `CONTACT_FROM`. A diferencia del formulario, aquí no hay valores por defecto: si faltan, la función falla y no se envía nada.
+- **Fuentes:** `UMAMI_API_KEY` + `UMAMI_WEBSITE_ID` para visitas y `GSC_SERVICE_ACCOUNT` (opcional `GSC_SITE`) para Google. Sin ninguna fuente, la función falla en vez de mandar un correo vacío. Si una fuente responde con error, el correo lo dice en una sección «No se pudo leer».
+- **Lo que se escapa:** lo que viene de fuera (sitios de origen, búsquedas) se escapa antes de ir al HTML; hay prueba de eso en `portfolio/tests/digest.test.ts`.
+- **Duplicados:** clave de idempotencia `weekly-digest-<inicio de la semana>`.
+- **Privacidad:** el pie aclara que Umami no usa cookies ni identifica a nadie: son conteos.
+
+Hoy no se envía: faltan esas variables en `admin-hgs`. Cómo probarlo y el detalle de cada variable, en [admin](admin.md).
