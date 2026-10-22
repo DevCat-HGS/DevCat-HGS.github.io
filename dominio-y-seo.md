@@ -10,6 +10,7 @@ orden: 10
 - **Producción:** `https://hgsportafolio.site`, fijado en `portfolio/netlify.toml` como `VITE_SITE_URL`. De ahí salen canonical, `hreflang`, Open Graph, JSON-LD y sitemap.
 - **Respaldo:** `portafolio-hgs.netlify.app` sigue abierto. No compite en Google porque cada página declara como canonical su versión en `hgsportafolio.site` (commit `8d5a3db`, que quitó la redirección 301 añadida en `73be47d`).
 - **Admin:** `admin.hgsportafolio.site`, con un registro `CNAME` en Hostinger hacia `admin-hgs.netlify.app` (`admin/README.md`).
+- **Documentación:** `docs.hgsportafolio.site`, con un registro `CNAME` en Hostinger hacia `DevCat-HGS.github.io`. El dominio lo fija el archivo `CNAME` que `publish-docs.yml` escribe en cada publicación, porque el workflow reemplaza toda la raíz del sitio.
 
 El registrador y el DNS están en Hostinger. Los registros del dominio raíz hacia Netlify no están escritos en el repositorio (por confirmar en el panel de Hostinger).
 

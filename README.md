@@ -16,7 +16,7 @@ Este repositorio privado (`DevCat-HGS/portfolio-hgs` en GitHub) reúne la presen
 | Hoja de vida | `curriculum/` | `portfolio/public/cv/` (botón de descarga del sitio) | Generador en Python que produce el CV en PDF en español e inglés desde `cv_data.json`. |
 | Perfil de GitHub | `README.md`, `README.es.md`, `profile/`, `privacity/`, `scripts/` | Repositorio público `DevCat-HGS/DevCat-HGS` | README del perfil, con gráficas de lenguajes generadas y copiado al repo público por un workflow. |
 | LinkedIn | `linkedin/` | Perfil de LinkedIn (manual) | Guía, banners y publicación con la misma identidad visual del sitio. |
-| Documentación | `Doc/` | `https://devcat-hgs.github.io` (repo público `DevCat-HGS.github.io`) | Estos artículos y su página `index.html`, publicados por el workflow `Publish docs` en cada push a `main` que toque `Doc/`. |
+| Documentación | `Doc/` | `https://docs.hgsportafolio.site` (repo público `DevCat-HGS.github.io`) | Estos artículos y su página `index.html`, publicados por el workflow `Publish docs` en cada push a `main` que toque `Doc/`. |
 
 ## Cómo se conectan
 

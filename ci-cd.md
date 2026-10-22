@@ -25,7 +25,7 @@ Todos en `.github/workflows/`.
 | `preview-comment.yml` (Preview comment) | Evento `status` de Netlify | Un comentario por sitio (Portafolio, Admin) y por PR con el enlace del deploy preview, editado en cada deploy. | Nada. |
 | `release.yml` (Release) | Solo a mano | Release Please: PR de versión con `CHANGELOG.md` desde los mensajes Conventional Commits. | Nada. |
 | `secret-scan.yml` (Secret scan) | Push a `main` o `desarrollo`, todo PR; a mano | gitleaks 8.30.1 (en Docker) revisa todo el historial en busca de claves, tokens y llaves privadas, con los valores tapados en el registro. | Check del PR si encuentra un secreto. |
-| `publish-docs.yml` (Publish docs) | Push a `main` que toque `Doc/**` o el workflow; a mano | Corre `node Doc/build.mjs` y reemplaza la raíz de `DevCat-HGS/DevCat-HGS.github.io` con los `.md` y el `index.html` de `Doc/`, usando el secreto `DOCS_DEPLOY_KEY`. | Nada. |
+| `publish-docs.yml` (Publish docs) | Push a `main` que toque `Doc/**` o el workflow; a mano | Corre `node Doc/build.mjs` y reemplaza la raíz de `DevCat-HGS/DevCat-HGS.github.io` con los `.md` y el `index.html` de `Doc/` (más el `CNAME` de `docs.hgsportafolio.site`), usando el secreto `DOCS_DEPLOY_KEY`. | Nada. |
 | `metrics.yml`, `privacity.yml`, `publish-profile.yml` | Ver [perfil de GitHub](perfil-github.md) | Gráficas, repos privados y copia al repo público. | Nada. |
 
 Notas:
