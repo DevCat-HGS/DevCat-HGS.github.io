@@ -1,7 +1,7 @@
 ---
 titulo: El portafolio por dentro
 seccion: Portafolio
-resumen: Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, los casos MIGOZZ, ARIA, DevPanel y Portafolio, la franja de DevPanel, imágenes y pruebas.
+resumen: Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, los casos MIGOZZ, ARIA, DevPanel y Portafolio, los proyectos propios y los de clientes, imágenes y pruebas.
 orden: 3
 ---
 
@@ -17,8 +17,7 @@ El portafolio es una página principal bilingüe en React 19 + TypeScript + Vite
 | 02 | Oficio | `Practice.tsx` (retrato, bento y marquesina) |
 | 03 | Startup | `Startup.tsx` (MIGOZZ y botón al caso) |
 | 04 | Cargo | `Tenure.tsx` (cargo anterior) |
-| 05 | Proyectos | `Projects.tsx` (los marcados `featured` y el resto tras «ver más») |
-| — | (sin capítulo) | `SideProject.tsx` (franja de DevPanel, ver abajo) |
+| 05 | Proyectos | `Projects.tsx`: primero «Proyectos propios» (una franja `OwnProject` por cada uno) y después «Para clientes e instituciones» (`ProjectCard`: los `featured` y el resto tras «ver más»). Ver abajo. |
 | 06 | Credenciales | `Credentials.tsx` y `Lightbox.tsx` (carga diferida) |
 | 07 | Stack | `Stack.tsx` (acordeón por grupo) |
 | 08 | Cierre | `Close.tsx` con `ContactForm.tsx`, `Socials.tsx` y `GithubStats.tsx` |
@@ -34,7 +33,7 @@ Todo el texto visible vive en `portfolio/src/content/data/`:
 | Archivo | Qué contiene | Quién lo lee |
 | :-- | :-- | :-- |
 | `site.json` | Textos del sitio en `es` y `en`, incluidos `credGroups` y `stackGroups` | `content/es.ts`, `content/en.ts` |
-| `projects.json` | Proyectos (campos comunes y textos por idioma) | `content/projects.ts` |
+| `projects.json` | Proyectos propios y de clientes (campos comunes y textos por idioma) | `content/projects.ts` |
 | `stack.json` | Tecnologías e íconos por grupo | `content/stack.ts` |
 | `migozz.json` | Página del caso MIGOZZ | `content/migozz.ts` |
 | `migozz-public.json` | Versiones de la App Store y comunidad de creadores destacados | `content/migozzPublic.ts` |
@@ -48,16 +47,19 @@ Todo el texto visible vive en `portfolio/src/content/data/`:
 
 JSON pierde los tipos literales, así que `checked()` en `src/content/json.ts` compara cada archivo con una copia «ensanchada» del tipo real (`Widen<T>`). Una clave que falta o está mal escrita hace fallar `tsc` y, por tanto, el build. Así un dato roto nunca llega a publicarse.
 
-`projects.ts` normaliza las entradas: el admin puede dejar campos opcionales como `""` o `null`, y `projectsFrom()` los quita antes de llegar a los componentes. `hidden: true` deja el proyecto en el archivo pero fuera del sitio; `featured: true` lo pone entre los destacados.
+`projects.ts` normaliza las entradas: el admin puede dejar campos opcionales como `""` o `null`, y `projectsFrom()` los quita antes de llegar a los componentes. `hidden: true` deja el proyecto en el archivo pero fuera del sitio; `featured: true` lo pone entre los destacados; `own: true` lo saca de la cuadrícula y lo muestra como franja de proyecto propio.
 
-### Campos `case` y `code` de un proyecto
+### Campos opcionales de un proyecto
 
-Dos campos opcionales de `projects.json`, agregados el 2026-10-21:
+`case` y `code` llegaron el 2026-10-21; `own`, `download` y `points`, el 2026-10-22 (commit `e88c874`). Los tipos están en `ProjectEntry` (`src/content/projects.ts`) y en `Project` (`src/content/types.ts`).
 
-| Campo | Qué guarda | Qué muestra la tarjeta |
-| :-- | :-- | :-- |
-| `case` | Id del caso de estudio en el sitio (hoy `"aria"`, `"devpanel"` y `"portafolio"`). `projectsFrom()` lo convierte en `/<id>/` o `/en/<id>/` según el idioma. | Enlace «Ver el caso completo» / «Read the case study». |
-| `code` | URL de un repositorio público. Solo código propio, nunca de un cliente (comentario de `ProjectEntry` y ayuda del campo en el admin). Hoy lo usan SENA Cloud, SensoresAPP y DevPanel. | Enlace «Ver código» / «View code», que abre en otra pestaña. |
+| Campo | Dónde va | Qué guarda | Qué muestra |
+| :-- | :-- | :-- | :-- |
+| `case` | Común | Id del caso de estudio en el sitio (hoy `"aria"`, `"devpanel"` y `"portafolio"`). `projectsFrom()` lo convierte en `/<id>/` o `/en/<id>/` según el idioma. | Enlace «Ver el caso completo» / «Read the case study». |
+| `code` | Común | URL de un repositorio público. Solo código propio, nunca de un cliente (comentario de `ProjectEntry` y ayuda del campo en el admin). Hoy lo usan DevPanel, SENA Cloud y SensoresAPP. | Enlace «Ver código» / «View code», que abre en otra pestaña. |
+| `own` | Común | `true` en un producto propio de Harol. Hoy lo tienen DevPanel y el portafolio. | El proyecto sale en «Proyectos propios» como franja, no en la cuadrícula. |
+| `download` | Común | URL de descarga de un producto propio que es una app; `projectsFrom()` la pasa a `downloadHref`. Hoy solo DevPanel, hacia el release `installer` de su repositorio. | Botón «Descargar para Windows» (`downloadLabel` en `site.json`). |
+| `points` | Dentro de `es` y `en` | Lista de puntos destacados de la franja. `projectsFrom()` recorta espacios y quita los vacíos. | Lista con viñetas en la franja. |
 
 Antes toda tarjeta con sitio en línea era un enlace completo. Un enlace no puede contener otros enlaces, así que una tarjeta con caso o con código pasa a ser un `<article>` con enlaces separados (sitio, caso, código); las demás siguen siendo un enlace completo (`ProjectCard` en `components/Projects.tsx`, commit `94f0f6a`).
 
@@ -123,31 +125,45 @@ Como el código del portafolio es privado, el registro público de cómo está h
 
 Tiene tres capturas: `shots/portafolio.webp` (la portada), `portafolio-case.webp` (un caso de estudio) y `portafolio-docs.webp` (esta documentación), cada una con su variante `-480.webp`. Están directamente en `portfolio/public/shots/`, sin original en `images/`: son capturas del sitio local y de `docs.hgsportafolio.site`, y el repositorio no guarda el script que las tomó, así que al cambiar el diseño hay que rehacerlas a mano.
 
-### Franja de DevPanel en la portada
-
-`src/components/SideProject.tsx` (estilos en `src/styles/side-project.css`) es una franja oscura justo después de Proyectos, con el ancla `#devpanel`. No es un capítulo de la línea: no está en `CHAPTER_IDS` ni en el menú. Sus textos están en `site.json`, clave `sideProject` (antetítulo, título, frase, tres puntos, etiquetas y la captura), y se editan en la estación «Textos del sitio» del admin, en el grupo «Otros textos» (`admin/src/components/Fields.tsx` junta ahí las claves que `schema.ts` no asigna a ningún grupo).
-
-Tiene tres enlaces:
-
-| Enlace | Destino | Evento de Umami |
-| :-- | :-- | :-- |
-| Ver el caso | `sideProject.caseHref` (`/devpanel/` o `/en/devpanel/`) | `case-devpanel` |
-| Código | `DEVPANEL_LINKS.code` | `devpanel-code` |
-| Descargar para Windows | `DEVPANEL_LINKS.download` (release `installer` del repositorio) | `devpanel-download` |
-
-`DEVPANEL_LINKS` vive en `src/content/devpanel.ts`; las direcciones del código y de la descarga no se editan en el admin desde la franja (los enlaces de la portada del caso sí, en `devpanel.json`).
-
 ### Tarjeta de ARIA
 
 La tarjeta de ARIA en `projects.json` se corrigió el mismo día: dice S3 Vectors en vez de OpenSearch (que el proyecto no usó), cambia el resultado «Escalamiento humano incluido» (que no se construyó) por un tiempo de respuesta medido, describe la parte de Harol en el equipo y enlaza al caso con `case: "aria"`. OpenSearch también salió del stack del sitio (`stack.json`, el texto de `site.json` y su ícono) en el commit `8bbfdbf`.
 
-### Tarjeta del portafolio
+## Sección Proyectos: propios y para clientes
 
-Desde `433174c`, `projects.json` tiene una tarjeta destacada `portafolio` («Este portafolio» / «This portfolio») justo después de la de DevPanel, con la captura `shots/portafolio.webp` y `case: "portafolio"`. No tiene `href` ni `code`, porque el código es privado; su resultado menciona la documentación en `docs.hgsportafolio.site`.
+Desde el commit `e88c874` (2026-10-22), `src/components/Projects.tsx` divide la sección 05 en dos subsecciones, bajo el encabezado común (`selectedEyebrow`, `selectedTitle` y `selectedLead` en `site.json`; la introducción habla de dos productos propios y ocho proyectos para clientes e instituciones, y esas cifras se escriben a mano):
 
-### Tarjeta de DevPanel
+| Subsección | Textos en `site.json` | Qué entra | Cómo se ve |
+| :-- | :-- | :-- | :-- |
+| Proyectos propios | `ownTitle` y `ownLead` | Los proyectos con `own: true`, en el orden de `projects.json` | Una franja oscura por proyecto (`OwnProject`). Si no hay ninguno, la subsección no aparece. |
+| Para clientes e instituciones | `clientTitle` | El resto | La cuadrícula de tarjetas (`ProjectCard`): los `featured` siempre y los demás tras «Ver más proyectos». |
 
-Desde `06a3e2b`, DevPanel es un proyecto destacado (`featured: true`) en `projects.json`, con la captura `shots/devpanel.webp`, enlace a su código (`code`) y, desde `90ff404`, a su caso (`case: "devpanel"`). El mensaje del commit explica por qué: es el código público más sólido de Harol.
+Antes DevPanel tenía, además de su tarjeta, una franja suelta después de Proyectos (`SideProject.tsx`, con sus textos en la clave `sideProject` de `site.json`). Ese componente y esa clave se borraron, así que DevPanel ya no sale dos veces. `downloadLabel` pasó a ser una clave de primer nivel de `site.json`.
+
+### Franja de proyecto propio
+
+`OwnProject` (en `Projects.tsx`; estilos en `src/styles/own-project.css`, que antes se llamaba `side-project.css`) arma cada franja con los datos del proyecto en `projects.json`:
+
+- Etiqueta (`tag`), título (`title`) y descripción (`dek`).
+- Los puntos destacados (`points`), si los hay.
+- Botones: «Ver el caso completo» si hay `case`, «Ver código» si hay `code` y «Descargar para Windows» si hay `download`.
+- Las tecnologías (`stack`) y la captura (`shot`, con su variante `-480.webp`).
+
+La franja no muestra el campo `result`. Cada una lleva el id `own-<id>`. En escritorio (desde 960 px) la segunda franja pone la captura a la izquierda, para que las dos no se lean como copias (comentario de `own-project.css`, regla `:nth-child(even)`).
+
+Las letras de línea de metro de las tarjetas se calculan solo sobre la lista de clientes: los proyectos propios no gastan letras y cada tarjeta conserva la suya al desplegar «Ver más».
+
+### Altura estimada de la sección
+
+Las secciones usan `content-visibility` con un estimado de altura de 1600 px (`src/styles/layout.css`). Con las franjas, Proyectos mide mucho más: con ese estimado el contenido de abajo se corría al pintarse y axe medía Credenciales sobre una franja oscura que ya no estaba ahí, lo que daba un fallo de contraste en e2e. Por eso `#selected` tiene `contain-intrinsic-size: auto 4600px` en móvil y `auto 3500px` desde 960 px. Si se agregan más proyectos propios, hay que subir esos valores.
+
+### DevPanel en Proyectos
+
+DevPanel entró a `projects.json` como proyecto destacado en `06a3e2b` (el mensaje del commit explica por qué: es el código público más sólido de Harol), con la captura `shots/devpanel.webp` y su código (`code`); su caso (`case: "devpanel"`) llegó en `90ff404`. Desde `e88c874` es el primero de la lista, con `own: true`, tres puntos por idioma y `download` hacia el release `installer`. Sale como la primera franja de «Proyectos propios», con los tres botones.
+
+### El portafolio en Proyectos
+
+La entrada `portafolio` («Este portafolio» / «This portfolio») llegó en `433174c`, con la captura `shots/portafolio.webp` y `case: "portafolio"`. Desde `e88c874` va segunda, con `own: true` y tres puntos por idioma. No tiene `href`, `code` ni `download`, porque el código es privado, así que su franja solo tiene el botón al caso. Las cifras de sus puntos (número de workflows y de pruebas) se escriben a mano.
 
 ## Imágenes
 
@@ -179,15 +195,17 @@ Eventos que ya se registran (atributos `data-umami-event` y llamadas a `umami.tr
 | `cv-download` | `Socials.tsx` | Clic en descargar el CV. |
 | `social-<red>` | `Socials.tsx` | Clic en una red social (nombre de la red en minúsculas). |
 | `project-<id>` | `Projects.tsx` | Clic en un proyecto con enlace. |
-| `case-<id>` | `Projects.tsx` | Clic en «Ver el caso completo» de una tarjeta. |
-| `case-devpanel` | `SideProject.tsx` | Clic en «Ver el caso» de la franja de DevPanel (mismo nombre que el de su tarjeta). |
-| `devpanel-code`, `devpanel-download` | `SideProject.tsx` y portada del caso DevPanel | Clic en el código o en la descarga de DevPanel. |
+| `case-<id>` | `Projects.tsx` | Clic en «Ver el caso completo» de una tarjeta o de una franja de proyecto propio (`case-devpanel`, `case-portafolio`). |
+| `code-<id>` | `Projects.tsx` | Clic en «Ver código» de una tarjeta o de una franja (en DevPanel, `code-devpanel`). |
+| `<id>-download` | `Projects.tsx` (franja `OwnProject`) | Clic en la descarga de un proyecto propio. Hoy solo `devpanel-download`. |
+| `devpanel-code`, `devpanel-download` | Portada del caso DevPanel (`devpanel.json` → `links`) | Clic en el código o en la descarga desde la página del caso. |
 | `portafolio-docs` | Portada del caso Portafolio (`portafolio.json` → `links`) | Clic en «Leer la documentación técnica». |
-| `code-<id>` | `Projects.tsx` | Clic en «Ver código» de una tarjeta. |
 | `migozz-play`, `migozz-appstore` | `Startup.tsx` | Clic en Google Play o App Store de MIGOZZ. |
 | `migozz-case` | `Startup.tsx` | Clic en el botón al caso de MIGOZZ. |
 | `contact` | `ContactForm.tsx` | Clic en enviar el formulario. |
 | `contact-sent` | `ContactForm.tsx` | El mensaje se envió bien (`window.umami.track`). |
+
+Desde `e88c874` el código de DevPanel cuenta con dos nombres: `code-devpanel` desde la franja de la portada (antes `devpanel-code`) y `devpanel-code` desde la página del caso. La descarga usa `devpanel-download` en los dos lugares. El resumen semanal del admin traduce cada nombre por separado (ver [admin](admin.md)).
 
 `umamiId()` (`seo/headers.ts`) extrae de la variable solo el UUID, así que un fragmento `<script>` pegado completo no rompe el `<head>`.
 

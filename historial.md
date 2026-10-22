@@ -1,7 +1,7 @@
 ---
 titulo: Cronología del repositorio
 seccion: Historial
-resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta los casos de estudio de ARIA, DevPanel y el propio portafolio, y el resumen semanal, en octubre de 2026.
+resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta los casos de estudio de ARIA, DevPanel y el propio portafolio, el resumen semanal y la sección de proyectos propios, en octubre de 2026.
 orden: 13
 ---
 
@@ -101,12 +101,16 @@ Fuente: `git log --format="%h %ad %s" --date=short`. Se omiten los commits autom
 
 Ese mismo día, fuera del repositorio: revisión del historial para decidir si `portfolio-hgs` podía ser público (ver [seguridad](seguridad.md)).
 
-## 2026-10-22: documentación en su dominio y caso del portafolio
+## 2026-10-22: documentación en su dominio, caso del portafolio y proyectos propios
 
 - `83ccd6b` La documentación se sirve en `docs.hgsportafolio.site`: `publish-docs.yml` escribe el archivo `CNAME` en cada publicación, porque reemplaza toda la raíz del sitio y la siguiente publicación borraba el dominio.
 - `6a21775` La página de la documentación queda siempre en tema claro, sobre papel crema (`#f6efe4`); se quita el modo oscuro para que se lea igual en todos los sistemas.
 - `433174c` Caso de estudio del propio portafolio en `/portafolio/` y `/en/portafolio/`, con la plantilla `CaseStudyPage`, Harol como autor en el JSON-LD y enlaces a la documentación (el código es privado). Tarjeta destacada después de DevPanel, tres capturas, redirección por idioma, estación «Portafolio» en el admin y evento `portafolio-docs` en el resumen semanal.
+- `cb565c1` `Doc/` al día con el caso del portafolio, el dominio de la documentación y su página clara.
+- `ef8b21f` LinkedIn: banner con el mensaje del sitio y los cuatro casos, publicación sobre `/portafolio/` con captura de la página en línea, y guía con DevPanel y el portafolio en Acerca de, Destacados y Proyectos (ARIA sigue sin cifras hasta que Arix Group las confirme).
+- `e88c874` Proyectos se divide en «Proyectos propios» (DevPanel y el portafolio, cada uno en una franja oscura con puntos, caso, código y descarga) y «Para clientes e instituciones». Se borran `SideProject.tsx` y la clave `sideProject`, así DevPanel ya no sale dos veces; `projects.json` gana `own`, `points` y `download`. Proyectos sube su altura estimada (`contain-intrinsic-size`) para que lo de abajo no se corra al pintarse.
+- `50e0ac6` El admin nombra en español los campos nuevos de proyectos propios y los textos de las dos subsecciones.
 
 ## Commits automáticos
 
-A la fecha (296 commits en `main`, contados con `git rev-list --count main`): 19 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.
+A la fecha (300 commits en `main`, contados con `git rev-list --count main`): 20 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.
