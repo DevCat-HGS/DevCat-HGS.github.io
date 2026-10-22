@@ -17,7 +17,7 @@ Desde el commit `f4be780` (2026-10-21) el portafolio ya no envía correos ni tie
 | Confirmación | El mismo mensaje | El correo que escribió el visitante | `CONTACT_FROM` |
 | Código de acceso | PIN correcto en el admin | `ADMIN_EMAIL` | `ADMIN_MAIL_FROM` |
 | Intentos fallidos | Se bloquea el PIN | `ADMIN_EMAIL` | `ADMIN_MAIL_FROM` |
-| Resumen semanal | Lunes 8:00 de Bogotá (función programada) | `DIGEST_TO` (si falta, `CONTACT_TO`) | `CONTACT_FROM` (sin valor por defecto) |
+| Resumen semanal | Lunes 8:00 de Bogotá (función programada) | `DIGEST_TO` (si falta, el mismo destino del formulario) | `CONTACT_FROM` (con el mismo valor por defecto del formulario) |
 
 Si una variable no está definida, el código del formulario y de los códigos usa un valor por defecto: el destino es el correo de contacto de Harol, y los remitentes son `contacto@hgsportafolio.site` (formulario) y `admin@hgsportafolio.site` (códigos).
 
@@ -72,7 +72,7 @@ Límites que frenan el abuso: un código cada 30 segundos por dirección y los b
 
 `admin/netlify/functions/weekly-digest.mts` corre cada lunes a las 8:00 de Bogotá y envía un correo con las visitas de la semana anterior (Umami Cloud) y cómo apareció el sitio en Google (Search Console). Asunto: «Tu portafolio esta semana: <n> visitantes, <n> descargas del CV». Lo arma `digestEmail()` en `admin/netlify/lib/digest.ts`, con el mismo marco visual que los correos del formulario (`layout()` de `contact.ts`), en HTML y en texto plano.
 
-- **Destino y remitente:** `DIGEST_TO` (o `CONTACT_TO`) y `CONTACT_FROM`. A diferencia del formulario, aquí no hay valores por defecto: si faltan, la función falla y no se envía nada.
+- **Destino y remitente:** `DIGEST_TO` y `CONTACT_FROM`. Desde el commit `574e51b`, si faltan, usa los mismos valores que el formulario (`CONTACT_TO`, luego `ADMIN_EMAIL`, luego el valor por defecto del código), así un `CONTACT_TO` vacío ya no detiene el resumen.
 - **Fuentes:** `UMAMI_API_KEY` + `UMAMI_WEBSITE_ID` para visitas y `GSC_SERVICE_ACCOUNT` (opcional `GSC_SITE`) para Google. Sin ninguna fuente, la función falla en vez de mandar un correo vacío. Si una fuente responde con error, el correo lo dice en una sección «No se pudo leer».
 - **Lo que se escapa:** lo que viene de fuera (sitios de origen, búsquedas) se escapa antes de ir al HTML; hay prueba de eso en `portfolio/tests/digest.test.ts`.
 - **Duplicados:** clave de idempotencia `weekly-digest-<inicio de la semana>`.

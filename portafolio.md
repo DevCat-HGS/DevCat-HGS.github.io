@@ -1,11 +1,11 @@
 ---
 titulo: El portafolio por dentro
 seccion: Portafolio
-resumen: Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, los casos MIGOZZ y ARIA, imágenes y pruebas.
+resumen: Secciones del sitio, componentes, contenido en JSON y su validación, idiomas, los casos MIGOZZ, ARIA y DevPanel, la franja de DevPanel, imágenes y pruebas.
 orden: 3
 ---
 
-El portafolio es una página principal bilingüe en React 19 + TypeScript + Vite, sin librerías de interfaz, más dos casos de estudio (MIGOZZ y ARIA). El diseño sigue una línea del metro de Medellín que recorre la página: una estación por capítulo (`portfolio/README.md`).
+El portafolio es una página principal bilingüe en React 19 + TypeScript + Vite, sin librerías de interfaz, más tres casos de estudio (MIGOZZ, ARIA y DevPanel). El diseño sigue una línea del metro de Medellín que recorre la página: una estación por capítulo (`portfolio/README.md`).
 
 ## Secciones
 
@@ -17,7 +17,8 @@ El portafolio es una página principal bilingüe en React 19 + TypeScript + Vite
 | 02 | Oficio | `Practice.tsx` (retrato, bento y marquesina) |
 | 03 | Startup | `Startup.tsx` (MIGOZZ y botón al caso) |
 | 04 | Cargo | `Tenure.tsx` (cargo anterior) |
-| 05 | Proyectos | `Projects.tsx` (dos destacados y el resto tras «ver más») |
+| 05 | Proyectos | `Projects.tsx` (los marcados `featured` y el resto tras «ver más») |
+| — | (sin capítulo) | `SideProject.tsx` (franja de DevPanel, ver abajo) |
 | 06 | Credenciales | `Credentials.tsx` y `Lightbox.tsx` (carga diferida) |
 | 07 | Stack | `Stack.tsx` (acordeón por grupo) |
 | 08 | Cierre | `Close.tsx` con `ContactForm.tsx`, `Socials.tsx` y `GithubStats.tsx` |
@@ -39,6 +40,7 @@ Todo el texto visible vive en `portfolio/src/content/data/`:
 | `migozz-public.json` | Versiones de la App Store y comunidad de creadores destacados | `content/migozzPublic.ts` |
 | `migozz-users.json` | Cifras de usuarios de MIGOZZ (ocultas mientras `visible` sea `false`) | `content/migozzUsers.ts` |
 | `aria.json` | Página del caso ARIA | `content/aria.ts` |
+| `devpanel.json` | Página del caso DevPanel | `content/devpanel.ts` |
 | `seo.json` | Identidad del sitio, enlaces, códigos de Search Console y textos de cada página | `seo/pages.ts` |
 
 ### Validación
@@ -53,8 +55,8 @@ Dos campos opcionales de `projects.json`, agregados el 2026-10-21:
 
 | Campo | Qué guarda | Qué muestra la tarjeta |
 | :-- | :-- | :-- |
-| `case` | Id del caso de estudio en el sitio (hoy solo ARIA usa `"aria"`). `projectsFrom()` lo convierte en `/aria/` o `/en/aria/` según el idioma. | Enlace «Ver el caso completo» / «Read the case study». |
-| `code` | URL de un repositorio público. Solo código propio, nunca de un cliente (comentario de `ProjectEntry` y ayuda del campo en el admin). Hoy lo usan SENA Cloud y SensoresAPP. | Enlace «Ver código» / «View code», que abre en otra pestaña. |
+| `case` | Id del caso de estudio en el sitio (hoy `"aria"` y `"devpanel"`). `projectsFrom()` lo convierte en `/<id>/` o `/en/<id>/` según el idioma. | Enlace «Ver el caso completo» / «Read the case study». |
+| `code` | URL de un repositorio público. Solo código propio, nunca de un cliente (comentario de `ProjectEntry` y ayuda del campo en el admin). Hoy lo usan SENA Cloud, SensoresAPP y DevPanel. | Enlace «Ver código» / «View code», que abre en otra pestaña. |
 
 Antes toda tarjeta con sitio en línea era un enlace completo. Un enlace no puede contener otros enlaces, así que una tarjeta con caso o con código pasa a ser un `<article>` con enlaces separados (sitio, caso, código); las demás siguen siendo un enlace completo (`ProjectCard` en `components/Projects.tsx`, commit `94f0f6a`).
 
@@ -64,7 +66,7 @@ Las pruebas de `tests/content.test.ts` añaden: misma estructura en los dos idio
 
 - Español en `/` y inglés en `/en/`: dos páginas estáticas con su propio título, descripción, canonical, `hreflang`, Open Graph, datos estructurados y texto de respaldo.
 - La URL decide el idioma (`useLocale`, `public/splash.js` y el build usan la misma regla). El botón cambia sin recargar y actualiza la dirección.
-- `portfolio/netlify.toml` redirige (302) `/` a `/en/` y `/migozz/` a `/en/migozz/` solo si el navegador pide inglés o tiene la cookie `nf_lang=en`. El botón de idioma fija esa cookie, que Netlify lee antes que el idioma del navegador. Los rastreadores no mandan idioma y reciben la versión en español. `/aria/` aún no tiene esa regla (ver [dominio y SEO](dominio-y-seo.md)).
+- `portfolio/netlify.toml` redirige (302) `/` a `/en/`, `/migozz/` a `/en/migozz/`, `/aria/` a `/en/aria/` y `/devpanel/` a `/en/devpanel/` solo si el navegador pide inglés o tiene la cookie `nf_lang=en`. El botón de idioma fija esa cookie, que Netlify lee antes que el idioma del navegador. Los rastreadores no mandan idioma y reciben la versión en español. La regla de `/aria/` llegó en `574e51b` y la de `/devpanel/` en `90ff404` (ver [dominio y SEO](dominio-y-seo.md)).
 
 ## Casos de estudio
 
@@ -77,17 +79,61 @@ Desde el commit `fc4b004` sigue la identidad actual de la marca: fondo blanco, m
 - Las gráficas de usuarios solo aparecen con `visible: true` en `migozz-users.json`, para no mostrar cifras inventadas.
 - `shots` en `migozz.json` está vacío hoy, así que la sección de capturas no aparece.
 
+### Plantilla compartida de los casos
+
+Desde el commit `90ff404`, ARIA y DevPanel usan la misma página: `src/CaseStudyPage.tsx`, con los tipos en `src/content/caseStudy.ts` (`CaseCopy`) y los estilos en `src/styles/case-study.css`. Antes eran `AriaPage.tsx` y `aria.css`. MIGOZZ sigue con su página propia.
+
+Cada caso tiene:
+
+| Pieza | ARIA | DevPanel |
+| :-- | :-- | :-- |
+| HTML (entrada de Vite) | `portfolio/aria/index.html` | `portfolio/devpanel/index.html` |
+| Entrada de React | `src/aria.tsx` | `src/devpanel.tsx` |
+| Textos (es y en) | `src/content/data/aria.json` | `src/content/data/devpanel.json` |
+| Carga y validación | `src/content/aria.ts` | `src/content/devpanel.ts` |
+| Estación del admin | ARIA | DevPanel |
+
+La entrada solo monta `<CaseStudyPage name=… copy=… titles=… />`. El título de pestaña es el mismo de los resultados de búsqueda (`seo.json` → `ariaPages` o `devpanelPages`). No usa `motion` ni pantalla de carga.
+
+Secciones de la plantilla, en orden: portada, cifras con su nota de contexto, problema y solución, capturas, la arquitectura como dos líneas de metro con su estación de transbordo, decisiones, lo que se rompió, la parte de Harol, lo que falta y el stack. Tres campos de `CaseCopy` son opcionales:
+
+- `links`: botones en la portada (etiqueta, enlace y nombre del evento de Umami).
+- `shotsTitle` y `shots`: capturas bajo `public/`; la plantilla usa también la variante `-480.webp` que está al lado. Sin capturas, la sección no aparece.
+- `teamNote`: quién hizo qué, cuando el proyecto fue de equipo. ARIA la tiene; DevPanel no.
+
+Agregar un caso nuevo exige también su entrada en la capa SEO (ver [dominio y SEO](dominio-y-seo.md)).
+
 ### ARIA
 
-`/aria/` y `/en/aria/` (commit `b9d13b1`) son la tercera entrada de Vite: `portfolio/aria/index.html`, `src/aria.tsx`, `src/AriaPage.tsx` y sus estilos en `src/styles/aria.css`. El contenido vive en `src/content/data/aria.json` (tipos en `src/content/aria.ts`) y se edita en la estación ARIA del admin.
+`/aria/` y `/en/aria/` (commit `b9d13b1`). ARIA es un asistente de soporte SAP hecho en equipo para Arix Group. Sus dos líneas de metro son la consulta y la ingesta diaria. La nota del admin para esta estación pide solo cifras medidas y nada de IDs de AWS, URLs internas ni nombres del equipo.
 
-ARIA es un asistente de soporte SAP hecho en equipo para Arix Group. La página tiene, en orden: portada, cifras medidas con su contexto (cada cifra lleva una nota de con qué se comparó o cómo se midió), problema y solución, la arquitectura dibujada como dos líneas de metro (consulta e ingesta diaria) con su estación de transbordo, decisiones, lo que se rompió, la parte de Harol en el equipo, lo que falta y el stack. La nota del admin para esta estación pide solo cifras medidas y nada de IDs de AWS, URLs internas ni nombres del equipo.
+### DevPanel
 
-No usa `motion` ni pantalla de carga. Su título de pestaña es el mismo de los resultados de búsqueda (`seo.json` → `ariaPages`).
+`/devpanel/` y `/en/devpanel/` (commit `90ff404`). DevPanel es una app de escritorio de código abierto de Harol, para Windows: repos de GitHub, proyectos locales y herramientas en un panel con entrada por rostro. Su página tiene enlaces en la portada al código y a la descarga (eventos `devpanel-code` y `devpanel-download`), tres capturas (`shots/devpanel.webp`, `devpanel-lock.webp`, `devpanel-tools.webp`) y dos líneas de metro: instalación y uso diario. No tiene nota de equipo. La nota del admin pide solo cifras que se puedan comprobar en el repositorio de DevPanel.
+
+Las capturas salen de las pruebas e2e del propio DevPanel, con datos de prueba (mensaje del commit `06a3e2b`). Están directamente en `portfolio/public/shots/`, cada una con su variante `-480.webp`.
+
+### Franja de DevPanel en la portada
+
+`src/components/SideProject.tsx` (estilos en `src/styles/side-project.css`) es una franja oscura justo después de Proyectos, con el ancla `#devpanel`. No es un capítulo de la línea: no está en `CHAPTER_IDS` ni en el menú. Sus textos están en `site.json`, clave `sideProject` (antetítulo, título, frase, tres puntos, etiquetas y la captura), y se editan en la estación «Textos del sitio» del admin, en el grupo «Otros textos» (`admin/src/components/Fields.tsx` junta ahí las claves que `schema.ts` no asigna a ningún grupo).
+
+Tiene tres enlaces:
+
+| Enlace | Destino | Evento de Umami |
+| :-- | :-- | :-- |
+| Ver el caso | `sideProject.caseHref` (`/devpanel/` o `/en/devpanel/`) | `case-devpanel` |
+| Código | `DEVPANEL_LINKS.code` | `devpanel-code` |
+| Descargar para Windows | `DEVPANEL_LINKS.download` (release `installer` del repositorio) | `devpanel-download` |
+
+`DEVPANEL_LINKS` vive en `src/content/devpanel.ts`; las direcciones del código y de la descarga no se editan en el admin desde la franja (los enlaces de la portada del caso sí, en `devpanel.json`).
 
 ### Tarjeta de ARIA
 
 La tarjeta de ARIA en `projects.json` se corrigió el mismo día: dice S3 Vectors en vez de OpenSearch (que el proyecto no usó), cambia el resultado «Escalamiento humano incluido» (que no se construyó) por un tiempo de respuesta medido, describe la parte de Harol en el equipo y enlaza al caso con `case: "aria"`. OpenSearch también salió del stack del sitio (`stack.json`, el texto de `site.json` y su ícono) en el commit `8bbfdbf`.
+
+### Tarjeta de DevPanel
+
+Desde `06a3e2b`, DevPanel es un proyecto destacado (`featured: true`) en `projects.json`, con la captura `shots/devpanel.webp`, enlace a su código (`code`) y, desde `90ff404`, a su caso (`case: "devpanel"`). El mensaje del commit explica por qué: es el código público más sólido de Harol.
 
 ## Imágenes
 
@@ -120,6 +166,8 @@ Eventos que ya se registran (atributos `data-umami-event` y llamadas a `umami.tr
 | `social-<red>` | `Socials.tsx` | Clic en una red social (nombre de la red en minúsculas). |
 | `project-<id>` | `Projects.tsx` | Clic en un proyecto con enlace. |
 | `case-<id>` | `Projects.tsx` | Clic en «Ver el caso completo» de una tarjeta. |
+| `case-devpanel` | `SideProject.tsx` | Clic en «Ver el caso» de la franja de DevPanel (mismo nombre que el de su tarjeta). |
+| `devpanel-code`, `devpanel-download` | `SideProject.tsx` y portada del caso DevPanel | Clic en el código o en la descarga de DevPanel. |
 | `code-<id>` | `Projects.tsx` | Clic en «Ver código» de una tarjeta. |
 | `migozz-play`, `migozz-appstore` | `Startup.tsx` | Clic en Google Play o App Store de MIGOZZ. |
 | `migozz-case` | `Startup.tsx` | Clic en el botón al caso de MIGOZZ. |
@@ -155,13 +203,13 @@ Requiere Node 20.19 o superior; CI usa Node 22.
 | :-- | :-- |
 | `tests/content.test.ts` | Integridad del contenido (ver arriba). |
 | `tests/assets.test.ts` | Peso de capturas, certificados, íconos, capturas de MIGOZZ y retrato. |
-| `tests/seo.test.ts` | Títulos por idioma, canonical, `hreflang`, Open Graph, JSON-LD, sitemap, texto de respaldo y página de ARIA. |
+| `tests/seo.test.ts` | Títulos por idioma, canonical, `hreflang`, Open Graph, JSON-LD, sitemap, texto de respaldo y páginas de ARIA y DevPanel (en DevPanel, que Harol figure como `author` y no como `contributor`). |
 | `tests/github-data.test.ts` | Forma de `src/data/github.json`. |
 | `tests/contact-email.test.ts` | Lógica del formulario en el admin (`admin/netlify/lib/contact.ts`): correos, descarte de bots, límites y orígenes permitidos. |
 | `tests/admin-auth.test.ts` | Reglas de entrada del admin y lista de llamadas a GitHub permitidas. |
 | `tests/digest.test.ts` | Resumen semanal del admin (`admin/netlify/lib/digest.ts`): rango de fechas, lectura de Umami y Search Console, y el correo. |
 | `tests/security-txt.test.ts` | `public/.well-known/security.txt` tiene contacto y dirección canónica, y falla un mes antes de que venza. |
-| `e2e/a11y.spec.ts` | Sin violaciones WCAG A/AA con axe, en ES y EN, móvil y escritorio, en la portada, MIGOZZ y ARIA. |
+| `e2e/a11y.spec.ts` | Sin violaciones WCAG A/AA con axe, en ES y EN, móvil y escritorio, en la portada, MIGOZZ, ARIA y DevPanel. |
 | `e2e/keyboard.spec.ts` | Enlace de salto, nombres accesibles, foco del visor de certificados, cambio de idioma. |
 | `e2e/features.spec.ts` | Envío del formulario (JSON a la función del admin, simulada), modo de alto contraste e impresión. |
 | `e2e/seo.spec.ts` | Idioma por URL, rutas de recursos, head estático y política de seguridad sin violaciones. |

@@ -1,7 +1,7 @@
 ---
 titulo: Cronología del repositorio
 seccion: Historial
-resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta el caso de estudio de ARIA y el resumen semanal en octubre de 2026.
+resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta los casos de estudio de ARIA y DevPanel y el resumen semanal en octubre de 2026.
 orden: 13
 ---
 
@@ -79,7 +79,7 @@ Fuente: `git log --format="%h %ad %s" --date=short`. Se omiten los commits autom
 - **2026-10-21** `f4be780` El formulario de contacto deja Netlify Forms, que no lo detectaba, y envía al admin (`/api/contact`), que guarda el mensaje y manda los dos correos. Nueva estación «Mensajes». El portafolio se queda sin funciones y registra el evento `contact-sent` en Umami.
 - **2026-10-21** `236c9d3` La carpeta `img/` (imágenes personales) sale del repositorio y queda en `.gitignore`.
 
-## 2026-10-21 (tarde): documentación, seguridad, ARIA y resumen semanal
+## 2026-10-21 (tarde): documentación, seguridad, casos ARIA y DevPanel, resumen semanal
 
 - `aeb5d33` `Doc/` al día con el nuevo flujo del formulario.
 - `4f2c664`, `fd823c4` La documentación se publica en `DevCat-HGS.github.io` con el workflow `Publish docs`, y pasa de vista de periódico a sitio de documentación.
@@ -92,9 +92,13 @@ Fuente: `git log --format="%h %ad %s" --date=short`. Se omiten los commits autom
 - `b9d13b1` Caso de estudio de ARIA en `/aria/` y `/en/aria/`, editable desde el admin; tarjeta de ARIA corregida (S3 Vectors y un resultado medido); subpáginas genéricas en la capa SEO; el respaldo de la portada lista todos los proyectos; nuevo enfoque de los textos: productos web y móviles a producción, con backend serverless e IA.
 - `94f0f6a` Las tarjetas de SENA Cloud y SensoresAPP enlazan a sus repos públicos nuevos (`sena-cloud`, `sensores-app`).
 - `8bbfdbf` El CV describe ARIA como trabajo de equipo con la parte de Harol y sin OpenSearch, que también sale del stack del sitio.
+- `ac531e1` `Doc/` al día con el caso ARIA, el resumen semanal y los repos públicos.
+- `574e51b` El resumen semanal usa el destino y el remitente del formulario si faltan los suyos; los eventos `case-<id>` y `code-<id>` salen con nombre legible en el correo; los navegadores en inglés llegan a `/en/aria/`; `admin/.env.example` lista las variables del resumen.
+- `06a3e2b` DevPanel entra a los proyectos destacados con una captura tomada de sus propias pruebas e2e y enlace a su código; el texto de respaldo enlaza al código cuando un proyecto no tiene caso ni sitio.
+- `90ff404` La página de ARIA pasa a ser la plantilla compartida `CaseStudyPage`, con enlaces en la portada, capturas y nota de equipo opcional. Nuevo caso de DevPanel en `/devpanel/` y `/en/devpanel/`, con Harol como autor en el JSON-LD, su redirección por idioma y su estación en el admin. Franja de DevPanel en la portada, después de los proyectos.
 
 Ese mismo día, fuera del repositorio: revisión del historial para decidir si `portfolio-hgs` podía ser público (ver [seguridad](seguridad.md)).
 
 ## Commits automáticos
 
-A la fecha (287 commits en `main`): 18 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.
+A la fecha (291 commits en `main`, contados con `git rev-list --count main`): 18 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.
