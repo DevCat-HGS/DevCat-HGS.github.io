@@ -5,7 +5,7 @@ resumen: Qué piezas viven en este repositorio, cómo se conectan, dónde corre 
 orden: 1
 ---
 
-> **¿Eres reclutador? No me creas: compruébalo.** En [health.hgsportafolio.site](https://health.hgsportafolio.site) un monitor público, aparte del sitio, mide cada 30 minutos si está arriba y una vez al día su velocidad, accesibilidad y seguridad. Su [código](https://github.com/DevCat-HGS/health), sus datos en bruto y el log de cada medición están a la vista, igual que el [código del sitio](https://github.com/DevCat-HGS/hgsportafolio).
+> **¿Eres reclutador? No me creas: compruébalo.** En [health.hgsportafolio.site](https://health.hgsportafolio.site) un monitor público, aparte del sitio, mide cada 30 minutos si está arriba y una vez al día su velocidad, accesibilidad y seguridad. Su [código](https://github.com/DevCat-HGS/health), sus datos en bruto y el log de cada medición están a la vista, igual que el [código del sitio](https://github.com/DevCat-HGS/hgsportafolio). Cómo está montado todo (dominio, DNS, hosting, HTTPS y correo) se explica paso a paso en [hgsportafolio-infra](https://github.com/DevCat-HGS/hgsportafolio-infra).
 
 Este repositorio privado (`DevCat-HGS/portfolio-hgs` en GitHub) reúne la presencia profesional de Harol Guerrero Salgado: el portafolio web, el editor de contenido, la hoja de vida en PDF, el README del perfil de GitHub y el material de LinkedIn. Todo sale de los mismos datos y se publica con un commit en `main`.
 
