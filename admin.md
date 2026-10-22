@@ -5,7 +5,7 @@ resumen: Para qué sirve el editor de admin.hgsportafolio.site, qué se edita en
 orden: 4
 ---
 
-El admin es un editor propio en React + Vite (`admin/`), con la misma identidad de línea de metro del portafolio. Lee y guarda directamente en este repositorio, así que Harol cambia textos, proyectos, credenciales, stack, CV, los casos MIGOZZ, ARIA y DevPanel, y SEO sin tocar código. También recibe los mensajes del formulario de contacto del portafolio y envía sus correos (ver [correos](correos.md)) y, cada lunes, le manda a Harol un resumen de la semana. Se despliega como segundo sitio de Netlify (`admin-hgs`) en `admin.hgsportafolio.site`.
+El admin es un editor propio en React + Vite (`admin/`), con la misma identidad de línea de metro del portafolio. Lee y guarda directamente en este repositorio, así que Harol cambia textos, proyectos, credenciales, stack, CV, los casos MIGOZZ, ARIA, DevPanel y Portafolio, y SEO sin tocar código. También recibe los mensajes del formulario de contacto del portafolio y envía sus correos (ver [correos](correos.md)) y, cada lunes, le manda a Harol un resumen de la semana. Se despliega como segundo sitio de Netlify (`admin-hgs`) en `admin.hgsportafolio.site`.
 
 Reemplazó el 2026-10-21 a un primer editor basado en Sveltia CMS (commits `3a1e1e4` y `c1629bf`).
 
@@ -25,14 +25,15 @@ Cada estación del mapa de la izquierda es una sección (`STATIONS` en `admin/sr
 | :-- | :-- |
 | Mensajes | Ninguno: lee los mensajes del formulario de contacto guardados en Netlify Blobs (ver abajo). |
 | Textos del sitio | `portfolio/src/content/data/site.json`, sin `credGroups` ni `stackGroups`. Agrupado en Portada, Oficio, MIGOZZ en la página principal, Cargo anterior, Encabezados, Contacto, Navegación y pie. Las claves sin grupo en `schema.ts` caen en «Otros textos» (`components/Fields.tsx`); ahí están los textos de la franja de DevPanel (`sideProject`). |
-| Proyectos | `portfolio/src/content/data/projects.json`. El orden de la lista es el del sitio. Incluye los campos `case` (id del caso de estudio: `aria` o `devpanel`) y `code` (repositorio público: solo código propio, nunca de un cliente); ver [portafolio](portafolio.md). |
+| Proyectos | `portfolio/src/content/data/projects.json`. El orden de la lista es el del sitio. Incluye los campos `case` (id del caso de estudio: `aria`, `devpanel` o `portafolio`) y `code` (repositorio público: solo código propio, nunca de un cliente); ver [portafolio](portafolio.md). |
 | Credenciales | `site.json` → `credGroups`. |
 | Stack | `site.json` → `stackGroups` (grupos) y `stack.json` (tecnologías de cada grupo, con el mismo identificador). |
 | Hoja de vida | `curriculum/cv_data.json`. El PDF se regenera solo al publicar. |
 | MIGOZZ | `migozz.json` (página del caso), `migozz-public.json` (cifras públicas) y `migozz-users.json` (usuarios). |
 | ARIA | `aria.json` (página del caso `/aria/`). Nueva desde el commit `b9d13b1`. La nota del panel pide solo cifras medidas y con su contexto, y nada de IDs de AWS, URLs internas ni nombres del equipo. |
 | DevPanel | `devpanel.json` (página del caso `/devpanel/`). Nueva desde el commit `90ff404`. La nota del panel pide solo cifras que se puedan comprobar en el repositorio de DevPanel; el texto de la estación recuerda que la franja de la portada está en «Textos del sitio». |
-| SEO | `portfolio/src/content/data/seo.json`, incluidos los textos de las páginas de MIGOZZ, de ARIA (`ariaPages`) y de DevPanel (`devpanelPages`). |
+| Portafolio | `portafolio.json` (página del caso `/portafolio/`, el de este mismo sitio). Nueva desde el commit `433174c`. El texto de la estación recuerda que la documentación técnica está en `docs.hgsportafolio.site`, y la nota del panel pide solo cifras que se puedan comprobar en este repositorio o en su documentación. |
+| SEO | `portfolio/src/content/data/seo.json`, incluidos los textos de las páginas de MIGOZZ, de ARIA (`ariaPages`), de DevPanel (`devpanelPages`) y del portafolio (`portafolioPages`, que el editor y la revisión antes de publicar nombran «Página del portafolio», según `PATH_LABELS` en `schema.ts`). |
 
 ## Mensajes
 
@@ -95,7 +96,7 @@ Cada lunes a las 8:00 de Bogotá (`schedule: "0 13 * * 1"`, en UTC). Cubre los s
 ### Qué manda
 
 - **Asunto:** visitantes y descargas del CV de la semana.
-- **Visitas (Umami Cloud):** visitantes, visitas, páginas vistas y tiempo medio por visita, comparados con la semana anterior; páginas más vistas, de dónde llegaron, países y los eventos del sitio. `eventLabel()` traduce a palabras los de descarga del CV, formulario, MIGOZZ, redes, proyectos, casos (`case-<id>`, desde `574e51b`) y código (`code-<id>`); los demás (como `devpanel-code` y `devpanel-download`) salen con su nombre tal cual.
+- **Visitas (Umami Cloud):** visitantes, visitas, páginas vistas y tiempo medio por visita, comparados con la semana anterior; páginas más vistas, de dónde llegaron, países y los eventos del sitio. `eventLabel()` traduce a palabras los de descarga del CV, formulario, MIGOZZ, redes, proyectos, casos (`case-<id>`, desde `574e51b`, con el nombre de cada caso en `CASE_NAMES`: ARIA, DevPanel, MIGOZZ y «del portafolio»), código (`code-<id>`), el código y la descarga de DevPanel (`devpanel-code`, `devpanel-download`) y, desde `433174c`, el botón de la documentación del caso Portafolio (`portafolio-docs`, «Abrieron la documentación del portafolio»). Los eventos que no conoce salen con su nombre tal cual.
 - **Google (Search Console):** apariciones en resultados, clics, posición media y las 5 búsquedas que más mostraron el sitio. Search Console va dos o tres días atrasado, así que su semana termina antes y el correo lo dice.
 - **Lo que falló:** si una fuente responde con error, el correo lo dice en «No se pudo leer» en vez de mostrar ceros.
 

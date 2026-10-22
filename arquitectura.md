@@ -9,7 +9,7 @@ orden: 2
 
 | Carpeta o archivo | Contenido |
 | :-- | :-- |
-| `portfolio/` | Sitio web. `src/` (React), `src/content/data/*.json` (contenido), `seo/` (cabeceras, head, sitemap), `migozz/`, `aria/` y `devpanel/` (HTML de cada caso de estudio), `scripts/` (imágenes, Lighthouse, og.png, datos de GitHub), `tests/` (Vitest), `e2e/` (Playwright), `images/` (originales de imágenes), `public/` (archivos servidos). |
+| `portfolio/` | Sitio web. `src/` (React), `src/content/data/*.json` (contenido), `seo/` (cabeceras, head, sitemap), `migozz/`, `aria/`, `devpanel/` y `portafolio/` (HTML de cada caso de estudio), `scripts/` (imágenes, Lighthouse, og.png, datos de GitHub), `tests/` (Vitest), `e2e/` (Playwright), `images/` (originales de imágenes), `public/` (archivos servidos). |
 | `admin/` | Editor de contenido. `src/` (React), `netlify/functions/` (`auth.mts`, `github.mts`, `contact.mts`, `messages.mts`, `weekly-digest.mts`), `netlify/lib/` (`auth.ts`, `contact.ts`, `digest.ts`, `google.ts`, `netlify.ts`), `netlify.toml`, `.env.example`. |
 | `curriculum/` | `cv_data.json` (fuente del CV), `generate_cv.py`, `fonts/` (Inter), `output/` (PDF versionados). |
 | `profile/` | SVG del README del perfil (`banner.svg`, `languages.svg`, `languages.es.svg`). |
@@ -19,7 +19,7 @@ orden: 2
 | `.github/` | Workflows, `dependabot.yml` y plantilla de pull request. |
 | `.claude/agents/` | Agentes de Claude Code del proyecto (`documentador.md`, `rrhh-estricto.md`). |
 | `release-please-config.json`, `.release-please-manifest.json` | Configuración de Release Please. |
-| `Doc/` | Esta documentación y su generador `build.mjs`; se publica en `DevCat-HGS.github.io`. |
+| `Doc/` | Esta documentación y su generador `build.mjs`; se publica en `DevCat-HGS.github.io`, servido en `https://docs.hgsportafolio.site`. |
 
 ## Tecnologías
 

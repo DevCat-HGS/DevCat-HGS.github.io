@@ -11,7 +11,7 @@ Este repositorio privado (`DevCat-HGS/portfolio-hgs` en GitHub) reúne la presen
 
 | Pieza | Carpeta | Dónde se ve | Qué es |
 | :-- | :-- | :-- | :-- |
-| Portafolio | `portfolio/` | `https://hgsportafolio.site` (sitio de Netlify `portafolio-hgs`) | Página bilingüe en React 19 + Vite, con los casos de estudio de MIGOZZ (`/migozz/`), ARIA (`/aria/`) y DevPanel (`/devpanel/`). |
+| Portafolio | `portfolio/` | `https://hgsportafolio.site` (sitio de Netlify `portafolio-hgs`) | Página bilingüe en React 19 + Vite, con los casos de estudio de MIGOZZ (`/migozz/`), ARIA (`/aria/`), DevPanel (`/devpanel/`) y del propio portafolio (`/portafolio/`). |
 | Admin | `admin/` | `admin.hgsportafolio.site` (sitio de Netlify `admin-hgs`) | Editor propio en React que lee y publica el contenido del portafolio y del CV en este repositorio. También recibe el formulario de contacto, envía sus correos, guarda los mensajes y manda un resumen semanal por correo. |
 | Hoja de vida | `curriculum/` | `portfolio/public/cv/` (botón de descarga del sitio) | Generador en Python que produce el CV en PDF en español e inglés desde `cv_data.json`. |
 | Perfil de GitHub | `README.md`, `README.es.md`, `profile/`, `privacity/`, `scripts/` | Repositorio público `DevCat-HGS/DevCat-HGS` | README del perfil, con gráficas de lenguajes generadas y copiado al repo público por un workflow. |
@@ -36,6 +36,8 @@ El detalle está en [arquitectura](arquitectura.md).
 - El formulario de contacto ya no usa Netlify Forms: envía al admin, que guarda el mensaje (estación «Mensajes») y, con Resend configurado, envía la copia a Harol y la confirmación al visitante (commit `f4be780`, 2026-10-21).
 - El caso de estudio de ARIA está en `/aria/` y `/en/aria/`, editable desde el admin; la tarjeta y el CV describen ARIA como trabajo de equipo, con S3 Vectors y un tiempo medido (commits `b9d13b1` y `8bbfdbf`, 2026-10-21).
 - DevPanel, la app de escritorio de código abierto de Harol, tiene caso de estudio en `/devpanel/` y `/en/devpanel/`, tarjeta destacada y una franja propia en la portada después de los proyectos. ARIA y DevPanel comparten la plantilla `CaseStudyPage` (commits `06a3e2b` y `90ff404`, 2026-10-21).
+- El propio portafolio tiene caso de estudio en `/portafolio/` y `/en/portafolio/`, con la misma plantilla `CaseStudyPage` y una tarjeta destacada después de DevPanel. Como su código es privado, el caso, la tarjeta y el texto de respaldo enlazan a esta documentación en `docs.hgsportafolio.site` (commit `433174c`, 2026-10-22).
+- La documentación se publica en `https://docs.hgsportafolio.site` y su página es siempre clara, sobre papel crema (commits `83ccd6b` y `6a21775`, 2026-10-22).
 - SENA Cloud y SensoresAPP tienen repos públicos nuevos y limpios, enlazados desde sus tarjetas. Los repos de clientes se quedan privados (ver [perfil de GitHub](perfil-github.md)).
 - La analítica con Umami está lista en el código; se activa con `VITE_UMAMI_WEBSITE_ID` (solo el UUID) en `portafolio-hgs`.
 - El resumen semanal por correo (`weekly-digest`) está desplegado, pero no envía nada hasta que se configuren sus variables en `admin-hgs`.
@@ -50,8 +52,8 @@ El detalle está en [arquitectura](arquitectura.md).
 | # | Artículo | De qué va |
 | :-- | :-- | :-- |
 | 2 | [Arquitectura](arquitectura.md) | Carpetas, tecnologías y el camino de un cambio hasta el sitio. |
-| 3 | [Portafolio](portafolio.md) | Secciones, componentes, contenido en JSON, idiomas, casos MIGOZZ, ARIA y DevPanel, imágenes, formulario, analítica y pruebas. |
-| 4 | [Admin](admin.md) | Estaciones (incluidas «Mensajes», ARIA y DevPanel), edición, imágenes, borradores, publicación y resumen semanal. |
+| 3 | [Portafolio](portafolio.md) | Secciones, componentes, contenido en JSON, idiomas, casos MIGOZZ, ARIA, DevPanel y Portafolio, imágenes, formulario, analítica y pruebas. |
+| 4 | [Admin](admin.md) | Estaciones (incluidas «Mensajes», ARIA, DevPanel y Portafolio), edición, imágenes, borradores, publicación y resumen semanal. |
 | 5 | [Seguridad](seguridad.md) | Entrada al admin, sesiones, límites, intermediario de GitHub, CSP, cabeceras, dependencias, gitleaks y publicación del repo. |
 | 6 | [Correos](correos.md) | Formulario de contacto, códigos de acceso y resumen semanal, con Resend. |
 | 7 | [Hoja de vida](curriculum.md) | Fuente única, generación de los PDF y diseño para ATS. |

@@ -46,6 +46,12 @@ Notas:
 - **Caché:** los archivos con hash (`/assets/*`) se guardan un año; imágenes, íconos, MIGOZZ y CV se revalidan en cada visita (`portfolio/netlify.toml`).
 - Si un check de GitHub Actions detiene o no un deploy de producción depende del panel de Netlify (por confirmar). Lo que sí detiene un deploy es que falle el build de Netlify, que incluye el typecheck.
 
+## Página de la documentación
+
+`Doc/` no se despliega en Netlify sino en GitHub Pages, con el workflow `publish-docs.yml`: el repositorio público `DevCat-HGS/DevCat-HGS.github.io`, servido en `https://docs.hgsportafolio.site`. El workflow escribe el archivo `CNAME` en cada publicación porque reemplaza toda la raíz del sitio; antes, la siguiente publicación borraba el dominio (commit `83ccd6b`). El historial de ese repositorio guarda las ediciones anteriores.
+
+`Doc/build.mjs` arma `Doc/index.html` a partir de los `.md`. Desde `6a21775` la página es siempre clara (`color-scheme: light`, sin modo oscuro), con tinta oscura sobre papel crema (`--paper: #f6efe4`), para que se lea igual en todos los sistemas. El caso de estudio `/portafolio/` del sitio enlaza a esta página porque el código del portafolio es privado (ver [portafolio](portafolio.md)).
+
 ## Dependabot
 
 `.github/dependabot.yml` revisa cada semana:

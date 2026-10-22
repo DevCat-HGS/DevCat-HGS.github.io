@@ -1,7 +1,7 @@
 ---
 titulo: Cronología del repositorio
 seccion: Historial
-resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta los casos de estudio de ARIA y DevPanel y el resumen semanal en octubre de 2026.
+resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta los casos de estudio de ARIA, DevPanel y el propio portafolio, y el resumen semanal, en octubre de 2026.
 orden: 13
 ---
 
@@ -97,8 +97,16 @@ Fuente: `git log --format="%h %ad %s" --date=short`. Se omiten los commits autom
 - `06a3e2b` DevPanel entra a los proyectos destacados con una captura tomada de sus propias pruebas e2e y enlace a su código; el texto de respaldo enlaza al código cuando un proyecto no tiene caso ni sitio.
 - `90ff404` La página de ARIA pasa a ser la plantilla compartida `CaseStudyPage`, con enlaces en la portada, capturas y nota de equipo opcional. Nuevo caso de DevPanel en `/devpanel/` y `/en/devpanel/`, con Harol como autor en el JSON-LD, su redirección por idioma y su estación en el admin. Franja de DevPanel en la portada, después de los proyectos.
 
+- `244496c` `Doc/` al día con el caso DevPanel, la plantilla compartida y la franja de la portada; los eventos de DevPanel salen con nombre legible en el resumen semanal.
+
 Ese mismo día, fuera del repositorio: revisión del historial para decidir si `portfolio-hgs` podía ser público (ver [seguridad](seguridad.md)).
+
+## 2026-10-22: documentación en su dominio y caso del portafolio
+
+- `83ccd6b` La documentación se sirve en `docs.hgsportafolio.site`: `publish-docs.yml` escribe el archivo `CNAME` en cada publicación, porque reemplaza toda la raíz del sitio y la siguiente publicación borraba el dominio.
+- `6a21775` La página de la documentación queda siempre en tema claro, sobre papel crema (`#f6efe4`); se quita el modo oscuro para que se lea igual en todos los sistemas.
+- `433174c` Caso de estudio del propio portafolio en `/portafolio/` y `/en/portafolio/`, con la plantilla `CaseStudyPage`, Harol como autor en el JSON-LD y enlaces a la documentación (el código es privado). Tarjeta destacada después de DevPanel, tres capturas, redirección por idioma, estación «Portafolio» en el admin y evento `portafolio-docs` en el resumen semanal.
 
 ## Commits automáticos
 
-A la fecha (291 commits en `main`, contados con `git rev-list --count main`): 18 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.
+A la fecha (296 commits en `main`, contados con `git rev-list --count main`): 19 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.
