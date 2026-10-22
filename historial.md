@@ -1,7 +1,7 @@
 ---
 titulo: Cronología del repositorio
 seccion: Historial
-resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta los casos de estudio de ARIA, DevPanel y el propio portafolio, el resumen semanal y la sección de proyectos propios, en octubre de 2026.
+resumen: Los hitos del proyecto por fecha, tomados de git log, desde el README del perfil en 2024 hasta los casos de estudio de ARIA, DevPanel y el propio portafolio, el resumen semanal, la sección de proyectos propios y el espejo público del código, en octubre de 2026.
 orden: 13
 ---
 
@@ -73,11 +73,12 @@ Fuente: `git log --format="%h %ad %s" --date=short`. Se omiten los commits autom
 - **2026-10-21** `c1629bf` Admin propio en React para todo el portafolio; todo el texto visible pasa a `src/content/data/*.json` validado con `checked()`.
 - **2026-10-21** `fc4b004` Correos del formulario con Resend y caso MIGOZZ en blanco con los colores actuales de la marca.
 - **2026-10-21** `4d8f465` Formato del README del portafolio y reintentos de Lighthouse.
-- **2026-10-21** `bf84696` Entrada al admin con PIN y código por correo, token de GitHub solo en el servidor, bloqueos en Netlify Blobs, `.env.example` en los dos sitios, un comentario de preview por sitio y workflows con la rama `desarrollo`.
+- **2026-10-21** `bf84696` Mejoras del admin: entrada con dos factores y token de GitHub solo en el servidor. Además, un comentario de preview por sitio y workflows con la rama `desarrollo`.
 - **2026-10-21** `fa72716`, `4ceff81` Primeros commits hechos desde el admin («content: actualizar textos del sitio desde el admin»): un cambio de prueba en `site.json` y su corrección.
 - **2026-10-21** `5ba4d50` Carpeta `Doc/` con el agente documentador y la vista de periódico; Dependabot también revisa `admin/`.
-- **2026-10-21** `f4be780` El formulario de contacto deja Netlify Forms, que no lo detectaba, y envía al admin (`/api/contact`), que guarda el mensaje y manda los dos correos. Nueva estación «Mensajes». El portafolio se queda sin funciones y registra el evento `contact-sent` en Umami.
+- **2026-10-21** `f4be780` El formulario de contacto deja Netlify Forms, que no lo detectaba, y envía al admin (`/api/contact`), que guarda el mensaje y manda los dos correos. El portafolio se queda sin funciones y registra el evento `contact-sent` en Umami.
 - **2026-10-21** `236c9d3` La carpeta `img/` (imágenes personales) sale del repositorio y queda en `.gitignore`.
+
 
 ## 2026-10-21 (tarde): documentación, seguridad, casos ARIA y DevPanel, resumen semanal
 
@@ -93,24 +94,29 @@ Fuente: `git log --format="%h %ad %s" --date=short`. Se omiten los commits autom
 - `94f0f6a` Las tarjetas de SENA Cloud y SensoresAPP enlazan a sus repos públicos nuevos (`sena-cloud`, `sensores-app`).
 - `8bbfdbf` El CV describe ARIA como trabajo de equipo con la parte de Harol y sin OpenSearch, que también sale del stack del sitio.
 - `ac531e1` `Doc/` al día con el caso ARIA, el resumen semanal y los repos públicos.
-- `574e51b` El resumen semanal usa el destino y el remitente del formulario si faltan los suyos; los eventos `case-<id>` y `code-<id>` salen con nombre legible en el correo; los navegadores en inglés llegan a `/en/aria/`; `admin/.env.example` lista las variables del resumen.
+- `574e51b` Mejoras del resumen semanal (eventos con nombre legible en el correo); los navegadores en inglés llegan a `/en/aria/`.
 - `06a3e2b` DevPanel entra a los proyectos destacados con una captura tomada de sus propias pruebas e2e y enlace a su código; el texto de respaldo enlaza al código cuando un proyecto no tiene caso ni sitio.
-- `90ff404` La página de ARIA pasa a ser la plantilla compartida `CaseStudyPage`, con enlaces en la portada, capturas y nota de equipo opcional. Nuevo caso de DevPanel en `/devpanel/` y `/en/devpanel/`, con Harol como autor en el JSON-LD, su redirección por idioma y su estación en el admin. Franja de DevPanel en la portada, después de los proyectos.
+- `90ff404` La página de ARIA pasa a ser la plantilla compartida `CaseStudyPage`, con enlaces en la portada, capturas y nota de equipo opcional. Nuevo caso de DevPanel en `/devpanel/` y `/en/devpanel/`, con Harol como autor en el JSON-LD, su redirección por idioma y su edición en el admin. Franja de DevPanel en la portada, después de los proyectos.
 
 - `244496c` `Doc/` al día con el caso DevPanel, la plantilla compartida y la franja de la portada; los eventos de DevPanel salen con nombre legible en el resumen semanal.
 
+
 Ese mismo día, fuera del repositorio: revisión del historial para decidir si `portfolio-hgs` podía ser público (ver [seguridad](seguridad.md)).
 
-## 2026-10-22: documentación en su dominio, caso del portafolio y proyectos propios
+## 2026-10-22: documentación en su dominio, caso del portafolio, proyectos propios y espejo del código
 
 - `83ccd6b` La documentación se sirve en `docs.hgsportafolio.site`: `publish-docs.yml` escribe el archivo `CNAME` en cada publicación, porque reemplaza toda la raíz del sitio y la siguiente publicación borraba el dominio.
 - `6a21775` La página de la documentación queda siempre en tema claro, sobre papel crema (`#f6efe4`); se quita el modo oscuro para que se lea igual en todos los sistemas.
-- `433174c` Caso de estudio del propio portafolio en `/portafolio/` y `/en/portafolio/`, con la plantilla `CaseStudyPage`, Harol como autor en el JSON-LD y enlaces a la documentación (el código es privado). Tarjeta destacada después de DevPanel, tres capturas, redirección por idioma, estación «Portafolio» en el admin y evento `portafolio-docs` en el resumen semanal.
+- `433174c` Caso de estudio del propio portafolio en `/portafolio/` y `/en/portafolio/`, con la plantilla `CaseStudyPage`, Harol como autor en el JSON-LD y enlaces a la documentación (el código es privado). Tarjeta destacada después de DevPanel, tres capturas, redirección por idioma, edición en el admin y evento `portafolio-docs` en el resumen semanal.
 - `cb565c1` `Doc/` al día con el caso del portafolio, el dominio de la documentación y su página clara.
 - `ef8b21f` LinkedIn: banner con el mensaje del sitio y los cuatro casos, publicación sobre `/portafolio/` con captura de la página en línea, y guía con DevPanel y el portafolio en Acerca de, Destacados y Proyectos (ARIA sigue sin cifras hasta que Arix Group las confirme).
 - `e88c874` Proyectos se divide en «Proyectos propios» (DevPanel y el portafolio, cada uno en una franja oscura con puntos, caso, código y descarga) y «Para clientes e instituciones». Se borran `SideProject.tsx` y la clave `sideProject`, así DevPanel ya no sale dos veces; `projects.json` gana `own`, `points` y `download`. Proyectos sube su altura estimada (`contain-intrinsic-size`) para que lo de abajo no se corra al pintarse.
-- `50e0ac6` El admin nombra en español los campos nuevos de proyectos propios y los textos de las dos subsecciones.
+- `50e0ac6` Mejoras del admin: nombres en español para los campos nuevos de proyectos propios y los textos de las dos subsecciones.
+- `0ba3fdf` El clic al código de DevPanel usa un solo nombre de evento, `code-devpanel`, en la franja y en la página del caso; se borra `DEVPANEL_LINKS`, que nadie usaba; `Doc/` cubre la división de Proyectos.
+- `5795692` Espejo público del código: el workflow `Publish code` copia una lista blanca (`.github/mirror/build.sh`) al repositorio nuevo `DevCat-HGS/hgsportafolio` en cada push a `main`, sin el admin, los datos del CV ni el perfil, con historial limpio y Actions apagadas. La franja y el caso del portafolio ganan «Ver el código», el JSON-LD suma el espejo en `sameAs`, el repositorio público sale de «Lo que falta» y el caso describe el admin como privado, con dos factores.
+- Sin commit todavía: la documentación tiene dos ediciones. `Doc/build.mjs --public` arma la pública, sin los artículos y trozos marcados como privados, y `publish-docs.yml` publica esa en `docs.hgsportafolio.site`; `Doc/index.html` sigue siendo la completa. Los artículos se marcaron para que la edición pública no explique cómo está hecho el admin.
+
 
 ## Commits automáticos
 
-A la fecha (300 commits en `main`, contados con `git rev-list --count main`): 20 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.
+A la fecha (302 commits en `main`, contados con `git rev-list --count main`): 20 de gráficas de lenguajes, 2 del CV, 1 de datos de GitHub y 10 actualizaciones de Dependabot (`Bump`), cada una con su merge.

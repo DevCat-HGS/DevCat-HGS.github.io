@@ -9,7 +9,8 @@ orden: 7
 
 `curriculum/cv_data.json` es la única fuente del CV. Tiene los datos de contacto y, por idioma (`es` y `en`): `title`, `location`, `labels`, `summary`, `experience`, `skills`, `projects`, `education`, `certifications` y `awards`. La clave `files` dice el nombre del PDF de cada idioma.
 
-Se edita desde el admin (estación «Hoja de vida», ver [admin](admin.md)) o a mano.
+Se edita desde el admin o a mano.
+
 
 ## Generación
 

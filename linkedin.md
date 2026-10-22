@@ -36,9 +36,9 @@ Usa el Playwright instalado en `portfolio/` (no instala nada nuevo) con el canal
 Desde el 2026-10-22 el banner y la publicación siguen el mensaje central del sitio: «Llevo productos a producción» (en inglés, «I take products to production»).
 
 - **Banner:** debajo del mensaje nombra los casos de estudio (MIGOZZ, ARIA, DevPanel y el propio portafolio).
-- **Publicación:** trata del caso `/portafolio/` («Mi portafolio se publica solo»), con tres cifras de ese caso: 14 workflows, más de 100 pruebas y accesibilidad 100 exigida.
+- **Publicación:** trata del caso `/portafolio/` («Mi portafolio se publica solo»), con tres cifras de ese caso: 15 workflows, más de 100 pruebas y accesibilidad 100 exigida.
 - **Primer comentario:** enlaza el caso y `docs.hgsportafolio.site`.
-- **Guía:** suma DevPanel y el portafolio al Acerca de, a Destacados y a Proyectos. ARIA aparece como trabajo en equipo y sin cifras hasta que Arix Group las confirme (ver [pendientes](pendientes.md)).
+- **Guía:** suma DevPanel y el portafolio al Acerca de, a Destacados y a Proyectos. ARIA aparece como trabajo en equipo y sin cifras hasta que Arix Group las confirme (ver pendientes).
 
 Esas cifras están escritas a mano en `publicacion.html` y en `PUBLICACION.md`: si cambian en el caso, hay que cambiarlas aquí también y volver a exportar.
 

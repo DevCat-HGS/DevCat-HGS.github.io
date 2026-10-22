@@ -56,7 +56,7 @@ JSON pierde los tipos literales, así que `checked()` en `src/content/json.ts` c
 | Campo | Dónde va | Qué guarda | Qué muestra |
 | :-- | :-- | :-- | :-- |
 | `case` | Común | Id del caso de estudio en el sitio (hoy `"aria"`, `"devpanel"` y `"portafolio"`). `projectsFrom()` lo convierte en `/<id>/` o `/en/<id>/` según el idioma. | Enlace «Ver el caso completo» / «Read the case study». |
-| `code` | Común | URL de un repositorio público. Solo código propio, nunca de un cliente (comentario de `ProjectEntry` y ayuda del campo en el admin). Hoy lo usan DevPanel, SENA Cloud y SensoresAPP. | Enlace «Ver código» / «View code», que abre en otra pestaña. |
+| `code` | Común | URL de un repositorio público. Solo código propio, nunca de un cliente (comentario de `ProjectEntry` y ayuda del campo en el admin). Hoy lo usan DevPanel, el portafolio (hacia su espejo público, desde `5795692`), SENA Cloud y SensoresAPP. | Enlace «Ver código» / «View code», que abre en otra pestaña. |
 | `own` | Común | `true` en un producto propio de Harol. Hoy lo tienen DevPanel y el portafolio. | El proyecto sale en «Proyectos propios» como franja, no en la cuadrícula. |
 | `download` | Común | URL de descarga de un producto propio que es una app; `projectsFrom()` la pasa a `downloadHref`. Hoy solo DevPanel, hacia el release `installer` de su repositorio. | Botón «Descargar para Windows» (`downloadLabel` en `site.json`). |
 | `points` | Dentro de `es` y `en` | Lista de puntos destacados de la franja. `projectsFrom()` recorta espacios y quita los vacíos. | Lista con viñetas en la franja. |
@@ -95,7 +95,9 @@ Cada caso tiene:
 | Textos (es y en) | `src/content/data/aria.json` | `src/content/data/devpanel.json` | `src/content/data/portafolio.json` |
 | Carga y validación | `src/content/aria.ts` | `src/content/devpanel.ts` | `src/content/portafolio.ts` |
 | Textos SEO (`seo.json`) | `ariaPages` | `devpanelPages` | `portafolioPages` |
-| Estación del admin | ARIA | DevPanel | Portafolio |
+
+Los textos de cada caso se editan en el admin.
+
 
 La entrada solo monta `<CaseStudyPage name=… copy=… titles=… />`. El título de pestaña es el mismo de los resultados de búsqueda (`seo.json` → `ariaPages`, `devpanelPages` o `portafolioPages`). No usa `motion` ni pantalla de carga.
 
@@ -109,11 +111,11 @@ Agregar un caso nuevo exige también su entrada en la capa SEO (ver [dominio y S
 
 ### ARIA
 
-`/aria/` y `/en/aria/` (commit `b9d13b1`). ARIA es un asistente de soporte SAP hecho en equipo para Arix Group. Sus dos líneas de metro son la consulta y la ingesta diaria. La nota del admin para esta estación pide solo cifras medidas y nada de IDs de AWS, URLs internas ni nombres del equipo.
+`/aria/` y `/en/aria/` (commit `b9d13b1`). ARIA es un asistente de soporte SAP hecho en equipo para Arix Group. Sus dos líneas de metro son la consulta y la ingesta diaria. Su regla de contenido, recordada en el editor: solo cifras medidas y nada de IDs de AWS, URLs internas ni nombres del equipo.
 
 ### DevPanel
 
-`/devpanel/` y `/en/devpanel/` (commit `90ff404`). DevPanel es una app de escritorio de código abierto de Harol, para Windows: repos de GitHub, proyectos locales y herramientas en un panel con entrada por rostro. Su página tiene enlaces en la portada al código y a la descarga (eventos `devpanel-code` y `devpanel-download`), tres capturas (`shots/devpanel.webp`, `devpanel-lock.webp`, `devpanel-tools.webp`) y dos líneas de metro: instalación y uso diario. No tiene nota de equipo. La nota del admin pide solo cifras que se puedan comprobar en el repositorio de DevPanel.
+`/devpanel/` y `/en/devpanel/` (commit `90ff404`). DevPanel es una app de escritorio de código abierto de Harol, para Windows: repos de GitHub, proyectos locales y herramientas en un panel con entrada por rostro. Su página tiene enlaces en la portada al código y a la descarga (eventos `devpanel-code` y `devpanel-download`), tres capturas (`shots/devpanel.webp`, `devpanel-lock.webp`, `devpanel-tools.webp`) y dos líneas de metro: instalación y uso diario. No tiene nota de equipo. Su regla de contenido: solo cifras que se puedan comprobar en el repositorio de DevPanel.
 
 Las capturas salen de las pruebas e2e del propio DevPanel, con datos de prueba (mensaje del commit `06a3e2b`). Están directamente en `portfolio/public/shots/`, cada una con su variante `-480.webp`.
 
@@ -121,7 +123,9 @@ Las capturas salen de las pruebas e2e del propio DevPanel, con datos de prueba (
 
 `/portafolio/` y `/en/portafolio/` (commit `433174c`). Es el caso de estudio de este mismo sitio, tratado como producto: admin propio, workflows de GitHub Actions, Lighthouse y accesibilidad exigidos en cada cambio. Sus dos líneas de metro son «Cada cambio» y «Solo, sin tocarlo» (en inglés, «Every change» y «On its own»): lo que pasa con un commit y lo que corre programado. No tiene nota de equipo.
 
-Como el código del portafolio es privado, el registro público de cómo está hecho es esta documentación. Por eso la portada del caso tiene un solo botón, «Leer la documentación técnica», hacia `https://docs.hgsportafolio.site` (evento `portafolio-docs`), y el pie del caso, la tarjeta y el texto de respaldo apuntan al mismo sitio. La nota del admin pide solo cifras que se puedan comprobar en este repositorio o en su documentación; las cifras del texto (número de workflows, de pruebas) se actualizan a mano en `portafolio.json`, `projects.json` y `seo.json`.
+Este repositorio es privado, pero desde `5795692` el código del sitio se lee en el espejo público `DevCat-HGS/hgsportafolio` (ver [CI/CD](ci-cd.md)). La portada del caso tiene dos botones: «Ver el código», hacia el espejo (evento `code-portafolio`), y «Leer la documentación técnica», hacia `https://docs.hgsportafolio.site` (evento `portafolio-docs`). El texto de respaldo sigue enlazando a la documentación y el JSON-LD suma el espejo en `sameAs`. El mismo commit cambió el bloque «Un admin con dos llaves» por «Un admin privado» (se entra con dos factores y su código no se publica) y quitó de «Lo que falta» el repositorio público, que ya existe.
+
+Su regla de contenido: solo cifras que se puedan comprobar en este repositorio o en su documentación. Las cifras del texto (número de workflows, de pruebas) se actualizan a mano en `portafolio.json`, `projects.json` y `seo.json`.
 
 Tiene tres capturas: `shots/portafolio.webp` (la portada), `portafolio-case.webp` (un caso de estudio) y `portafolio-docs.webp` (esta documentación), cada una con su variante `-480.webp`. Están directamente en `portfolio/public/shots/`, sin original en `images/`: son capturas del sitio local y de `docs.hgsportafolio.site`, y el repositorio no guarda el script que las tomó, así que al cambiar el diseño hay que rehacerlas a mano.
 
@@ -163,7 +167,7 @@ DevPanel entró a `projects.json` como proyecto destacado en `06a3e2b` (el mensa
 
 ### El portafolio en Proyectos
 
-La entrada `portafolio` («Este portafolio» / «This portfolio») llegó en `433174c`, con la captura `shots/portafolio.webp` y `case: "portafolio"`. Desde `e88c874` va segunda, con `own: true` y tres puntos por idioma. No tiene `href`, `code` ni `download`, porque el código es privado, así que su franja solo tiene el botón al caso. Las cifras de sus puntos (número de workflows y de pruebas) se escriben a mano.
+La entrada `portafolio` («Este portafolio» / «This portfolio») llegó en `433174c`, con la captura `shots/portafolio.webp` y `case: "portafolio"`. Desde `e88c874` va segunda, con `own: true` y tres puntos por idioma. No tiene `href` ni `download`; desde `5795692` tiene `code` hacia el espejo público, así que su franja muestra el caso y el código. Las cifras de sus puntos (número de workflows y de pruebas) se escriben a mano.
 
 ## Imágenes
 
@@ -182,7 +186,7 @@ Los certificados (fotos de celular) pasan antes por un filtro de mediana. Los pr
 
 ## Formulario de contacto
 
-`ContactForm.tsx` envía JSON a `https://admin.hgsportafolio.site/api/contact` (`src/lib/endpoints.ts`). El portafolio no tiene funciones de Netlify propias: guardar el mensaje y enviar los correos lo hace el admin. Además de nombre, correo y mensaje, manda el idioma de la página, un campo trampa invisible (`website`) y el tiempo de llenado (`elapsed`). La CSP permite esa conexión (`seo/headers.ts`). Detalle en [correos](correos.md).
+`ContactForm.tsx` envía JSON a `https://admin.hgsportafolio.site/api/contact` (`src/lib/endpoints.ts`). El portafolio no tiene funciones de Netlify propias: guardar el mensaje y enviar los correos lo hace el admin. Además de nombre, correo y mensaje, manda el idioma de la página, un campo trampa invisible (`website`) y el tiempo de llenado (`elapsed`). La CSP permite esa conexión (`seo/headers.ts`).
 
 ## Analítica
 
@@ -198,18 +202,18 @@ Eventos que ya se registran (atributos `data-umami-event` y llamadas a `umami.tr
 | `case-<id>` | `Projects.tsx` | Clic en «Ver el caso completo» de una tarjeta o de una franja de proyecto propio (`case-devpanel`, `case-portafolio`). |
 | `code-<id>` | `Projects.tsx` | Clic en «Ver código» de una tarjeta o de una franja (en DevPanel, `code-devpanel`). |
 | `<id>-download` | `Projects.tsx` (franja `OwnProject`) | Clic en la descarga de un proyecto propio. Hoy solo `devpanel-download`. |
-| `devpanel-code`, `devpanel-download` | Portada del caso DevPanel (`devpanel.json` → `links`) | Clic en el código o en la descarga desde la página del caso. |
-| `portafolio-docs` | Portada del caso Portafolio (`portafolio.json` → `links`) | Clic en «Leer la documentación técnica». |
+| `code-devpanel`, `devpanel-download` | Portada del caso DevPanel (`devpanel.json` → `links`) | Clic en el código o en la descarga desde la página del caso. |
+| `code-portafolio`, `portafolio-docs` | Portada del caso Portafolio (`portafolio.json` → `links`) | Clic en «Ver el código» o en «Leer la documentación técnica». |
 | `migozz-play`, `migozz-appstore` | `Startup.tsx` | Clic en Google Play o App Store de MIGOZZ. |
 | `migozz-case` | `Startup.tsx` | Clic en el botón al caso de MIGOZZ. |
 | `contact` | `ContactForm.tsx` | Clic en enviar el formulario. |
 | `contact-sent` | `ContactForm.tsx` | El mensaje se envió bien (`window.umami.track`). |
 
-Desde `e88c874` el código de DevPanel cuenta con dos nombres: `code-devpanel` desde la franja de la portada (antes `devpanel-code`) y `devpanel-code` desde la página del caso. La descarga usa `devpanel-download` en los dos lugares. El resumen semanal del admin traduce cada nombre por separado (ver [admin](admin.md)).
+Desde `0ba3fdf` el código de DevPanel cuenta con un solo nombre, `code-devpanel`, en la franja y en la página del caso (antes la página mandaba `devpanel-code`). La descarga usa `devpanel-download` en los dos lugares. El resumen semanal sigue mostrando legible el nombre viejo, para las semanas anteriores.
 
 `umamiId()` (`seo/headers.ts`) extrae de la variable solo el UUID, así que un fragmento `<script>` pegado completo no rompe el `<head>`.
 
-Para activarla: crear el sitio en `cloud.umami.is` (Add website), copiar su Website ID (solo el UUID), ponerlo como `VITE_UMAMI_WEBSITE_ID` en el sitio `portafolio-hgs` de Netlify y volver a desplegar, porque se lee al construir. Ver [configuración](configuracion.md).
+Para activarla: crear el sitio en `cloud.umami.is` (Add website), copiar su Website ID (solo el UUID), ponerlo como `VITE_UMAMI_WEBSITE_ID` en el sitio `portafolio-hgs` de Netlify y volver a desplegar, porque se lee al construir.
 
 ## Estilos
 
@@ -238,14 +242,14 @@ Requiere Node 20.19 o superior; CI usa Node 22.
 | `tests/assets.test.ts` | Peso de capturas, certificados, íconos, capturas de MIGOZZ y retrato. |
 | `tests/seo.test.ts` | Títulos por idioma, canonical, `hreflang`, Open Graph, JSON-LD, sitemap, texto de respaldo y páginas de ARIA, DevPanel y Portafolio (en DevPanel, que Harol figure como `author` y no como `contributor`; en Portafolio, largos de título y descripción, las dos URL en el sitemap, `author` y `subjectOf` hacia la documentación en el JSON-LD, y los enlaces del texto de respaldo). |
 | `tests/github-data.test.ts` | Forma de `src/data/github.json`. |
-| `tests/contact-email.test.ts` | Lógica del formulario en el admin (`admin/netlify/lib/contact.ts`): correos, descarte de bots, límites y orígenes permitidos. |
-| `tests/admin-auth.test.ts` | Reglas de entrada del admin y lista de llamadas a GitHub permitidas. |
-| `tests/digest.test.ts` | Resumen semanal del admin (`admin/netlify/lib/digest.ts`): rango de fechas, lectura de Umami y Search Console, y el correo. |
 | `tests/security-txt.test.ts` | `public/.well-known/security.txt` tiene contacto y dirección canónica, y falla un mes antes de que venza. |
 | `e2e/a11y.spec.ts` | Sin violaciones WCAG A/AA con axe, en ES y EN, móvil y escritorio, en la portada, MIGOZZ, ARIA, DevPanel y Portafolio. |
 | `e2e/keyboard.spec.ts` | Enlace de salto, nombres accesibles, foco del visor de certificados, cambio de idioma. |
 | `e2e/features.spec.ts` | Envío del formulario (JSON a la función del admin, simulada), modo de alto contraste e impresión. |
 | `e2e/seo.spec.ts` | Idioma por URL, rutas de recursos, head estático y política de seguridad sin violaciones. |
 | `e2e/screenshots.spec.ts` | Capturas por sección para el comentario del PR. |
+
+En `portfolio/tests/` viven además tres pruebas del código del admin (formulario, entrada y resumen semanal). No van al espejo público, porque importan archivos de `admin/`.
+
 
 Los presupuestos de Lighthouse están en `scripts/lighthouse.mjs`: móvil rendimiento 0.90, escritorio 0.95, accesibilidad 1, buenas prácticas y SEO 0.95. Cada corrida fallida se reintenta hasta 3 veces.

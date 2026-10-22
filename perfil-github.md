@@ -8,7 +8,7 @@ orden: 8
 ## Dos repositorios
 
 - **Este repo privado** (`DevCat-HGS/portfolio-hgs`) tiene la fuente: `README.md` (inglés), `README.es.md` (español), `profile/`, `privacity/` y `scripts/`.
-- **El repo público** `DevCat-HGS/DevCat-HGS` solo recibe el README y sus imágenes. El código del portafolio, los workflows y el historial no salen de aquí (comentario de `publish-profile.yml`).
+- **El repo público** `DevCat-HGS/DevCat-HGS` solo recibe el README y sus imágenes (comentario de `publish-profile.yml`). El código del portafolio sale por otro camino, el espejo `DevCat-HGS/hgsportafolio`, que nunca lleva el perfil (ver [CI/CD](ci-cd.md)).
 
 ## Repos públicos de proyectos
 
@@ -55,12 +55,13 @@ Opciones: `--check` (no escribe, falla si algo está desactualizado) y `--no-ver
 
 | Workflow | Cuándo | Qué hace |
 | :-- | :-- | :-- |
-| `metrics.yml` (Metrics) | Diario 06:00 UTC, a mano, o al cambiar el script o el workflow en `main` | Corre `generate_language_charts.py` con `METRICS_TOKEN` y commitea las gráficas si cambiaron. |
+| `metrics.yml` (Metrics) | Diario 06:00 UTC, a mano, o al cambiar el script o el workflow en `main` | Corre `generate_language_charts.py` con un token guardado como secreto del repositorio y commitea las gráficas si cambiaron. |
 | `privacity.yml` (Privacity) | Diario 06:30 UTC, a mano, o al cambiar `featured.json`, el script o el workflow en `main` o `desarrollo` | Actualiza la tabla de repos privados y commitea los README si cambiaron. |
-| `publish-profile.yml` (Publish profile) | Push a `main` que toque `README.md`, `README.es.md`, `profile/*.svg` o el workflow; al terminar bien Metrics o Privacity; a mano | Clona `DevCat-HGS/DevCat-HGS` con `METRICS_TOKEN`, copia los dos README, `banner.svg` y las dos gráficas, y hace push si hay cambios. |
+| `publish-profile.yml` (Publish profile) | Push a `main` que toque `README.md`, `README.es.md`, `profile/*.svg` o el workflow; al terminar bien Metrics o Privacity; a mano | Clona `DevCat-HGS/DevCat-HGS` con el mismo token, copia los dos README, `banner.svg` y las dos gráficas, y hace push si hay cambios. |
 
-`METRICS_TOKEN` es un secreto del repositorio en GitHub (no está en el código). Según `privacity/README.md`, sirve un token clásico con alcance `repo` o uno fine-grained con lectura de metadatos; para publicar el perfil además necesita escribir en `DevCat-HGS/DevCat-HGS` (por confirmar en GitHub).
+El token es un secreto del repositorio en GitHub; su valor no está en el código.
+
 
 ## Archivos sin uso
 
-`profile/stats.svg` y `profile/calendar.svg` no los referencia ningún README ni workflow (vienen de commits del 2026-09-21). La carpeta `img/` (imágenes del README antiguo) salió del repositorio en el commit `236c9d3` y ahora está en `.gitignore`: solo existe en el equipo de Harol. Ver [pendientes](pendientes.md).
+`profile/stats.svg` y `profile/calendar.svg` no los referencia ningún README ni workflow (vienen de commits del 2026-09-21). La carpeta `img/` (imágenes del README antiguo) salió del repositorio en el commit `236c9d3` y ahora está en `.gitignore`: solo existe en el equipo de Harol.

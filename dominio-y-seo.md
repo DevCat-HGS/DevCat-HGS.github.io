@@ -16,13 +16,14 @@ El registrador y el DNS están en Hostinger. Los registros del dominio raíz hac
 
 ### Registros para Resend
 
-Para que salgan los correos, `hgsportafolio.site` debe estar verificado en Resend: Resend entrega unos registros DNS (normalmente SPF, DKIM y, opcional, DMARC) que se agregan en Hostinger. Esos registros no están en el repositorio; es un paso pendiente de Harol. Ver [configuración](configuracion.md).
+Para que salgan los correos, `hgsportafolio.site` debe estar verificado en Resend: Resend entrega unos registros DNS (normalmente SPF, DKIM y, opcional, DMARC) que se agregan en Hostinger. Esos registros no están en el repositorio.
+
 
 ## Search Console
 
-`seo.json` → `site.verification` guarda dos códigos de verificación de Google Search Console, que se emiten como `<meta name="google-site-verification">` en cada página. Se editan en el admin, estación SEO. Sus valores no se copian aquí.
+`seo.json` → `site.verification` guarda dos códigos de verificación de Google Search Console, que se emiten como `<meta name="google-site-verification">` en cada página. Se editan en el admin. Sus valores no se copian aquí.
 
-Search Console también alimenta el resumen semanal por correo del admin, si se configura una cuenta de servicio (ver [admin](admin.md)).
+Search Console también alimenta el resumen semanal por correo que envía el admin.
 
 ## Páginas e idiomas
 
@@ -46,22 +47,22 @@ Search Console también alimenta el resumen semanal por correo del admin, si se 
 Desde el commit `b9d13b1` los casos de estudio no se programan uno por uno. `portfolio/seo/pages.ts` define:
 
 - `SUBPAGE_IDS` (hoy `migozz`, `aria`, `devpanel` y `portafolio`; `PAGE_IDS` suma `home`): de esa lista salen el head, el JSON-LD, el sitemap, el texto de respaldo, las rutas del servidor de desarrollo y las entradas del build en `vite.config.ts`.
-- `SUBPAGES`: por cada caso, sus textos (`migozzPages`, `ariaPages`, `devpanelPages` y `portafolioPages` en `seo.json`), el nombre corto para la miga de pan, el enlace del producto, de su cliente o de su código (`siteUrl`, que el texto de respaldo muestra como enlace), el nodo schema.org del producto y `relation`. En el caso `portafolio` el nombre es «Portafolio HGS» y `siteUrl` es `https://docs.hgsportafolio.site`: según el comentario de `pages.ts`, el código es privado y el registro público de cómo está hecho es la documentación.
+- `SUBPAGES`: por cada caso, sus textos (`migozzPages`, `ariaPages`, `devpanelPages` y `portafolioPages` en `seo.json`), el nombre corto para la miga de pan, el enlace del producto, de su cliente o de su código (`siteUrl`, que el texto de respaldo muestra como enlace), el nodo schema.org del producto y `relation`. En el caso `portafolio` el nombre es «Portafolio HGS» y `siteUrl` es `https://docs.hgsportafolio.site`: según el comentario de `pages.ts` (desde `5795692`), el texto de respaldo enlaza la documentación y el código está en el espejo público, que el nodo declara en `sameAs`.
 
 `relation` (desde `90ff404`) dice cómo se relaciona Harol con el producto: `author` si es su proyecto propio (DevPanel y Portafolio) o `contributor` si trabajó en él con un equipo (MIGOZZ y ARIA). `structuredData()` en `seo/render.ts` usa ese valor como nombre de la propiedad que enlaza el producto con la `Person`.
 
-Agregar un caso nuevo es, según el comentario de `pages.ts`, un id nuevo en `SUBPAGE_IDS`, su entrada en `SUBPAGES` y su propio `<id>/index.html`. Del lado de la página hacen falta además su `src/<id>.tsx`, su JSON y su carga en `src/content/` (ver [portafolio](portafolio.md)), sus textos en `seo.json`, su regla de idioma en `netlify.toml` y su estación en el admin, como hizo `90ff404` con DevPanel y `433174c` con Portafolio.
+Agregar un caso nuevo es, según el comentario de `pages.ts`, un id nuevo en `SUBPAGE_IDS`, su entrada en `SUBPAGES` y su propio `<id>/index.html`. Del lado de la página hacen falta además su `src/<id>.tsx`, su JSON y su carga en `src/content/` (ver [portafolio](portafolio.md)), sus textos en `seo.json`, su regla de idioma en `netlify.toml` y su pantalla en el admin, como hizo `90ff404` con DevPanel y `433174c` con Portafolio.
 
 ### Enfoque de los textos
 
-Los títulos, descripciones y texto de respaldo salen de `portfolio/src/content/data/seo.json` (se editan en el admin, estación SEO). Desde `b9d13b1` el mensaje central es «llevo productos web y móviles a producción, con backend serverless e IA» (en inglés, «takes web and mobile products to production, with serverless backends and AI»), y la descripción de la portada menciona los casos MIGOZZ y ARIA. `tests/seo.test.ts` comprueba los largos de título y descripción.
+Los títulos, descripciones y texto de respaldo salen de `portfolio/src/content/data/seo.json` (se editan en el admin). Desde `b9d13b1` el mensaje central es «llevo productos web y móviles a producción, con backend serverless e IA» (en inglés, «takes web and mobile products to production, with serverless backends and AI»), y la descripción de la portada menciona los casos MIGOZZ y ARIA. `tests/seo.test.ts` comprueba los largos de título y descripción.
 
 ## Lo que genera el build
 
 Todo en `portfolio/seo/render.ts`, con pruebas en `portfolio/tests/seo.test.ts`:
 
 - **Head:** título, descripción, canonical, `hreflang` para `es`, `en` y `x-default`, Open Graph (con `og:locale` y alternativo) y tarjeta para compartir (`og.png`, 1200 × 630).
-- **Datos estructurados (JSON-LD):** `Person` (con `worksFor` MIGOZZ, `alumniOf` SENA y dirección en Medellín) y `SoftwareApplication` de MIGOZZ en todas las páginas. En la portada se suman `WebSite` y `ProfilePage`. En un caso de estudio, `WebPage` y `BreadcrumbList`; en ARIA y DevPanel, además, un `SoftwareApplication` propio, y en Portafolio un `WebApplication` («Portafolio HGS», en `es` y `en`, con `url` en la portada del sitio y `subjectOf` hacia un `TechArticle` «Documentación técnica» en `https://docs.hgsportafolio.site`). En ARIA, Arix Group es el creador y Harol colaborador (`contributor`). En DevPanel, Harol es el autor (`author`), y el nodo lleva categoría `DeveloperApplication`, sistema Windows, licencia MIT, enlace de descarga y el repositorio en `sameAs`. En Portafolio Harol también es `author`. Pruebas de `tests/seo.test.ts` comprueban que DevPanel tenga `author` y no `contributor`, y que el nodo del portafolio tenga `author` y `subjectOf.url` hacia la documentación.
+- **Datos estructurados (JSON-LD):** `Person` (con `worksFor` MIGOZZ, `alumniOf` SENA y dirección en Medellín) y `SoftwareApplication` de MIGOZZ en todas las páginas. En la portada se suman `WebSite` y `ProfilePage`. En un caso de estudio, `WebPage` y `BreadcrumbList`; en ARIA y DevPanel, además, un `SoftwareApplication` propio, y en Portafolio un `WebApplication` («Portafolio HGS», en `es` y `en`, con `url` en la portada del sitio, el espejo `https://github.com/DevCat-HGS/hgsportafolio` en `sameAs` y `subjectOf` hacia un `TechArticle` «Documentación técnica» en `https://docs.hgsportafolio.site`). En ARIA, Arix Group es el creador y Harol colaborador (`contributor`). En DevPanel, Harol es el autor (`author`), y el nodo lleva categoría `DeveloperApplication`, sistema Windows, licencia MIT, enlace de descarga y el repositorio en `sameAs`. En Portafolio Harol también es `author`. Pruebas de `tests/seo.test.ts` comprueban que DevPanel tenga `author` y no `contributor`, y que el nodo del portafolio tenga `author` y `subjectOf.url` hacia la documentación.
 - **Texto de respaldo:** lo que queda dentro de `#root` para buscadores y lectores sin JavaScript. En la portada lista todos los proyectos visibles con una línea (enlace al caso de estudio si lo tiene, si no al sitio del proyecto, si no a su código —desde `06a3e2b`—, si no solo el nombre) y enlaza a cada caso de estudio. Así un rastreador o una IA que lee el HTML sin ejecutar nada ve el mismo trabajo que un visitante.
 - **Pantalla de carga:** el HTML estático ya trae «Bienvenido / Cargando…» o «Welcome / Loading…» según el idioma de la página (`localizeHtml`), porque es lo primero que lee un rastreador sin JavaScript. Antes salía en inglés en todas.
 - **`sitemap.xml`:** las páginas de cada idioma, con sus alternativas de idioma y `lastmod`.
@@ -75,7 +76,7 @@ Si no hay dirección del sitio en el build (ni `VITE_SITE_URL` ni la variable `U
 
 ## Etiqueta de Umami
 
-`umamiId()` en `portfolio/seo/headers.ts` toma de `VITE_UMAMI_WEBSITE_ID` solo el UUID del sitio. Así, si alguien pega en la variable el `<script>` completo que da Umami, la etiqueta sigue siendo válida en vez de romper el `<head>` de todas las páginas (commit `b7461ec`). Lo correcto sigue siendo dejar solo el UUID (ver [pendientes](pendientes.md)).
+`umamiId()` en `portfolio/seo/headers.ts` toma de `VITE_UMAMI_WEBSITE_ID` solo el UUID del sitio. Así, si alguien pega en la variable el `<script>` completo que da Umami, la etiqueta sigue siendo válida en vez de romper el `<head>` de todas las páginas (commit `b7461ec`). Lo correcto sigue siendo dejar solo el UUID.
 
 ## Redirección por idioma
 
